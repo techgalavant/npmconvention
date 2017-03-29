@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">NPM Convention</string>
+    <string name="one">Welcome</string>
+    <string name="two">Program</string>
+    <string name="three">Schedule</string>
+    <string name="four">Maps</string>
+    <string name="five">Chapters</string>
+    <string name="six">Exhibits</string>
+    <string name="download">Download Program</string>
+    <string name="upload">Upload</string>
+
+</resources>

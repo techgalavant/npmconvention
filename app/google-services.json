@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "113481153514",
+    "firebase_url": "https://npm-convention.firebaseio.com",
+    "project_id": "npm-convention",
+    "storage_bucket": "npm-convention.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:113481153514:android:358df06b7dd818fc",
+        "android_client_info": {
+          "package_name": "com.techgalavant.npmconvention"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "113481153514-p21huo9b0bc457tp3pg98m7amg6rng8i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.techgalavant.npmconvention",
+            "certificate_hash": "404fb723b7e36baf9287baf7b1570ca96ebdd414"
+          }
+        },
+        {
+          "client_id": "113481153514-jb7qfq8f2sn64c6ussrha9lu2l79ubim.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASRsxD4O6tH8Dz7fUfdwfLa3aR6HA_Clk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "113481153514-jb7qfq8f2sn64c6ussrha9lu2l79ubim.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
