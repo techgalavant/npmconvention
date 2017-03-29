@@ -8,23 +8,32 @@ package com.techgalavant.npmconvention;
  * Credit to -
  * https://www.simplifiedcoding.net/firebase-storage-tutorial-android/
  * https://firebase.google.com/docs/storage/android/download-files#create_a_reference
+ * Displaying it use - http://androidsrc.net/create-and-display-pdf-within-android-application/
  */
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
 import java.io.IOException;
 
 import static android.app.Activity.RESULT_OK;
@@ -75,17 +84,38 @@ public class ProgramFragment extends Fragment implements View.OnClickListener{
         btnUpload.setOnClickListener(this);
 
         //getting firebase storage reference
-        storageReference = FirebaseStorage.getInstance().getReference();
+        storageReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://npm-convention.appspot.com/2017convention.pdf");
 
         return rootView;
 
     }
-    //method to show file chooser
+
     private void showFileChooser() {
+        File localFile = new File(Environment.getExternalStorageDirectory(), "2017convention.pdf");
+        storageReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                // Successfully downloaded data to local file
+                Log.e(TAG,"Successfully downloaded file and stored it on local device.");
+                Toast.makeText(getContext(), "SUCCESS!", Toast.LENGTH_LONG).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle failed download
+                Log.e(TAG,"Unsuccessful at downloading and storing file locally.");
+                Toast.makeText(getContext(), "Unsuccessful at download...", Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+        /*// this code below picks a local file but not from Firebase!!
         Intent intent = new Intent();
-        intent.setType("image/*");
+        // setting the intent to only show images to pick from
+        intent.setType("image*//*");
+        // intent.setType("application/pdf");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);*/
     }
 
     //handling the image chooser activity result
@@ -95,7 +125,7 @@ public class ProgramFragment extends Fragment implements View.OnClickListener{
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath = data.getData();
             try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), filePath);
                 imageView.setImageBitmap(bitmap);
 
             } catch (IOException e) {
