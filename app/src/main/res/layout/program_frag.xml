@@ -5,40 +5,50 @@
     android:layout_height="match_parent"
     tools:context="com.techgalavant.npmconvention.ProgramFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/two"
-        android:textSize="40dp"
-        android:textStyle="bold"
-        android:layout_centerHorizontal="true"/>
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnDownload"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="22dp"
+            android:layout_marginStart="22dp"
             android:layout_weight="1"
-            android:text="@string/download" />
+            android:text="@string/download"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
         <Button
-            android:id="@+id/btnUpload"
+            android:id="@+id/btnView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="49dp"
+            android:layout_marginStart="49dp"
             android:layout_weight="1"
-            android:text="@string/upload" />
+            android:text="@string/upload"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/btnDownload"
+            android:layout_toEndOf="@+id/btnDownload" />
 
-    </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/colorPrimaryDark"
+            android:text="@string/two"
+            android:textColor="#ffffff"
+            android:id="@+id/tv_header"
+            android:textSize="18dp"
+            android:gravity="center"
+            android:layout_below="@+id/btnDownload"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="16dp"></TextView>
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/linearLayout" />
+        <com.github.barteksc.pdfviewer.PDFView
+            android:id="@+id/pdfView"
+            android:layout_below="@+id/tv_header"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
 
 </RelativeLayout>

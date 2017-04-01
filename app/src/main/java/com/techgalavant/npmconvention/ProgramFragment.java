@@ -4,59 +4,49 @@ package com.techgalavant.npmconvention;
  * Created by Mike Fallon
  * ProgramFragment
  *
- * This is a screen to download the convention program from Firebase.
- * Credit to -
- * https://www.simplifiedcoding.net/firebase-storage-tutorial-android/
- * https://firebase.google.com/docs/storage/android/download-files#create_a_reference
- * Displaying it use - http://androidsrc.net/create-and-display-pdf-within-android-application/
+ * This is a screen to download the convention program from a Firebase URL.
+ * Credits to -
+ * Displaying it use - https://github.com/barteksc/AndroidPdfViewer
  */
 
-import android.content.Intent;
-import android.graphics.Bitmap;
+import android.app.DownloadManager;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FileDownloadTask;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
+import com.github.barteksc.pdfviewer.PDFView;
+import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
+import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
+import com.shockwave.pdfium.PdfDocument;
 
 import java.io.File;
-import java.io.IOException;
-
-import static android.app.Activity.RESULT_OK;
+import java.util.List;
 
 
-public class ProgramFragment extends Fragment implements View.OnClickListener{
+public class ProgramFragment extends Fragment implements View.OnClickListener,OnPageChangeListener,OnLoadCompleteListener{
     public static final String TAG = ProgramFragment.class.getSimpleName();
 
-    //a constant to track the file chooser intent
-    private static final int PICK_IMAGE_REQUEST = 234;
 
     //Buttons
     private Button btnDownload;
-    private Button btnUpload;
+    private Button btnView;
 
-    //ImageView
-    private ImageView imageView;
+    // A download manager is used to download a file from a URL onto the device
+    DownloadManager downloadManager;
 
-    //a Uri object to store file path
-    private Uri filePath;
-
-    //firebase storage reference
-    private StorageReference storageReference;
+    // PDFView from https://github.com/barteksc/AndroidPdfViewer
+    PDFView pdfView;
+    Integer pageNumber = 0;
+    private String pdfDir = "/NPM"; // the name of the directory to store the PDF files
+    private String pdfFile = "2017Convention.pdf"; // the name of the PDF file
 
     public ProgramFragment() {
         // Required empty public constructor
@@ -75,74 +65,87 @@ public class ProgramFragment extends Fragment implements View.OnClickListener{
 
         //getting views from layout
         btnDownload = (Button) rootView.findViewById(R.id.btnDownload);
-        btnUpload = (Button) rootView.findViewById(R.id.btnUpload);
+        btnView = (Button) rootView.findViewById(R.id.btnView);
 
-        imageView = (ImageView) rootView.findViewById(R.id.imageView);
+        // Used to show the downloaded PDFs
+        pdfView = (PDFView) rootView.findViewById(R.id.pdfView);
 
         //attaching listener
         btnDownload.setOnClickListener(this);
-        btnUpload.setOnClickListener(this);
+        btnView.setOnClickListener(this);
 
-        //getting firebase storage reference
-        storageReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://npm-convention.appspot.com/2017convention.pdf");
+        // Try seeing if the file exists and displaying it automatically
+        displayFromFile();
 
         return rootView;
+    }
+
+    // Use to display the PDF which has been downloaded
+    private void displayFromFile() {
+        File localFile = new File(Environment.getExternalStorageDirectory()+pdfDir, pdfFile);
+
+        try {
+            if (localFile.exists()){
+                Log.e(TAG,"Found " + pdfFile + " in " + pdfDir +".");
+
+                // Credit to https://github.com/barteksc/AndroidPdfViewer
+                pdfView.fromFile(localFile)
+                        .defaultPage(pageNumber)
+                        .enableSwipe(true)
+                        .swipeHorizontal(false)
+                        .onPageChange(this)
+                        .enableAnnotationRendering(true)
+                        .onLoad(this)
+                        .load();
+
+            } else {
+                Toast.makeText(getContext(),"Please download the file.", Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 
-    private void showFileChooser() {
-        File localFile = new File(Environment.getExternalStorageDirectory(), "2017convention.pdf");
-        storageReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                // Successfully downloaded data to local file
-                Log.e(TAG,"Successfully downloaded file and stored it on local device.");
-                Toast.makeText(getContext(), "SUCCESS!", Toast.LENGTH_LONG).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle failed download
-                Log.e(TAG,"Unsuccessful at downloading and storing file locally.");
-                Toast.makeText(getContext(), "Unsuccessful at download...", Toast.LENGTH_LONG).show();
-            }
-        });
-
-
-        /*// this code below picks a local file but not from Firebase!!
-        Intent intent = new Intent();
-        // setting the intent to only show images to pick from
-        intent.setType("image*//*");
-        // intent.setType("application/pdf");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);*/
-    }
-
-    //handling the image chooser activity result
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            filePath = data.getData();
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), filePath);
-                imageView.setImageBitmap(bitmap);
+    public void onPageChanged(int page, int pageCount) {
+        pageNumber = page;
+        //setTitle(String.format("%s %s / %s", pdfFile, page + 1, pageCount));
+    }
 
-            } catch (IOException e) {
-                e.printStackTrace();
+    @Override
+    public void loadComplete(int nbPages) {
+        PdfDocument.Meta meta = pdfView.getDocumentMeta();
+        printBookmarksTree(pdfView.getTableOfContents(), "-");
+
+    }
+
+    public void printBookmarksTree(List<PdfDocument.Bookmark> tree, String sep) {
+        for (PdfDocument.Bookmark b : tree) {
+
+            Log.e(TAG, String.format("%s %s, p %d", sep, b.getTitle(), b.getPageIdx()));
+
+            if (b.hasChildren()) {
+                printBookmarksTree(b.getChildren(), sep + "-");
             }
         }
     }
 
     @Override
     public void onClick(View view) {
-        //if the clicked button is choose
+        // Download file to sdcard
         if (view == btnDownload) {
-            showFileChooser();
+           downloadManager = (DownloadManager)getContext().getSystemService(Context.DOWNLOAD_SERVICE);
+            Uri uri = Uri.parse("https://firebasestorage.googleapis.com/v0/b/npm-convention.appspot.com/o/2017convention.pdf?alt=media&token=b9db1a12-3370-47f0-b422-9fa44e4c23df");
+            DownloadManager.Request request = new DownloadManager.Request(uri);
+            request.setDestinationInExternalPublicDir(pdfDir,pdfFile);
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+            request.setTitle(pdfFile);
+            Long reference = downloadManager.enqueue(request);
         }
-        //if the clicked button is upload
-        else if (view == btnUpload) {
-
+        // View the PDF stored locally in the app
+        else if (view == btnView) {
+            displayFromFile();
         }
     }
 
