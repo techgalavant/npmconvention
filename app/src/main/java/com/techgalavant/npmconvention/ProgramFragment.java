@@ -47,6 +47,7 @@ public class ProgramFragment extends Fragment implements View.OnClickListener,On
     Integer pageNumber = 0;
     private String pdfDir = "/NPM"; // the name of the directory to store the PDF files
     private String pdfFile = "2017Convention.pdf"; // the name of the PDF file
+    File localFile = new File(Environment.getExternalStorageDirectory()+pdfDir, pdfFile);
 
     public ProgramFragment() {
         // Required empty public constructor
@@ -60,62 +61,85 @@ public class ProgramFragment extends Fragment implements View.OnClickListener,On
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.program_frag, container, false);
-
-        //getting views from layout
-        btnDownload = (Button) rootView.findViewById(R.id.btnDownload);
-        btnView = (Button) rootView.findViewById(R.id.btnView);
-
-        // Used to show the downloaded PDFs
-        pdfView = (PDFView) rootView.findViewById(R.id.pdfView);
-
-        //attaching listener
-        btnDownload.setOnClickListener(this);
-        btnView.setOnClickListener(this);
-
-        // Try seeing if the file exists and displaying it automatically
-        displayFromFile();
-
-        return rootView;
-    }
-
-    // Use to display the PDF which has been downloaded
-    private void displayFromFile() {
-        File localFile = new File(Environment.getExternalStorageDirectory()+pdfDir, pdfFile);
 
         try {
-            if (localFile.exists()){
-                Log.e(TAG,"Found " + pdfFile + " in " + pdfDir +".");
+            if (localFile.exists()) {
+                Log.e(TAG, "Found " + pdfFile + " in " + pdfDir + ".");
 
-                // Credit to https://github.com/barteksc/AndroidPdfViewer
-                pdfView.fromFile(localFile)
-                        .defaultPage(pageNumber)
-                        .enableSwipe(true)
-                        .swipeHorizontal(false)
-                        .onPageChange(this)
-                        .enableAnnotationRendering(true)
-                        .onLoad(this)
-                        .load();
+                // Display the program without the download buttons
+                View rootView = inflater.inflate(R.layout.programb_frag, container, false);
+
+                // Used to show the downloaded PDF
+                pdfView = (PDFView) rootView.findViewById(R.id.pdfView);
+
+                displayFile();
+
+                return rootView;
 
             } else {
-                Toast.makeText(getContext(),"Please download the file.", Toast.LENGTH_LONG).show();
+                // show screen with download button
+                Log.e(TAG, pdfFile + " not found at " + pdfDir);
+
+                // Display the fragment with the download buttons
+                View rootView = inflater.inflate(R.layout.program_frag, container, false);
+
+                //getting views from layout
+                btnDownload = (Button) rootView.findViewById(R.id.btnDownload);
+                btnView = (Button) rootView.findViewById(R.id.btnView);
+
+                // Used to show the downloaded PDFs
+                pdfView = (PDFView) rootView.findViewById(R.id.pdfView);
+
+                //attaching listener
+                btnDownload.setOnClickListener(this);
+                btnView.setOnClickListener(this);
+
+                return rootView;
+
             }
-        } catch (Exception e){
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
+        return getView();
     }
+
+    private void displayFile(){
+
+        File localFile = new File(Environment.getExternalStorageDirectory()+pdfDir, pdfFile);
+
+        // Credit to https://github.com/barteksc/AndroidPdfViewer
+        pdfView.fromFile(localFile)
+                .defaultPage(pageNumber)
+                .enableSwipe(true)
+                .swipeHorizontal(false)
+                .onPageChange(this)
+                .enableAnnotationRendering(true)
+                .onLoad(this)
+                .load();
+    }
+
 
     @Override
     public void onPageChanged(int page, int pageCount) {
-        pageNumber = page;
-        //setTitle(String.format("%s %s / %s", pdfFile, page + 1, pageCount));
+        pageNumber = page+1;
+        pdfView.getCurrentPage();
+        Toast.makeText(getContext(),"Page " + pageNumber + " of " + pageCount, Toast.LENGTH_SHORT).show();
+        //request.setTitle(String.format("%s %s / %s", pdfFile, page + 1, pageCount));
     }
 
     @Override
     public void loadComplete(int nbPages) {
         PdfDocument.Meta meta = pdfView.getDocumentMeta();
+        Log.e(TAG, "title = " + meta.getTitle());
+        Log.e(TAG, "author = " + meta.getAuthor());
+        Log.e(TAG, "subject = " + meta.getSubject());
+        Log.e(TAG, "keywords = " + meta.getKeywords());
+        Log.e(TAG, "creator = " + meta.getCreator());
+        Log.e(TAG, "producer = " + meta.getProducer());
+        Log.e(TAG, "creationDate = " + meta.getCreationDate());
+        Log.e(TAG, "modDate = " + meta.getModDate());
+
         printBookmarksTree(pdfView.getTableOfContents(), "-");
 
     }
@@ -131,6 +155,7 @@ public class ProgramFragment extends Fragment implements View.OnClickListener,On
         }
     }
 
+
     @Override
     public void onClick(View view) {
         // Download file to sdcard
@@ -145,7 +170,11 @@ public class ProgramFragment extends Fragment implements View.OnClickListener,On
         }
         // View the PDF stored locally in the app
         else if (view == btnView) {
-            displayFromFile();
+            if (localFile.exists()){
+                displayFile();
+            } else {
+                Toast.makeText(getContext(),"Please download the file to view it.", Toast.LENGTH_LONG).show();
+            }
         }
     }
 
