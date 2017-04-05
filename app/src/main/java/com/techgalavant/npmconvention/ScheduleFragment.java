@@ -61,7 +61,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
     //private String jsonFile = "Events_NPM.json"; // the name of the actual file
     File localFile = new File(Environment.getExternalStorageDirectory()+jsonDir, jsonFile);
 
-    ArrayList<HashMap<String, String>> contactList;
+    ArrayList<HashMap<String, String>> contactList = new ArrayList<>();
 
 
     public ScheduleFragment() {
