@@ -6,6 +6,10 @@
     <!-- Permission: Writing to SDCard needed for downloading convention PDF and maps-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
+    <!-- Permission: Network and Get Accounts needed for Google Calendar implementation-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/npmlogo"

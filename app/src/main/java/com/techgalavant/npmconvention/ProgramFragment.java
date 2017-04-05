@@ -34,7 +34,6 @@ import java.util.List;
 public class ProgramFragment extends Fragment implements View.OnClickListener,OnPageChangeListener,OnLoadCompleteListener{
     public static final String TAG = ProgramFragment.class.getSimpleName();
 
-
     //Buttons
     private Button btnDownload;
     private Button btnView;
@@ -62,6 +61,8 @@ public class ProgramFragment extends Fragment implements View.OnClickListener,On
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        // If the Program PDF file has been downloaded, then display it.
+        // Otherwise show the buttons for users to download it.
         try {
             if (localFile.exists()) {
                 Log.e(TAG, "Found " + pdfFile + " in " + pdfDir + ".");

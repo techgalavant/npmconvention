@@ -5,30 +5,6 @@
     android:layout_height="match_parent"
     tools:context="com.techgalavant.npmconvention.ScheduleFragment">
 
-    <Button
-        android:id="@+id/btnDownload"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="22dp"
-        android:layout_marginStart="22dp"
-        android:layout_weight="1"
-        android:text="@string/access"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:id="@+id/btnView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="49dp"
-        android:layout_marginStart="49dp"
-        android:layout_weight="1"
-        android:text="@string/upload"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/btnDownload"
-        android:layout_toEndOf="@+id/btnDownload" />
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -42,12 +18,10 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="16dp"></TextView>
-
     <ListView
         android:id="@+id/list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_header" />
-
 
 </RelativeLayout>
