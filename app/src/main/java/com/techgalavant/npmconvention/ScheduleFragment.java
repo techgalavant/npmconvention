@@ -57,11 +57,9 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
     // A download manager is used to download a file from a URL onto the device
     DownloadManager downloadManager;
     private String jsonDir = "/NPM"; // the name of the directory to store the file
-    //private String jsonFile = "contacts.json"; // the name of the downloaded test file
     private String jsonFile = "Events_NPM.json"; // the name of the actual file
     File localFile = new File(Environment.getExternalStorageDirectory()+jsonDir, jsonFile);
 
-    ArrayList<HashMap<String, String>> contactList = new ArrayList<>();
     ArrayList<HashMap<String, String>> eventList = new ArrayList<>();
 
 
@@ -87,13 +85,12 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
                 View rootView = inflater.inflate(R.layout.scheduleb_frag, container, false);
 
                 // populate the JSON file into an arraylist
-                // contactList = new ArrayList<>();
                 eventList = new ArrayList<>();
 
                 // Used to show the events in a listview
                 lv = (ListView) rootView.findViewById(R.id.list);
 
-                // Display the list of contacts
+                // Display the list of events
                 displayFile();
 
                 return rootView;
@@ -122,7 +119,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
 
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(getContext(),"View loading issue" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
         return getView();
     }
@@ -162,7 +158,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
             JSONObject jsonObj = new JSONObject(loadJSONFromFile());
 
             // Getting JSON Array node
-            // JSONArray contacts = jsonObj.getJSONArray("contacts");
             JSONArray events = jsonObj.getJSONArray("events");
 
             // populate the array nodes into hashmap
@@ -178,8 +173,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
                 String end = c.getString("End");
                 String map = c.getString("Map");
 
-                // the hash map for single contact
-                // HashMap<String, String> contact = new HashMap<>();
+                // the hash map for single event
                 HashMap<String, String> event = new HashMap<>();
 
                 // add each child node to HashMap key => value
@@ -192,20 +186,19 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
                 event.put("end", end);
                 event.put("map", map);
 
-                // add the contact into contact list
-                //contactList.add(contact);
+                // add the event into the event list
                 eventList.add(event);
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
             Log.e(TAG, "JSONException: " + e.getMessage());
-            Toast.makeText(getContext(),"JSONException:" + e.getMessage(),Toast.LENGTH_LONG).show();
+
         }
 
-        // show the contactlist in a listview adaptor
+        // show the eventlist in a listview adaptor
         ListAdapter adapter = new SimpleAdapter(
-                getActivity().getApplicationContext(), contactList,
+                getActivity().getApplicationContext(), eventList,
                 R.layout.listeventitem, new String[]{"id", "name", "description", "start",
                 "end", "map"}, new int[]{R.id.eid, R.id.ename,
                 R.id.edesc, R.id.estart, R.id.efinish, R.id.emap});
@@ -221,15 +214,11 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
         if (view == btnDownload) {
             downloadManager = (DownloadManager)getContext().getSystemService(Context.DOWNLOAD_SERVICE);
 
-            // Test file contacts.json
-            // Uri uri = Uri.parse("https://firebasestorage.googleapis.com/v0/b/npm-convention.appspot.com/o/contacts.json?alt=media&token=815fddb6-fb72-4ebc-94f7-75ea6341b7a9");
-
-            // Real file points here
-            Uri uri = Uri.parse("https://firebasestorage.googleapis.com/v0/b/npm-convention.appspot.com/o/2016Schedule_825PM.json?alt=media&token=47637b90-bf14-4a66-8a6b-d1bc14f8f28e");
+            // Location of the file to be downloaded
+            Uri uri = Uri.parse("https://firebasestorage.googleapis.com/v0/b/npm-convention.appspot.com/o/Events_NPM.json?alt=media&token=65a29d0a-5f78-487a-9d76-41c6c31762e0");
 
             DownloadManager.Request request = new DownloadManager.Request(uri);
 
-            // TO-DO set the destination directory in res.assets folder
             request.setDestinationInExternalPublicDir(jsonDir,jsonFile);
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
             request.setTitle(jsonFile);
