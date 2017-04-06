@@ -6,6 +6,16 @@
     android:padding="@dimen/activity_horizontal_margin">
 
     <TextView
+        android:id="@+id/eid"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="2dip"
+        android:paddingTop="6dip"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
         android:id="@+id/ename"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -31,6 +41,13 @@
 
     <TextView
         android:id="@+id/efinish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#165e14"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/emap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#165e14"
