@@ -9,6 +9,7 @@ package com.techgalavant.npmconvention;
  * Checkout - http://stackoverflow.com/questions/3721963/how-to-add-calendar-events-in-android
  * - http://stacktips.com/tutorials/android/how-to-add-event-to-calendar-in-android
  * - https://developers.google.com/google-apps/calendar/v3/reference/calendars/insert
+ * - Expandable ListView Adaptor tutorial - http://www.vogella.com/tutorials/AndroidListView/article.html
  *
  * JSON Parsing Tutorial - http://www.androidhive.info/2012/01/android-json-parsing-tutorial/
  *
@@ -39,9 +40,13 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
-
+import java.util.Locale;
 
 
 public class ScheduleFragment extends Fragment implements View.OnClickListener{
@@ -160,6 +165,12 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
             // Getting JSON Array node
             JSONArray events = jsonObj.getJSONArray("events");
 
+            SimpleDateFormat dtStart = new SimpleDateFormat("M/dd/yy h:mm a zzz", Locale.US);
+            DateFormat dtDay = new SimpleDateFormat("M/dd/yy", Locale.US);
+            DateFormat dtTime = new SimpleDateFormat("h:mm a", Locale.US);
+            Date dateStart = null;
+            Date dateEnd = null;
+
             // populate the array nodes into hashmap
             for (int i = 0; i < events.length(); i++) {
 
@@ -171,6 +182,25 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
                 String room = c.getString("Room #");
                 String start = c.getString("Start");
                 String end = c.getString("End");
+
+                // convert the date strings so that it can be used in the array
+                try {
+                    dateStart = dtStart.parse(start);
+                    dateEnd = dtStart.parse(end);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                // date / time formats: http://javatechniques.com/blog/dateformat-and-simpledateformat-examples/
+                // convert date back to string so that it can go into the array
+                String day = dtDay.format(dateStart);
+
+                // convert time back to string so that it can be used in the array
+                String starttime = dtTime.format(dateStart);
+
+                // convert end date back to string for the array
+                String endtime = dtTime.format(dateEnd);
+
                 String map = c.getString("Map");
 
                 // the hash map for single event
@@ -182,8 +212,9 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
                 event.put("presenter", presenter);
                 event.put("description", description);
                 event.put("room", room);
-                event.put("start", start);
-                event.put("end", end);
+                event.put("day", day);
+                event.put("start", starttime);
+                event.put("finish", endtime);
                 event.put("map", map);
 
                 // add the event into the event list
@@ -196,11 +227,12 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
 
         }
 
+
         // show the eventlist in a listview adaptor
         ListAdapter adapter = new SimpleAdapter(
                 getActivity().getApplicationContext(), eventList,
-                R.layout.listeventitem, new String[]{"id", "name", "description", "start",
-                "end", "map"}, new int[]{R.id.eid, R.id.ename,
+                R.layout.listeventitem, new String[]{"id", "name", "description", "day",
+                "start", "finish"}, new int[]{R.id.eid, R.id.ename,
                 R.id.edesc, R.id.estart, R.id.efinish, R.id.emap});
 
         lv.setAdapter(adapter);
