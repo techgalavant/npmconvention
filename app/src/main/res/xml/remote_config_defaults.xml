@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- START xml_defaults -->
+<defaultsMap>
+    <entry>
+        <key>is_welcome_on</key>
+        <value>true</value>
+    </entry>
+    <entry>
+        <key>is_program_on</key>
+        <value>true</value>
+    </entry>
+    <entry>
+        <key>is_events_on</key>
+        <value>true</value>
+    </entry>
+    <entry>
+        <key>is_maps_on</key>
+        <value>true</value>
+    </entry>
+    <entry>
+        <key>is_chapters_on</key>
+        <value>true</value>
+    </entry>
+    <entry>
+        <key>is_exhibits_on</key>
+        <value>true</value>
+    </entry>
+    <entry>
+        <key>is_sponsors_on</key>
+        <value>true</value>
+    </entry>
+</defaultsMap>
+    <!-- END xml_defaults -->
