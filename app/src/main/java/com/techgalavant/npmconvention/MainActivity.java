@@ -20,6 +20,9 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO Setup a permissions interface so that users can set permissions to download and read the JSON and PDF files
+// Refer to - http://www.journaldev.com/10409/android-handling-runtime-permissions-example
+
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = MainActivity.class.getSimpleName();
 
@@ -96,8 +99,6 @@ public class MainActivity extends AppCompatActivity {
 
     // Used to retrieve the remote configs and compare against local remote config files
     private void fetchRemoteConfigs() {
-        // The app will use default parameters in case it can't reach the Firebase Remote Config service
-        mRemoteConfig.setDefaults(R.xml.remote_config_defaults);
 
         // START retrieving from Firebase service
         long cacheExpiration = 3600; // 1 hour in seconds.
@@ -128,6 +129,8 @@ public class MainActivity extends AppCompatActivity {
                             Log.e(TAG,"fetchRemoteConfigs UNSUCCESSFUL");
                             Toast.makeText(MainActivity.this, "Fetch Failed",
                                     Toast.LENGTH_SHORT).show();
+                            // The app will use default parameters in case it can't reach the Firebase Remote Config service
+                            mRemoteConfig.setDefaults(R.xml.remote_config_defaults);
                         }
                         //return;
                     }
