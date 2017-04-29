@@ -1,55 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="@dimen/activity_horizontal_margin">
+    android:orientation="horizontal"
+    android:padding="7dp" >
 
-    <TextView
-        android:id="@+id/eid"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="2dip"
-        android:paddingTop="6dip"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+    
+    <RelativeLayout
+        android:id="@+id/body"
+        android:layout_weight=".9"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="3dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginEnd="5dp">
 
-    <TextView
-        android:id="@+id/ename"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="2dip"
-        android:paddingTop="6dip"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/eid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#3363cc"
+            android:textSize="16sp"
+            android:layout_alignParentLeft="true"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/ename"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#5d5d5d"
+            android:layout_below="@id/eid"
+            android:textStyle="bold"/>
 
-    <TextView
-        android:id="@+id/edesc"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="2dip"
-        android:textColor="@color/colorAccent" />
+        <TextView
+            android:id="@+id/edesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="2dip"
+            android:textColor="#5d5d5d"
+            android:layout_below="@id/ename"
+            android:textStyle="italic"
+            android:paddingLeft="2dp"/>
 
-    <TextView
-        android:id="@+id/estart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#5d5d5d"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/eday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#091c97"
+            android:textStyle="bold"
+            android:layout_below="@id/edesc"
+            android:textSize="12dp"/>
 
-    <TextView
-        android:id="@+id/efinish"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#165e14"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/estart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#5d5d5d"
+            android:textStyle="bold"
+            android:layout_toRightOf="@id/eday"
+            android:layout_below="@+id/edesc"
+            android:textSize="12dp"
+            android:paddingStart="7dp"
+            android:paddingLeft="7dp"/>
 
-    <TextView
-        android:id="@+id/emap"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#165e14"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/efrom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#5d5d5d"
+            android:textStyle="bold"
+            android:text="@string/from"
+            android:layout_toRightOf="@id/estart"
+            android:layout_below="@+id/edesc"
+            android:textSize="12dp"
+            android:paddingStart="2dp"
+            android:paddingLeft="2dp"/>
+
+        <TextView
+            android:id="@+id/efinish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#5d5d5d"
+            android:textStyle="bold"
+            android:layout_toRightOf="@id/efrom"
+            android:layout_below="@+id/edesc"
+            android:textSize="12dp"
+            android:paddingStart="3dp"
+            android:paddingLeft="3dp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/calendar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="3dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_gravity="right"
+        android:gravity="end"
+        android:layout_weight="4.58">
+
+        <ImageView
+            android:id="@+id/addevent"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="end"
+            android:gravity="right"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:contentDescription="@string/addcalendar"
+            android:src="@drawable/calendar_add"/>
+</RelativeLayout>
+
+    
+
 </LinearLayout>

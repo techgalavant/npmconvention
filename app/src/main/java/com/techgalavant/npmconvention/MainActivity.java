@@ -72,29 +72,39 @@ public class MainActivity extends AppCompatActivity {
         // fetch the remote configs and determine if these are different from local R.xml.remote_config_defaults file
         fetchRemoteConfigs();
 
-        // display the tab if it's enabled on remote configurations
+        // Welcome tab should be displayed regardless
+        adapter.addFragment(new WelcomeFragment(), "WELCOME");
 
-        if (mRemoteConfig.getBoolean(welcome_tab)) {
-            adapter.addFragment(new WelcomeFragment(), "WELCOME");
-            // TODO set WelcomeFragment to display a message regardless of remote config setting
-        }
-        if (mRemoteConfig.getBoolean(program_tab)) {
+        // Firebase remote management will not work on Kindle Fire, so display all tabs by default
+        if (isKindleFire()) {
             adapter.addFragment(new ProgramFragment(), "PROGRAM");
-        }
-        if (mRemoteConfig.getBoolean(schedule_tab)){
-            adapter.addFragment(new ScheduleFragment(), "SCHEDULE");
-        }
-        if (mRemoteConfig.getBoolean(maps_tab)){
+            adapter.addFragment(new ScheduleFragment(), "EVENTS");
             adapter.addFragment(new MapsFragment(), "MAPS");
-        }
-        if (mRemoteConfig.getBoolean(chapters_tab)){
             adapter.addFragment(new ChaptersFragment(), "CHAPTERS");
-        }
-        if (mRemoteConfig.getBoolean(exhibits_tab)){
             adapter.addFragment(new ExhibitsFragment(), "EXHIBITS");
         }
 
-        viewPager.setAdapter(adapter);
+        // display the tabs if it's enabled on Firebase remote configuration
+        else {
+            if (mRemoteConfig.getBoolean(program_tab)) {
+                adapter.addFragment(new ProgramFragment(), "PROGRAM");
+            }
+            if (mRemoteConfig.getBoolean(schedule_tab)) {
+                adapter.addFragment(new ScheduleFragment(), "SCHEDULE");
+            }
+            if (mRemoteConfig.getBoolean(maps_tab)) {
+                adapter.addFragment(new MapsFragment(), "MAPS");
+            }
+            if (mRemoteConfig.getBoolean(chapters_tab)) {
+                adapter.addFragment(new ChaptersFragment(), "CHAPTERS");
+            }
+            if (mRemoteConfig.getBoolean(exhibits_tab)) {
+                adapter.addFragment(new ExhibitsFragment(), "EXHIBITS");
+            }
+
+            // start displaying the different tabs in the viewPager
+            viewPager.setAdapter(adapter);
+        }
     }
 
     // Used to retrieve the remote configs and compare against local remote config files
@@ -165,5 +175,14 @@ public class MainActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
+    }
+
+    // The app should run on the Kindle Fire which has an older version of Android.
+    // Firebase remote config will not run on these older models.
+    // This is a check to determine if the app is on a Kindle Fire
+    public static boolean isKindleFire() {
+        return android.os.Build.MANUFACTURER.equals("Amazon")
+                && (android.os.Build.MODEL.equals("Kindle Fire")
+                || android.os.Build.MODEL.startsWith("KF"));
     }
 }

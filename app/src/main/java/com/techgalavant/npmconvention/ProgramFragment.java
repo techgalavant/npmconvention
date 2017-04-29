@@ -4,7 +4,7 @@ package com.techgalavant.npmconvention;
  * Created by Mike Fallon
  * ProgramFragment
  *
- * This is a screen to download the convention program from a Firebase URL.
+ * This is a screen to download & display the convention program which is a PDF file.
  * Credits to -
  * Displaying it use - https://github.com/barteksc/AndroidPdfViewer
  */
@@ -45,7 +45,7 @@ public class ProgramFragment extends Fragment implements View.OnClickListener,On
     PDFView pdfView;
     Integer pageNumber = 0;
     private String pdfDir = "/NPM"; // the name of the directory to store the PDF files
-    private String pdfFile = "2017Convention.pdf"; // the name of the PDF file
+    private String pdfFile = "ConventionBrochure.pdf"; // the name of the PDF file
     File localFile = new File(Environment.getExternalStorageDirectory()+pdfDir, pdfFile);
 
     public ProgramFragment() {
@@ -162,7 +162,7 @@ public class ProgramFragment extends Fragment implements View.OnClickListener,On
         // Download file to sdcard
         if (view == btnDownload) {
            downloadManager = (DownloadManager)getContext().getSystemService(Context.DOWNLOAD_SERVICE);
-            Uri uri = Uri.parse("https://firebasestorage.googleapis.com/v0/b/npm-convention.appspot.com/o/2017convention.pdf?alt=media&token=b9db1a12-3370-47f0-b422-9fa44e4c23df");
+            Uri uri = Uri.parse("https://firebasestorage.googleapis.com/v0/b/npm-convention.appspot.com/o/ConventionBrochure.pdf?alt=media&token=bf07296e-cc61-4429-b27e-ad628c6eb486");
             DownloadManager.Request request = new DownloadManager.Request(uri);
             request.setDestinationInExternalPublicDir(pdfDir,pdfFile);
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);

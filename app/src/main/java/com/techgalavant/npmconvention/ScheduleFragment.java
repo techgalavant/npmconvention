@@ -19,15 +19,20 @@ package com.techgalavant.npmconvention;
 
 import android.app.DownloadManager;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.CalendarContract;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -48,12 +53,21 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
+import static com.techgalavant.npmconvention.R.id.edesc;
+import static com.techgalavant.npmconvention.R.id.efinish;
+import static com.techgalavant.npmconvention.R.id.eid;
+import static com.techgalavant.npmconvention.R.id.emap;
+import static com.techgalavant.npmconvention.R.id.ename;
+import static com.techgalavant.npmconvention.R.id.estart;
+
 
 public class ScheduleFragment extends Fragment implements View.OnClickListener{
     public static final String TAG = ScheduleFragment.class.getSimpleName();
 
-    // Listview to show the contacts
+    // Listview to show the events
     private ListView lv;
+
+    private ImageView calIcon;
 
     //Buttons
     private Button btnDownload;
@@ -66,6 +80,13 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
     File localFile = new File(Environment.getExternalStorageDirectory()+jsonDir, jsonFile);
 
     ArrayList<HashMap<String, String>> eventList = new ArrayList<>();
+    ArrayList<HashMap<String, String>> sunList = new ArrayList<>();
+    ArrayList<HashMap<String, String>> monList = new ArrayList<>();
+    ArrayList<HashMap<String, String>> tueList = new ArrayList<>();
+    ArrayList<HashMap<String, String>> wedList = new ArrayList<>();
+    ArrayList<HashMap<String, String>> thuList = new ArrayList<>();
+    ArrayList<HashMap<String, String>> friList = new ArrayList<>();
+    ArrayList<HashMap<String, String>> satList = new ArrayList<>();
 
 
     public ScheduleFragment() {
@@ -80,13 +101,14 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // If the Program PDF file has been downloaded, then display it.
         // Otherwise show the buttons for users to download it.
         try {
             if (localFile.exists()) {
                 Log.e(TAG, "Found " + jsonFile + " in " + jsonDir + ".");
 
-                // Display the program without the download buttons
+                // Display the events if the events JSON file has already been downloaded
                 View rootView = inflater.inflate(R.layout.scheduleb_frag, container, false);
 
                 // populate the JSON file into an arraylist
@@ -219,6 +241,33 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
 
                 // add the event into the event list
                 eventList.add(event);
+
+                // adds the event to the appropriate day of the week
+                // TODO add the event to the expandableListDetail
+                switch (day){
+                    case "SUN":
+                        sunList.add(event);
+                        break;
+                    case "MON":
+                        monList.add(event);
+                        break;
+                    case "TUE":
+                        tueList.add(event);
+                        break;
+                    case "WED":
+                        wedList.add(event);
+                        break;
+                    case "THU":
+                        thuList.add(event);
+                        break;
+                    case "FRI":
+                        friList.add(event);
+                        break;
+                    case "SAT":
+                        satList.add(event);
+                        break;
+                }
+
             }
 
         } catch (JSONException e) {
@@ -227,15 +276,44 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
 
         }
 
-
         // show the eventlist in a listview adaptor
         ListAdapter adapter = new SimpleAdapter(
                 getActivity().getApplicationContext(), eventList,
                 R.layout.listeventitem, new String[]{"id", "name", "description", "day",
                 "start", "finish"}, new int[]{R.id.eid, R.id.ename,
-                R.id.edesc, R.id.estart, R.id.efinish, R.id.emap});
+                R.id.edesc, R.id.eday, R.id.estart, R.id.efinish});
 
         lv.setAdapter(adapter);
+
+
+        // See reponse here: http://stackoverflow.com/questions/20947075/setting-date-content-values-on-android-calendar
+        // REF also - http://www.grokkingandroid.com/androids-calendarcontract-provider/
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                if (Build.VERSION.SDK_INT >= 14) {
+
+                    Intent calIntent = new Intent(Intent.ACTION_INSERT)
+                            .setData(CalendarContract.CONTENT_URI)
+                            .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, estart)
+                            .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, efinish)
+                            .putExtra(CalendarContract.Events.TITLE, eid + ": " + ename)
+                            .putExtra(CalendarContract.Events.DESCRIPTION, edesc + " See location on " + emap)
+                            .putExtra(CalendarContract.Events.EVENT_LOCATION, "See " + emap)
+                            .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY);
+
+                    startActivity(calIntent);
+                } else {
+                    // TODO add item to favorites
+                    Intent intent = new Intent(getActivity(), EventDetails.class);
+                    //intent.putExtra("Author", (nameICE[position]));
+                    startActivity(intent);
+                }
+
+            }
+        });
+
 
     }
 

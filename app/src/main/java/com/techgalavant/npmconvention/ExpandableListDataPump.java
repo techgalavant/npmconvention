@@ -1,5 +1,12 @@
 package com.techgalavant.npmconvention;
 
+/**
+ * Mike Fallon
+ *
+ * Credit to - http://www.journaldev.com/9942/android-expandablelistview-example-tutorial
+ * This is supposed to provide the data in a List and then map the child items to the group headers via Hashmap
+ */
+
 import android.os.Environment;
 import android.util.Log;
 
@@ -38,11 +45,9 @@ class ExpandableListDataPump {
             is.close();
             json = new String(buffer, "UTF-8");
             Log.e(TAG, "loadJSONFromFile SUCCESSFUL");
-            //Toast.makeText(getContext(),"JSON file loaded from asset", Toast.LENGTH_SHORT).show();
         } catch (IOException ex) {
             ex.printStackTrace();
             Log.e(TAG, "IOException: " + ex.getMessage());
-            //Toast.makeText(getContext(),"JSON file load error: " +ex.getMessage(), Toast.LENGTH_SHORT).show();
             return null;
         }
         return json;
@@ -115,7 +120,6 @@ class ExpandableListDataPump {
 
                 // the hash map for single event
                 HashMap<String, String> event = new HashMap<>();
-                //HashMap<String, List<String>> expandableListDetail = new HashMap<String, List<String>>();
 
                 // add each child node to HashMap key => value
                 event.put("id", id);
@@ -128,11 +132,9 @@ class ExpandableListDataPump {
                 event.put("finish", endtime);
                 event.put("map", map);
 
-                // With help from http://stackoverflow.com/questions/39911460/how-to-group-json-array-data-if-exits-the-same-value-android-studio
-                // this will put all the JSON items with the same sub-name of Day
-                // REFER TO - http://www.journaldev.com/9942/android-expandablelistview-example-tutorial/*
-                // the expandableListDetail object is used to map the group header strings to their respective children using an ArrayList of Strings.
                 // groupJsonByDay --> http://stackoverflow.com/questions/39911460/how-to-group-json-array-data-if-exits-the-same-value-android-studio
+                // the expandableListDetail object is used to map the group header strings to their respective children using an ArrayList of Strings.
+                // REFER TO - http://www.journaldev.com/9942/android-expandablelistview-example-tutorial/*
 
                 // Create a list for each day of the week and
                 // add the event if it falls on that day

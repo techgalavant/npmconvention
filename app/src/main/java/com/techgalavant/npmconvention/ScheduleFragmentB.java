@@ -176,7 +176,7 @@ public class ScheduleFragmentB extends Fragment implements View.OnClickListener{
         // show the eventlist in a listview adaptor
         ListAdapter adapter = new SimpleAdapter(
                 getActivity().getApplicationContext(), eventList,
-                R.layout.listeventitem, new String[]{"id", "name", "description", "day",
+                R.layout.listeventitem3, new String[]{"id", "name", "description", "day",
                 "start", "finish"}, new int[]{R.id.eid, R.id.ename,
                 R.id.edesc, R.id.estart, R.id.efinish, R.id.emap});
 

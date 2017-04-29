@@ -3,7 +3,8 @@ package com.techgalavant.npmconvention;
 /**
  * Created by Mike Fallon
  *
- * Credit to Android Hive - http://www.androidhive.info/2015/09/android-material-design-working-with-tabs/
+ * The purpose of this fragment is to display contact information for the chapters across the country.
+ *
  */
 
 import android.os.Bundle;
