@@ -21,10 +21,8 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.CalendarContract;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -53,11 +51,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
+import static com.techgalavant.npmconvention.R.id.eday;
 import static com.techgalavant.npmconvention.R.id.edesc;
 import static com.techgalavant.npmconvention.R.id.efinish;
 import static com.techgalavant.npmconvention.R.id.eid;
 import static com.techgalavant.npmconvention.R.id.emap;
 import static com.techgalavant.npmconvention.R.id.ename;
+import static com.techgalavant.npmconvention.R.id.epresent;
 import static com.techgalavant.npmconvention.R.id.estart;
 
 
@@ -197,9 +197,9 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
             for (int i = 0; i < events.length(); i++) {
 
                 JSONObject c = events.getJSONObject(i);
-                String id = c.getString("Event Number");
+                String evid = c.getString("Event Number");
                 String name = c.getString("Event Name");
-                String presenter = c.getString("Presenter");
+                String presented = c.getString("Presenter");
                 String description = c.getString("Description");
                 String room = c.getString("Room #");
                 String start = c.getString("Start");
@@ -229,9 +229,9 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
                 HashMap<String, String> event = new HashMap<>();
 
                 // add each child node to HashMap key => value
-                event.put("id", id);
+                event.put("evid", evid);
                 event.put("name", name);
-                event.put("presenter", presenter);
+                event.put("presented", presented);
                 event.put("description", description);
                 event.put("room", room);
                 event.put("day", day);
@@ -279,39 +279,35 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
         // show the eventlist in a listview adaptor
         ListAdapter adapter = new SimpleAdapter(
                 getActivity().getApplicationContext(), eventList,
-                R.layout.listeventitem, new String[]{"id", "name", "description", "day",
+                R.layout.listeventitem, new String[]{"evid", "name", "description", "day",
                 "start", "finish"}, new int[]{R.id.eid, R.id.ename,
                 R.id.edesc, R.id.eday, R.id.estart, R.id.efinish});
 
         lv.setAdapter(adapter);
 
-
-        // See reponse here: http://stackoverflow.com/questions/20947075/setting-date-content-values-on-android-calendar
-        // REF also - http://www.grokkingandroid.com/androids-calendarcontract-provider/
-
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                if (Build.VERSION.SDK_INT >= 14) {
 
-                    Intent calIntent = new Intent(Intent.ACTION_INSERT)
-                            .setData(CalendarContract.CONTENT_URI)
-                            .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, estart)
-                            .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, efinish)
-                            .putExtra(CalendarContract.Events.TITLE, eid + ": " + ename)
-                            .putExtra(CalendarContract.Events.DESCRIPTION, edesc + " See location on " + emap)
-                            .putExtra(CalendarContract.Events.EVENT_LOCATION, "See " + emap)
-                            .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY);
+                // See for more info - http://abhiandroid.com/ui/simpleadapter.html
 
-                    startActivity(calIntent);
-                } else {
-                    // TODO add item to favorites
-                    Intent intent = new Intent(getActivity(), EventDetails.class);
-                    //intent.putExtra("Author", (nameICE[position]));
-                    startActivity(intent);
+                String title = (String.valueOf(eid)) + " - " + (String.valueOf(ename));
+                String desc = String.valueOf(edesc);
+                String present = String.valueOf(epresent);
+                String etime = (String.valueOf(eday)) + " " + (String.valueOf(estart)) + " to " + (String.valueOf(efinish));
+                String mapname = (String.valueOf(emap));
+
+                Intent intent = new Intent(getActivity(), EventDetails.class);
+                intent.putExtra("Title", title);
+                intent.putExtra("Desc", desc);
+                intent.putExtra("Presenter", present);
+                intent.putExtra("eTime", etime);
+                intent.putExtra("Map", mapname);
+                intent.putExtra("event", eventList);
+
+                startActivity(intent);
                 }
 
-            }
         });
 
 
