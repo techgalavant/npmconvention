@@ -6,8 +6,8 @@ package com.techgalavant.npmconvention;
  * This tab will be used to display the list of events. The events are parsed from a JSON file.
  * Users will be able to click on an event to see more details and to save it to their favorites.
  *
- * - Expandable ListView Adaptor tutorial - http://www.vogella.com/tutorials/AndroidListView/article.html
- * JSON Parsing Tutorial - http://www.androidhive.info/2012/01/android-json-parsing-tutorial/
+ * Credits
+ *  - JSON Parsing Tutorial - http://www.androidhive.info/2012/01/android-json-parsing-tutorial/
  *
  * If your JSON node starts with [, then we should use getJSONArray() method.
  * If the node starts with {, then we should use getJSONObject() method.
@@ -295,7 +295,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
         });
 
     }
-
 
     @Override
     public void onClick(View view) {
