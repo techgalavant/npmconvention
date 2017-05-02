@@ -4,8 +4,12 @@ package com.techgalavant.npmconvention;
  * Created by Mike Fallon
  *
  * This class is used to display the event details from the ScheduleFragment in a card-like layout.
- * Credit to CheeseSquare - - https://github.com/chrisbanes/cheesesquare
+ * Users should also be able to add the event to their own favorites list or ideally onto their own Google calendar.
+ * Checkout - http://stackoverflow.com/questions/3721963/how-to-add-calendar-events-in-android
+ * - http://stacktips.com/tutorials/android/how-to-add-event-to-calendar-in-android
+ * - https://developers.google.com/google-apps/calendar/v3/reference/calendars/insert
  *
+ * Credit to CheeseSquare - - https://github.com/chrisbanes/cheesesquare
  */
 
 import android.content.Intent;
@@ -13,17 +17,22 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import static com.techgalavant.npmconvention.R.id.edesc;
+import static com.techgalavant.npmconvention.R.id.epresent;
+import static com.techgalavant.npmconvention.R.id.etitle;
+
 
 public class EventDetails extends AppCompatActivity {
     private static final String TAG = EventDetails.class.getSimpleName();
 
-    TextView evtDesc, evtPresenter, evtTime;
+    TextView evtTitle, evtDesc, evtPresenter, evtTime, evtRoom;
     ImageView evtMap;
 
 
@@ -34,33 +43,48 @@ public class EventDetails extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-            String eventTitle = intent.getStringExtra("Title");
-            String eventDesc = intent.getStringExtra("Desc");
-            String eventPresent = intent.getStringExtra("Presenter");
-            String eventTime = intent.getStringExtra("eTime");
-            String eventMap = intent.getStringExtra("Map");
+        // get the event list items from ScheduleFragment
+        String complete_event = (intent.getStringExtra("complete_event"));
+        Log.e(TAG, "Event Detail for the list item - " + complete_event); // Log the event details to ensure it's displaying the correct information
+
+        String eventId = intent.getStringExtra("evid");
+        String eventTitle = intent.getStringExtra("name");
+        String eventDesc = intent.getStringExtra("description");
+        String eventPresent = intent.getStringExtra("presented");
+        String eventTime = (intent.getStringExtra("day")) + " " + (intent.getStringExtra("start")) + " to " + (intent.getStringExtra("finish"));
+        String eventMap = intent.getStringExtra("map");
+        String eventRoom = "Room: " + (intent.getStringExtra("room"));
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // It should bring the user back to the ScheduleFragment
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // Let the user use the back button to return to ScheduleFragment rather than showing a back arrow in the image.
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
+        // The collapsing toolbar shows a random image in it as well as the event title from the list event
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbar.setTitle(eventTitle);
+        collapsingToolbar.setTitle(eventId);
 
         // load the top random image from EventImages
         loadBackdrop();
 
-        evtDesc = (TextView) findViewById(R.id.edesc);
-        evtPresenter = (TextView) findViewById(R.id.epresent);
+        // populate the textviews and imageviews with the specific event list items
+        evtTitle = (TextView) findViewById(etitle);
+        evtDesc = (TextView) findViewById(edesc);
+        evtPresenter = (TextView) findViewById(epresent);
         evtTime = (TextView) findViewById(R.id.event_time);
+        evtRoom = (TextView) findViewById(R.id.room);
         evtMap = (ImageView) findViewById(R.id.map_location);
 
+        evtTitle.setText(eventTitle);
         evtDesc.setText(eventDesc);
         evtPresenter.setText(eventPresent);
         evtTime.setText(eventTime);
+        evtRoom.setText(eventRoom);
+
+        // TODO locate map from string
+        // Use a sample map for the time being
         evtMap.setImageResource(R.drawable.sample_map);
     }
 

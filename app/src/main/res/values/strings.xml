@@ -11,7 +11,8 @@
     <string name="access">Download Events</string>
     <string name="addcalendar">Adds event to your Google calendar</string>
     <string name="from">to</string>
-    <string name="cheese_ipsum">Some Text Here</string>
+    <string name="evt_name">Event Name</string>
+    <string name="evt_desc">Description</string>
     <string name="room_location">You can find this in </string>
     <string name="map_info">Map for location</string>
     <string name="random_img">Random image displayed</string>

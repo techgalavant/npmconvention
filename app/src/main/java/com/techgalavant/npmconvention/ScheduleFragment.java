@@ -4,13 +4,9 @@ package com.techgalavant.npmconvention;
  * Created by Mike Fallon
  *
  * This tab will be used to display the list of events. The events are parsed from a JSON file.
- * Future-State: users will be able to add the content to their own Google Calendar.
+ * Users will be able to click on an event to see more details and to save it to their favorites.
  *
- * Checkout - http://stackoverflow.com/questions/3721963/how-to-add-calendar-events-in-android
- * - http://stacktips.com/tutorials/android/how-to-add-event-to-calendar-in-android
- * - https://developers.google.com/google-apps/calendar/v3/reference/calendars/insert
  * - Expandable ListView Adaptor tutorial - http://www.vogella.com/tutorials/AndroidListView/article.html
- *
  * JSON Parsing Tutorial - http://www.androidhive.info/2012/01/android-json-parsing-tutorial/
  *
  * If your JSON node starts with [, then we should use getJSONArray() method.
@@ -50,15 +46,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
-
-import static com.techgalavant.npmconvention.R.id.eday;
-import static com.techgalavant.npmconvention.R.id.edesc;
-import static com.techgalavant.npmconvention.R.id.efinish;
-import static com.techgalavant.npmconvention.R.id.eid;
-import static com.techgalavant.npmconvention.R.id.emap;
-import static com.techgalavant.npmconvention.R.id.ename;
-import static com.techgalavant.npmconvention.R.id.epresent;
-import static com.techgalavant.npmconvention.R.id.estart;
 
 
 public class ScheduleFragment extends Fragment implements View.OnClickListener{
@@ -193,7 +180,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
             Date dateStart = null;
             Date dateEnd = null;
 
-            // populate the array nodes into hashmap
+            // populate the array nodes into a hashmap
             for (int i = 0; i < events.length(); i++) {
 
                 JSONObject c = events.getJSONObject(i);
@@ -276,7 +263,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
 
         }
 
-        // show the eventlist in a listview adaptor
+        // use this adaptor to show the event list item on listeventitem.xml
         ListAdapter adapter = new SimpleAdapter(
                 getActivity().getApplicationContext(), eventList,
                 R.layout.listeventitem, new String[]{"evid", "name", "description", "day",
@@ -289,27 +276,23 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 
-                // See for more info - http://abhiandroid.com/ui/simpleadapter.html
-
-                String title = (String.valueOf(eid)) + " - " + (String.valueOf(ename));
-                String desc = String.valueOf(edesc);
-                String present = String.valueOf(epresent);
-                String etime = (String.valueOf(eday)) + " " + (String.valueOf(estart)) + " to " + (String.valueOf(efinish));
-                String mapname = (String.valueOf(emap));
-
+                // Take the event strings from listview position and populate them in EventDetails.java
                 Intent intent = new Intent(getActivity(), EventDetails.class);
-                intent.putExtra("Title", title);
-                intent.putExtra("Desc", desc);
-                intent.putExtra("Presenter", present);
-                intent.putExtra("eTime", etime);
-                intent.putExtra("Map", mapname);
-                intent.putExtra("event", eventList);
+                intent.putExtra("complete_event", parent.getItemAtPosition(position).toString()); // Pass the entire event info so I can check it in EventDetails
+                intent.putExtra("evid", ((HashMap<String, String>) lv.getAdapter().getItem((int)id)).get("evid"));
+                intent.putExtra("start", ((HashMap<String, String>) lv.getAdapter().getItem((int)id)).get("start"));
+                intent.putExtra("map", ((HashMap<String, String>) lv.getAdapter().getItem((int)id)).get("map"));
+                intent.putExtra("description", ((HashMap<String, String>) lv.getAdapter().getItem((int)id)).get("description"));
+                intent.putExtra("day", ((HashMap<String, String>) lv.getAdapter().getItem((int)id)).get("day"));
+                intent.putExtra("name", ((HashMap<String, String>) lv.getAdapter().getItem((int)id)).get("name"));
+                intent.putExtra("presented", ((HashMap<String, String>) lv.getAdapter().getItem((int)id)).get("presented"));
+                intent.putExtra("finish", ((HashMap<String, String>) lv.getAdapter().getItem((int)id)).get("finish"));
+                intent.putExtra("room", ((HashMap<String, String>) lv.getAdapter().getItem((int)id)).get("room"));
 
                 startActivity(intent);
                 }
 
         });
-
 
     }
 
