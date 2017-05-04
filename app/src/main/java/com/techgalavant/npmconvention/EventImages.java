@@ -18,15 +18,15 @@ public class EventImages {
         switch (RANDOM.nextInt(11)) {
             default:
             case 0:
-                return R.drawable.image1;
+                return R.drawable.image3;
             case 1:
-                return R.drawable.image2;
+                return R.drawable.image9;
             case 2:
                 return R.drawable.image3;
             case 3:
                 return R.drawable.image4;
             case 4:
-                return R.drawable.image5;
+                return R.drawable.image10;
             case 5:
                 return R.drawable.image6;
             case 6:

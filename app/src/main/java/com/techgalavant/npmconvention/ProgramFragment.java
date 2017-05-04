@@ -178,6 +178,11 @@ public class ProgramFragment extends Fragment implements View.OnClickListener,On
             }
         }
     }
+    public static boolean isProgramTabSelected() {
+        return android.os.Build.MANUFACTURER.equals("Amazon")
+                && (android.os.Build.MODEL.equals("Kindle Fire")
+                || android.os.Build.MODEL.startsWith("KF"));
+    }
 
 }
 

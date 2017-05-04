@@ -225,6 +225,8 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
                 event.put("start", starttime);
                 event.put("finish", endtime);
                 event.put("map", map);
+                event.put("start_mills", start);
+                event.put("end_mills", end);
 
                 // add the event into the event list
                 eventList.add(event);
@@ -288,6 +290,8 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
                 intent.putExtra("presented", ((HashMap<String, String>) lv.getAdapter().getItem((int)id)).get("presented"));
                 intent.putExtra("finish", ((HashMap<String, String>) lv.getAdapter().getItem((int)id)).get("finish"));
                 intent.putExtra("room", ((HashMap<String, String>) lv.getAdapter().getItem((int)id)).get("room"));
+                intent.putExtra("start_mills", ((HashMap<String, String>) lv.getAdapter().getItem((int)id)).get("start_mills")); // need time in mills for adding to user's Google calendar
+                intent.putExtra("end_mills", ((HashMap<String, String>) lv.getAdapter().getItem((int)id)).get("end_mills"));
 
                 startActivity(intent);
                 }
