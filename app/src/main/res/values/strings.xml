@@ -16,5 +16,14 @@
     <string name="room_location">You can find this in </string>
     <string name="map_info">Map for location</string>
     <string name="random_img">Random image displayed</string>
+    <string name="senders_name">Enter your name</string>
+    <string name="senders_contact">Provide your email or contact number</string>
+    <string name="senders_feedback">Enter your feedback here...</string>
+    <string name="feedback_title">NPM Convention App</string>
+    <string name="feedback_title2">Feedback Form</string>
+    <string name="feedback_chg">Change Your Feedback</string>
+    <string name="send">Send</string>
+    <string name="update">Update</string>
+    <string name="hermosa">chucknorrisrules</string>
 
 </resources>

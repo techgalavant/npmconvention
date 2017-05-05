@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Used by SendFeedback. Used for posting feedback on the app in the Firebase DB. -->
+<ScrollView
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/feedback_title"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="normal|bold"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/feedback_title2"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="normal|bold"
+        android:textAlignment="center" />
+
+    <EditText
+        android:id="@+id/word1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/senders_name"
+        android:textStyle="normal|italic"
+        android:fontFamily="casual" />
+
+    <EditText
+        android:id="@+id/word2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/senders_contact"
+        android:textStyle="normal|italic"
+        android:fontFamily="casual" />
+
+    <EditText
+        android:id="@+id/word3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/senders_feedback"
+        android:fontFamily="casual"
+        android:textStyle="normal|italic"
+        android:inputType="textMultiLine" />
+
+    <RelativeLayout
+        android:id="@+id/buttons"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/mashIt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="casual"
+            android:text="Send"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:textStyle="normal|bold" />
+
+        <Button
+            android:id="@+id/clearIt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/mashIt"
+            android:fontFamily="casual"
+            android:text="Reset"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:textStyle="normal|bold" />
+
+        <Button
+            android:id="@+id/cxlIt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/clearIt"
+            android:fontFamily="casual"
+            android:text="Cancel"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:textStyle="normal|bold" />
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>
+</ScrollView>
+

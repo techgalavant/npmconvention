@@ -16,6 +16,7 @@ package com.techgalavant.npmconvention;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
@@ -89,8 +90,6 @@ public class MainActivity extends AppCompatActivity {
         mShakeDetector = new ShakeDetector();
         mShakeDetector.setOnShakeListener(new ShakeDetector.OnShakeListener() {
 
-            // TODO Display alert process dialog box
-
             @Override
             public void onShake(int count) {
 
@@ -99,36 +98,38 @@ public class MainActivity extends AppCompatActivity {
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
                 Log.e(TAG, "ShakeListener detected movement so it displayed the alert dialog box.");
 
-                // Setting Dialog Title
+                // Set Dialog box title
                 alertDialog.setTitle("App Feedback");
 
-                // Setting Dialog Message
+                // Set Dialog message
                 alertDialog.setMessage("Send feedback to app developer?");
 
-                // Setting Icon to Dialog
+                // Sets icon in the AlertDialog window
                 alertDialog.setIcon(R.drawable.ic_mesg);
 
-                // Setting Positive "Yes" Button
+                // Set operation for when user selects "YES" on AlertDialog
                 alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,int which) {
 
-                        // Write your code here to invoke YES event
+                        // Launch feedback form - SendFeedback
+                        Intent intent = new Intent(MainActivity.this, SendFeedback.class);
+                        startActivity(intent);
+
                         Toast.makeText(getApplicationContext(), "You clicked on YES", Toast.LENGTH_SHORT).show();
                         Log.e(TAG, "User selected YES on AlertDialog");
                     }
                 });
 
-                // Setting Negative "NO" Button
+                // Sets operation for when "NO" button is selected
                 alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        // Write your code here to invoke NO event
-                        Toast.makeText(getApplicationContext(), "You clicked on NO", Toast.LENGTH_SHORT).show();
+                        // Close the AlertDialog box
                         Log.e(TAG, "User selected NO on AlertDialog");
                         dialog.cancel();
                     }
                 });
 
-                // Showing Alert Message
+                // Show AlertDialog box
                 alertDialog.show();
 
             }
