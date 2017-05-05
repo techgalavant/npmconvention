@@ -31,6 +31,7 @@
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="true" />
     </application>
 
 </manifest>

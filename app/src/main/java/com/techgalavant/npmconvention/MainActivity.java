@@ -1,5 +1,23 @@
 package com.techgalavant.npmconvention;
 
+/**
+ * Created by Mike Fallon
+ *
+ * The Main Activity will display tabs to users. It is integrated with Firebase remote config.
+ * If users shake their device, it has an onShakeListener so that the users can post / send a message to Digital Hermosa.
+ * The same messaging capability will also allow Digital Hermosa to post a message to users in the TextView.
+ *
+ * Credits to:
+ * - Android Hive - Working with tabs - http://www.androidhive.info/2015/09/android-material-design-working-with-tabs/
+ * - Device Shaking Detection - http://jasonmcreynolds.com/?p=388
+ * - Android Hive - Working with alertdialog - http://www.androidhive.info/2011/09/how-to-show-alert-dialog-in-android/
+ */
+
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
@@ -29,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+
+    // The following are related to the Firebase Remote Config
     private FirebaseRemoteConfig mRemoteConfig;
     private static final String welcome_tab = "is_welcome_on";
     private static final String schedule_tab = "is_events_on";
@@ -37,6 +57,11 @@ public class MainActivity extends AppCompatActivity {
     private static final String exhibits_tab = "is_exhibits_on";
     private static final String sponsors_tab = "is_sponsors_on";
     private static final String maps_tab = "is_maps_on";
+
+    // The following are used for the shake detection
+    private SensorManager mSensorManager;
+    private Sensor mAccelerometer;
+    private ShakeDetector mShakeDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +80,60 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        // The user can also shake the device to send a message
+        // Device Shake Listener credit to http://jasonmcreynolds.com/?p=388
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mAccelerometer = mSensorManager
+                .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mShakeDetector = new ShakeDetector();
+        mShakeDetector.setOnShakeListener(new ShakeDetector.OnShakeListener() {
+
+            // TODO Display alert process dialog box
+
+            @Override
+            public void onShake(int count) {
+
+                // Launch an AlertDialog box so that users can post a message
+
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
+                Log.e(TAG, "ShakeListener detected movement so it displayed the alert dialog box.");
+
+                // Setting Dialog Title
+                alertDialog.setTitle("App Feedback");
+
+                // Setting Dialog Message
+                alertDialog.setMessage("Send feedback to app developer?");
+
+                // Setting Icon to Dialog
+                alertDialog.setIcon(R.drawable.ic_mesg);
+
+                // Setting Positive "Yes" Button
+                alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int which) {
+
+                        // Write your code here to invoke YES event
+                        Toast.makeText(getApplicationContext(), "You clicked on YES", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG, "User selected YES on AlertDialog");
+                    }
+                });
+
+                // Setting Negative "NO" Button
+                alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Write your code here to invoke NO event
+                        Toast.makeText(getApplicationContext(), "You clicked on NO", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG, "User selected NO on AlertDialog");
+                        dialog.cancel();
+                    }
+                });
+
+                // Showing Alert Message
+                alertDialog.show();
+
+            }
+        });
+
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -142,7 +221,6 @@ public class MainActivity extends AppCompatActivity {
                             // The app will use default parameters in case it can't reach the Firebase Remote Config service
                             mRemoteConfig.setDefaults(R.xml.remote_config_defaults);
                         }
-                        //return;
                     }
                 });
         // [END fetch_config_with_callback]
@@ -184,5 +262,21 @@ public class MainActivity extends AppCompatActivity {
         return android.os.Build.MANUFACTURER.equals("Amazon")
                 && (android.os.Build.MODEL.equals("Kindle Fire")
                 || android.os.Build.MODEL.startsWith("KF"));
+    }
+
+    // Used for ShakerListener
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Add the following line to register the Session Manager Listener onResume
+        mSensorManager.registerListener(mShakeDetector, mAccelerometer, SensorManager.SENSOR_DELAY_UI);
+    }
+
+    // Used for ShakerListener
+    @Override
+    public void onPause() {
+        // Add the following line to unregister the Sensor Manager onPause
+        mSensorManager.unregisterListener(mShakeDetector);
+        super.onPause();
     }
 }
