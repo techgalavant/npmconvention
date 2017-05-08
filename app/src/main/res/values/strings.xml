@@ -2,7 +2,7 @@
     <string name="app_name">NPM Convention</string>
     <string name="one">Welcome</string>
     <string name="two">Program</string>
-    <string name="three">Schedule</string>
+    <string name="three">Events</string>
     <string name="four">Maps</string>
     <string name="five">Chapters</string>
     <string name="six">Exhibits</string>
@@ -24,9 +24,14 @@
     <string name="feedback_chg">Change Your Feedback</string>
     <string name="send">Send</string>
     <string name="update">Update</string>
-    <string name="hermosa">chucknorrisrules</string>
+    <string name="hermosa">"chucknorrisrules"</string>
     <string name="appdate">appdate</string>
     <string name="apptime">apptime</string>
     <string name="purpose">Before you can start to use the NPM convention app, you will need to grant permissions and download some files. The files will get stored in your download folder called \'NPM\'. Please complete these steps before attending the convention site, which may have poor internet connectivity. In case you have any questions, shake your device to send us feedback. Now let\'s get started below!</string>
+    <string name="about">About</string>
+    <string name="feedback">Feedback</string>
+    <string name="settings">Settings</string>
+    <string name="initial_setup">Run Setup</string>
+    <string name="check_setup">Download Files Again</string>
 
 </resources>

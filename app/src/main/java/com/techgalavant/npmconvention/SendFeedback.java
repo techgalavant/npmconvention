@@ -48,7 +48,8 @@ public class SendFeedback extends AppCompatActivity {
     private String storyId;
     private String togglebtn;
 
-    private String userName = "chucknorrisrules"; // used to display messages on WelcomeFragment
+    //String hermosa = getResources().getString(R.string.hermosa); // causes error on Fragments - see http://stackoverflow.com/questions/28672883/java-lang-illegalstateexception-fragment-not-attached-to-activity
+    private String hermosa = "chucknorrisrules"; // used to display messages on WelcomeFragment
     private String Contact;
 
 
@@ -77,7 +78,7 @@ public class SendFeedback extends AppCompatActivity {
                     String Sender = inWord1.getText().toString();
                     String Feedback = inWord3.getText().toString();
 
-                    if (Sender.equals(userName)){
+                    if (Sender.equals(hermosa)){
                         String currentTimeString = DateFormat.getDateTimeInstance().format(new Date());
                         Contact = "UPDATE: " + currentTimeString; // Instead of contact info, set contact field to time entered when userName equals Sender
                         // myStory = MyFirebaseUtil.getDatabase().getReference(Sender).child(Contact); // create separate message based on time entered?

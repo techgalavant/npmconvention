@@ -13,6 +13,7 @@ package com.techgalavant.npmconvention;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -85,6 +86,7 @@ public class LaunchPermissions extends AppCompatActivity implements View.OnClick
                 if (checkPermission()) {
 
                     Snackbar.make(view, "Permissions already completed.", Snackbar.LENGTH_LONG).show();  // if permissions already completed
+                    downloadFiles();
 
                 } else {
 
@@ -99,48 +101,7 @@ public class LaunchPermissions extends AppCompatActivity implements View.OnClick
                 } else {
 
                     Snackbar.make(view, "Permissions already completed.", Snackbar.LENGTH_LONG).show();
-
-                    if (PDFFile.exists()){
-
-                        Log.e(TAG, "PDF Programs file exists already.");
-
-                    } else {
-
-                        // download the PDF file
-                        downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
-                        // Location of the PDF file to be downloaded
-                        Uri uri = Uri.parse("https://firebasestorage.googleapis.com/v0/b/npm-convention.appspot.com/o/ConventionBrochure.pdf?alt=media&token=bf07296e-cc61-4429-b27e-ad628c6eb486");
-                        DownloadManager.Request request = new DownloadManager.Request(uri);
-                        request.setDestinationInExternalPublicDir(pdfDir,pdfFile);
-                        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                        request.setTitle(pdfFile);
-                        Long reference = downloadManager.enqueue(request);
-
-                        Log.e(TAG, "Downloading Program PDF file.");
-
-                        Snackbar.make(view, "Downloading files started", Snackbar.LENGTH_LONG).show();
-                    }
-
-                   if (JSONFile.exists()){
-
-                       Log.e(TAG, "Events JSON file exists already.");
-
-                   } else {
-                       // download the JSON file
-                       dm = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-                       // Location of the  JSON file to be downloaded
-                       Uri uri2 = Uri.parse("https://firebasestorage.googleapis.com/v0/b/npm-convention.appspot.com/o/Events_NPM.json?alt=media&token=65a29d0a-5f78-487a-9d76-41c6c31762e0");
-                       DownloadManager.Request request2 = new DownloadManager.Request(uri2);
-                       request2.setDestinationInExternalPublicDir(jsonDir,jsonFile);
-                       request2.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                       request2.setTitle(jsonFile);
-                       Long reference2 = dm.enqueue(request2);
-
-                       Log.e(TAG, "Downloading Events JSON file.");
-
-                       Snackbar.make(view, "Downloading files started", Snackbar.LENGTH_LONG).show();
-                   }
-
+                    downloadFiles();
                 }
                 break;
         }
@@ -176,15 +137,17 @@ public class LaunchPermissions extends AppCompatActivity implements View.OnClick
                     boolean writecalAccepted = grantResults[2] == PackageManager.PERMISSION_GRANTED;
                     boolean getacctsAccepted = grantResults[3] == PackageManager.PERMISSION_GRANTED;
 
-                    if (writestorageAccepted && readcalAccepted  && writecalAccepted  && getacctsAccepted)
+                    if (writestorageAccepted && readcalAccepted  && writecalAccepted  && getacctsAccepted) {
                         Snackbar.make(view, "All permissions granted.", Snackbar.LENGTH_LONG).show();
+                        downloadFiles();
+                    }
                     else {
 
                         Snackbar.make(view, "Not all permissions have been granted.", Snackbar.LENGTH_LONG).show();
 
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             if (shouldShowRequestPermissionRationale(WRITE_EXTERNAL_STORAGE)) {
-                                showMessageOKCancel("You need to allow access to all these permissions",
+                                showMessageOKCancel("You need to allow access to all these permissions.",
                                         new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
@@ -206,7 +169,7 @@ public class LaunchPermissions extends AppCompatActivity implements View.OnClick
         }
     }
 
-
+    // Alert dialog displays permission settings to user
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
         new AlertDialog.Builder(LaunchPermissions.this)
                 .setMessage(message)
@@ -215,5 +178,85 @@ public class LaunchPermissions extends AppCompatActivity implements View.OnClick
                 .create()
                 .show();
     }
+
+    // Download the files needed for the app to perform it's operations
+    private void downloadFiles(){
+
+        if (PDFFile.exists()){
+
+            Log.e(TAG, "PDF Programs file exists already.");
+
+        } else {
+
+            // download the PDF file
+            downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+            // Location of the PDF file to be downloaded
+            Uri uri = Uri.parse("https://firebasestorage.googleapis.com/v0/b/npm-convention.appspot.com/o/ConventionBrochure.pdf?alt=media&token=bf07296e-cc61-4429-b27e-ad628c6eb486");
+            DownloadManager.Request request = new DownloadManager.Request(uri);
+            request.setDestinationInExternalPublicDir(pdfDir,pdfFile);
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+            request.setTitle(pdfFile);
+            Long reference = downloadManager.enqueue(request);
+
+            Log.e(TAG, "Downloading Program PDF file.");
+
+            Snackbar.make(view, "Downloading files started", Snackbar.LENGTH_LONG).show();
+        }
+
+        if (JSONFile.exists()){
+
+            Log.e(TAG, "Events JSON file exists already.");
+
+        } else {
+            // download the JSON file
+            dm = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+            // Location of the  JSON file to be downloaded
+            Uri uri2 = Uri.parse("https://firebasestorage.googleapis.com/v0/b/npm-convention.appspot.com/o/Events_NPM.json?alt=media&token=65a29d0a-5f78-487a-9d76-41c6c31762e0");
+            DownloadManager.Request request2 = new DownloadManager.Request(uri2);
+            request2.setDestinationInExternalPublicDir(jsonDir,jsonFile);
+            request2.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+            request2.setTitle(jsonFile);
+            Long reference2 = dm.enqueue(request2);
+
+            Log.e(TAG, "Downloading Events JSON file.");
+
+            Snackbar.make(view, "Downloading files started", Snackbar.LENGTH_LONG).show();
+        }
+
+        if (PDFFile.exists() && JSONFile.exists()){
+            Log.e(TAG, "All downloaded files are present.");
+
+            // Launch an alert dialog with a confirmation that allows the user to return to WelcomeFragment (MainActivity)
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(LaunchPermissions.this);
+
+            // Set Dialog box title
+            alertDialog.setTitle("SUCCESS!");
+
+            // Set Dialog message
+            alertDialog.setMessage("Your initial app setup appears to be completed.");
+
+            // Sets icon in the AlertDialog window
+            alertDialog.setIcon(R.drawable.ic_mesg);
+
+            // Set operation for when user selects "YES" on AlertDialog
+            alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog,int which) {
+
+                    // Launch feedback form - SendFeedback
+                    Intent intent = new Intent(LaunchPermissions.this, MainActivity.class);
+                    startActivity(intent);
+                    Log.e(TAG, "User selected OK on AlertDialog");
+                    finish(); // closes this activity so that it's not accessible in the back button
+                }
+            });
+
+            // Show AlertDialog box
+            alertDialog.show();
+
+
+        }
+
+    }
+
 
 }

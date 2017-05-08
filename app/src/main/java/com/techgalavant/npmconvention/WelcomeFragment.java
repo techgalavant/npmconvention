@@ -31,6 +31,9 @@ public class WelcomeFragment extends Fragment{
 
     private TextView txtMsg, tvDate;
 
+    // String hermosa = getResources().getString(R.string.hermosa); // causes a problem for Fragments -- See http://stackoverflow.com/questions/28672883/java-lang-illegalstateexception-fragment-not-attached-to-activity
+    private String hermosa = "chucknorrisrules"; // used to display messages on WelcomeFragment
+
     public WelcomeFragment() {
         // Required empty public constructor
     }
@@ -49,7 +52,7 @@ public class WelcomeFragment extends Fragment{
         View rootView = inflater.inflate(R.layout.welcome_frag, container, false);
 
         // Used to retrieve welcome messages in the Firebase DB
-        DatabaseReference myRef = MyFirebaseUtil.getDatabase().getReference("chucknorrisrules");
+        DatabaseReference myRef = MyFirebaseUtil.getDatabase().getReference(hermosa);
         DatabaseReference myMesg = myRef.child("Feedback");
         DatabaseReference mesgTime = myRef.child("Contact");
 
