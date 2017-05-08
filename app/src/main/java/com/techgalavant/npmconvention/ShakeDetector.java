@@ -19,6 +19,8 @@ import android.hardware.SensorManager;
 
 public class ShakeDetector implements SensorEventListener {
 
+    private static final String TAG = ShakeDetector.class.getSimpleName();
+
     /*
      * The gForce that is necessary to register as shake.
      * Must be greater than 1G (one earth gravity unit).

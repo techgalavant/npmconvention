@@ -27,5 +27,6 @@
     <string name="hermosa">chucknorrisrules</string>
     <string name="appdate">appdate</string>
     <string name="apptime">apptime</string>
+    <string name="purpose">Before you can start to use the NPM convention app, you will need to grant permissions and download some files. The files will get stored in your download folder called \'NPM\'. Please complete these steps before attending the convention site, which may have poor internet connectivity. In case you have any questions, shake your device to send us feedback. Now let\'s get started below!</string>
 
 </resources>

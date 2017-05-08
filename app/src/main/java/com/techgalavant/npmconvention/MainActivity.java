@@ -123,7 +123,12 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         // Close the AlertDialog box
                         Log.e(TAG, "User selected NO on AlertDialog");
-                        dialog.cancel();
+
+                        // TODO set this up elsewhere
+                        Intent intent = new Intent(MainActivity.this, LaunchPermissions.class);
+                        startActivity(intent);
+
+                        //dialog.cancel();
                     }
                 });
 
