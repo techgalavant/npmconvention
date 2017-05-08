@@ -55,19 +55,19 @@ public class SendFeedback extends AppCompatActivity {
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.feedback);
+            setContentView(R.layout.feedback_hints);
 
             txtTitle = (TextView) findViewById(R.id.textView);
             txtDetails = (TextView) findViewById(R.id.textView2);
+
+            // EditTexts in feedback_hints.xml use TextInputLayout to animate the hint texts.
+            // The TextInputLayout wraps around each EditText in the layout file.
             inWord1 = (EditText) findViewById(word1);
             inWord2 = (EditText) findViewById(word2);
             inWord3 = (EditText) findViewById(word3);
             mashIt_btn = (Button) findViewById(R.id.mashIt);
             clearIt_btn = (Button) findViewById(R.id.clearIt);
             cancelIt_btn = (Button) findViewById(R.id.cxlIt);
-
-            // Get Firebase DB instance
-            myFBInstance = FirebaseDatabase.getInstance();
 
             // Store the Words in Firebase and passes the words via intent to display the story
             mashIt_btn.setOnClickListener(new View.OnClickListener() {
@@ -80,10 +80,11 @@ public class SendFeedback extends AppCompatActivity {
                     if (Sender.equals(userName)){
                         String currentTimeString = DateFormat.getDateTimeInstance().format(new Date());
                         Contact = "UPDATE: " + currentTimeString; // Instead of contact info, set contact field to time entered when userName equals Sender
-                        myStory = myFBInstance.getReference(Sender).child(Contact); // create separate message based on time entered?
+                        // myStory = MyFirebaseUtil.getDatabase().getReference(Sender).child(Contact); // create separate message based on time entered?
+                        myStory = MyFirebaseUtil.getDatabase().getReference(Sender);
                     } else {
                         Contact = inWord2.getText().toString();
-                        myStory = myFBInstance.getReference(Sender); // set reference just to the Sender's name
+                        myStory = MyFirebaseUtil.getDatabase().getReference(Sender);
                     }
 
                     Log.e(TAG, "Firebase reference is set to " + myStory);
@@ -198,12 +199,12 @@ public class SendFeedback extends AppCompatActivity {
 
                     // Check for null
                     if (words == null) {
-                        Log.e(TAG, "No feedback words have been found.");
+                        Log.e(TAG, "No feedback has been found.");
                         togglebtn = "";
                         return;
                     } else {
 
-                        Log.e(TAG, "Feedback words have been changed!");
+                        Log.e(TAG, "Feedback was updated.");
 
                         // Change the subtitle if the user has already provided feedback
                         txtDetails.getResources().getString(R.string.feedback_chg);

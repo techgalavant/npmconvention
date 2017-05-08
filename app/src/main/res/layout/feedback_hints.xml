@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- Used by SendFeedback. Used for posting feedback on the app in the Firebase DB. -->
+<!-- Used by SendFeedback, this one has the hint layout. -->
 <ScrollView
     android:layout_height="wrap_content"
     android:layout_width="fill_parent"
@@ -36,6 +36,11 @@
         android:textStyle="normal|bold"
         android:textAlignment="center" />
 
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/word1Wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
     <EditText
         android:id="@+id/word1"
         android:layout_width="match_parent"
@@ -43,6 +48,13 @@
         android:hint="@string/senders_name"
         android:textStyle="normal|italic"
         android:fontFamily="casual" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/word2Wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     <EditText
         android:id="@+id/word2"
@@ -52,6 +64,13 @@
         android:textStyle="normal|italic"
         android:fontFamily="casual" />
 
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/word3Wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
     <EditText
         android:id="@+id/word3"
         android:layout_width="match_parent"
@@ -60,6 +79,8 @@
         android:fontFamily="casual"
         android:textStyle="normal|italic"
         android:inputType="textMultiLine" />
+
+    </android.support.design.widget.TextInputLayout>
 
     <RelativeLayout
         android:id="@+id/buttons"

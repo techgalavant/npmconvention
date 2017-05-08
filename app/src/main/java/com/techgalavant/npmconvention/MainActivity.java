@@ -114,8 +114,6 @@ public class MainActivity extends AppCompatActivity {
                         // Launch feedback form - SendFeedback
                         Intent intent = new Intent(MainActivity.this, SendFeedback.class);
                         startActivity(intent);
-
-                        Toast.makeText(getApplicationContext(), "You clicked on YES", Toast.LENGTH_SHORT).show();
                         Log.e(TAG, "User selected YES on AlertDialog");
                     }
                 });

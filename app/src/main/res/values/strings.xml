@@ -25,5 +25,7 @@
     <string name="send">Send</string>
     <string name="update">Update</string>
     <string name="hermosa">chucknorrisrules</string>
+    <string name="appdate">appdate</string>
+    <string name="apptime">apptime</string>
 
 </resources>
