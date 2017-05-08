@@ -236,7 +236,7 @@ public class LaunchPermissions extends AppCompatActivity implements View.OnClick
             alertDialog.setMessage("Your initial app setup appears to be completed.");
 
             // Sets icon in the AlertDialog window
-            alertDialog.setIcon(R.drawable.ic_mesg);
+            alertDialog.setIcon(R.drawable.ic_check);
 
             // Set operation for when user selects "YES" on AlertDialog
             alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
