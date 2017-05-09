@@ -124,11 +124,6 @@ public class EventDetails extends AppCompatActivity {
                 // Log if calendar_add button was pressed
                 Log.e(TAG, "Add calendar button pressed");
 
-                // Conduct permissions check to write to the user's calendar
-                // Reference:
-                // - http://stackoverflow.com/questions/33407250/checkselfpermission-method-is-not-working-in-targetsdkversion-22
-                // - https://developer.android.com/training/permissions/requesting.html
-                // TODO check calendar permissions
 
                 // Insert event to user's calendar
                 // Reference:

@@ -94,24 +94,43 @@
                         android:id="@+id/edesc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="2dip"
+                        android:paddingBottom="2dp"
                         android:textColor="#5d5d5d"
                         android:textStyle="italic"
                         android:paddingLeft="2dp"/>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/card_margin">
+
+                <LinearLayout
+                    style="@style/Widget.CardContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/etime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/time_title"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
                     <TextView
                         android:id="@+id/event_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="#091c97"
-                        android:textStyle="bold"
-                        android:layout_below="@id/edesc"
-                        android:textSize="12dp"/>
+                        android:textSize="16sp" />
 
 
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
+
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"

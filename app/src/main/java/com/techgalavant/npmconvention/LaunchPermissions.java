@@ -44,6 +44,10 @@ public class LaunchPermissions extends AppCompatActivity implements View.OnClick
     private View view;
     private TextView txtPurpose;
 
+    private String togglebtn; // use to display text on conditions
+    private Button request_permission;  // use to kick off app permission process
+    private Button check_permission;  // use to check if all permissions set and files downloaded
+
     // A download manager is used to download a file from a URL onto the device
     // Download the Program PDF file
     private DownloadManager downloadManager;
@@ -65,12 +69,14 @@ public class LaunchPermissions extends AppCompatActivity implements View.OnClick
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Button check_permission = (Button) findViewById(R.id.check_permission);
-        Button request_permission = (Button) findViewById(R.id.request_permission);
+        check_permission = (Button) findViewById(R.id.check_permission);
+        request_permission = (Button) findViewById(R.id.request_permission);
         check_permission.setOnClickListener(this);
         request_permission.setOnClickListener(this);
 
         txtPurpose = (TextView) findViewById(R.id.purpose); // displays the purpose string
+
+        toggleButton(); // conditional text on the button if the files have alerady been downloaded
 
     }
 
@@ -256,6 +262,16 @@ public class LaunchPermissions extends AppCompatActivity implements View.OnClick
 
         }
 
+    }
+
+    // Changing button text
+    private void toggleButton() {
+
+        if (JSONFile.exists() && PDFFile.exists()) {
+            check_permission.setText("LAUNCH CONVENTION APP");
+        } else {
+            check_permission.setText("DOWNLOAD FILES");
+        }
     }
 
 
