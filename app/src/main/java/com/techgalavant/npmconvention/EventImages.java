@@ -41,4 +41,14 @@ public class EventImages {
                 return R.drawable.image11;
         }
     }
+
+    public static int getAboutImage() {
+        switch (RANDOM.nextInt(2)) {
+            default:
+            case 0:
+                return R.drawable.ic_hermosa;
+            case 1:
+                return R.drawable.ic_techgalavant;
+        }
+    }
 }

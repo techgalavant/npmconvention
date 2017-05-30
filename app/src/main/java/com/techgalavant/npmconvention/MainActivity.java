@@ -32,7 +32,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -51,9 +50,6 @@ public class MainActivity extends AppCompatActivity {
 
     // The following are related to the Firebase Remote Config
     private FirebaseRemoteConfig mRemoteConfig;
-    private static final String welcome_tab = "is_welcome_on";
-    private static final String schedule_tab = "is_events_on";
-    private static final String program_tab = "is_program_on";
     private static final String chapters_tab = "is_chapters_on";
     private static final String exhibits_tab = "is_exhibits_on";
     private static final String sponsors_tab = "is_sponsors_on";
@@ -68,79 +64,83 @@ public class MainActivity extends AppCompatActivity {
     // Upon first launch, you want the app to run LaunchPermissions
     SharedPreferences prefs = null;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        // Toolbar shows the appName and the appIcon
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.npmlogo32);
 
-        // Access the shared preferences to detect if this is the first time the app has launched
-        prefs = getSharedPreferences("com.techgalavant.npmconvention", MODE_PRIVATE);
+            setContentView(R.layout.activity_main);
 
-        // better implementation example seen here https://github.com/saulmm/CoordinatorExamples
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
+            // Toolbar shows the appName and the appIcon
+            toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.npmlogo32);
 
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
+            // Access the shared preferences to detect if this is the first time the app has launched
+            prefs = getSharedPreferences("com.techgalavant.npmconvention", MODE_PRIVATE);
 
-        // The user can also shake the device to send a message
-        // Device Shake Listener credit to http://jasonmcreynolds.com/?p=388
-        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        mAccelerometer = mSensorManager
-                .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        mShakeDetector = new ShakeDetector();
-        mShakeDetector.setOnShakeListener(new ShakeDetector.OnShakeListener() {
+            // better implementation example seen here https://github.com/saulmm/CoordinatorExamples
+            viewPager = (ViewPager) findViewById(R.id.viewpager);
+            setupViewPager(viewPager);
 
-            @Override
-            public void onShake(int count) {
+            tabLayout = (TabLayout) findViewById(R.id.tabs);
+            tabLayout.setupWithViewPager(viewPager);
 
-                // Launch an AlertDialog box so that users can post a message
+            // The user can also shake the device to send a message
+            // Device Shake Listener credit to http://jasonmcreynolds.com/?p=388
+            mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+            mAccelerometer = mSensorManager
+                    .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+            mShakeDetector = new ShakeDetector();
+            mShakeDetector.setOnShakeListener(new ShakeDetector.OnShakeListener() {
 
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
-                Log.e(TAG, "ShakeListener detected movement so it displayed the alert dialog box.");
+                @Override
+                public void onShake(int count) {
 
-                // Set Dialog box title
-                alertDialog.setTitle("App Feedback");
+                    // Launch an AlertDialog box so that users can post a message
 
-                // Set Dialog message
-                alertDialog.setMessage("Send feedback to app developer?");
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
+                    Log.e(TAG, "ShakeListener detected movement so it displayed the alert dialog box.");
 
-                // Sets icon in the AlertDialog window
-                alertDialog.setIcon(R.drawable.ic_mesg);
+                    // Set Dialog box title
+                    alertDialog.setTitle("App Feedback");
 
-                // Set operation for when user selects "YES" on AlertDialog
-                alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,int which) {
+                    // Set Dialog message
+                    alertDialog.setMessage("Send feedback to app developer?");
 
-                        // Launch feedback form - SendFeedback
-                        Intent intent = new Intent(MainActivity.this, SendFeedback.class);
-                        startActivity(intent);
-                        Log.e(TAG, "User selected YES on AlertDialog");
-                    }
-                });
+                    // Sets icon in the AlertDialog window
+                    alertDialog.setIcon(R.drawable.ic_mesg);
 
-                // Sets operation for when "NO" button is selected
-                alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Close the AlertDialog box
-                        Log.e(TAG, "User selected NO on AlertDialog");
-                        dialog.cancel();
-                    }
-                });
+                    // Set operation for when user selects "YES" on AlertDialog
+                    alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
 
-                // Show AlertDialog box
-                alertDialog.show();
+                            // Launch feedback form - SendFeedback
+                            Intent intent = new Intent(MainActivity.this, SendFeedback.class);
+                            startActivity(intent);
+                            Log.e(TAG, "User selected YES on AlertDialog");
+                        }
+                    });
 
-            }
-        });
+                    // Sets operation for when "NO" button is selected
+                    alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Close the AlertDialog box
+                            Log.e(TAG, "User selected NO on AlertDialog");
+                            dialog.cancel();
+                        }
+                    });
 
-    }
+                    // Show AlertDialog box
+                    alertDialog.show();
+
+                }
+            });
+
+        }
+
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
         // Welcome tab should be displayed regardless
         adapter.addFragment(new WelcomeFragment(), "WELCOME");
         adapter.addFragment(new ProgramFragment(), "PROGRAM");
-        adapter.addFragment(new ScheduleFragment(), "EVENTS");
+        adapter.addFragment(new EventFragment(), "EVENTS");
 
         // Firebase remote management will not work on Kindle Fire, so display all tabs by default
         if (isKindleFire()) {
@@ -208,16 +208,16 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             Log.e(TAG,"fetchRemoteConfigs SUCCESSFUL");
-                            Toast.makeText(MainActivity.this, "Successfully fetched remote configs",
-                                    Toast.LENGTH_SHORT).show();
+                           /* Toast.makeText(MainActivity.this, "Successfully fetched remote configs",
+                                    Toast.LENGTH_SHORT).show();*/
 
                             // After config data is successfully fetched, it must be activated before newly fetched
                             // values are returned.
                             mRemoteConfig.activateFetched();
                         } else {
                             Log.e(TAG,"fetchRemoteConfigs UNSUCCESSFUL");
-                            Toast.makeText(MainActivity.this, "Fetch Failed",
-                                    Toast.LENGTH_SHORT).show();
+                      /*      Toast.makeText(MainActivity.this, "Fetch Failed",
+                                    Toast.LENGTH_SHORT).show();*/
                             // The app will use default parameters in case it can't reach the Firebase Remote Config service
                             mRemoteConfig.setDefaults(R.xml.remote_config_defaults);
                         }
@@ -271,7 +271,7 @@ public class MainActivity extends AppCompatActivity {
         // Add the following line to register the Session Manager Listener onResume
         mSensorManager.registerListener(mShakeDetector, mAccelerometer, SensorManager.SENSOR_DELAY_UI);
 
-        // Add these lines to detect if the app is first run
+        // Detects if app is running for the first time, and users must download the files & set permissions
         if (prefs.getBoolean("firstrun", true)) {
 
             // If this is the first time that the app is running, user's must set their app permissions and download the files
@@ -301,9 +301,9 @@ public class MainActivity extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            /*case R.id.about:
+            case R.id.about:
                 startActivity(new Intent(this, About.class));
-                return true;*/
+                return true;
             case R.id.settings:
                 startActivity(new Intent(this, LaunchPermissions.class));
                 return true;
@@ -314,7 +314,5 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-
 
 }

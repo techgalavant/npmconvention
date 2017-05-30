@@ -48,6 +48,9 @@ public class ProgramFragment extends Fragment implements View.OnClickListener,On
     private String pdfFile = "ConventionBrochure.pdf"; // the name of the PDF file
     File localFile = new File(Environment.getExternalStorageDirectory()+pdfDir, pdfFile);
 
+    // use this boolean to display pages as Toast
+    boolean mUserVisibleHint = true;
+
     public ProgramFragment() {
         // Required empty public constructor
     }
@@ -125,19 +128,16 @@ public class ProgramFragment extends Fragment implements View.OnClickListener,On
     public void onPageChanged(int page, int pageCount) {
         pageNumber = page+1;
         pdfView.getCurrentPage();
-        Toast.makeText(getContext(),"Page " + pageNumber + " of " + pageCount, Toast.LENGTH_SHORT).show();
-        //request.setTitle(String.format("%s %s / %s", pdfFile, page + 1, pageCount));
+        if (mUserVisibleHint){
+
+            Toast.makeText(getContext(),"Page " + pageNumber + " of " + pageCount, Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override
     public void loadComplete(int nbPages) {
         PdfDocument.Meta meta = pdfView.getDocumentMeta();
-        Log.e(TAG, "title = " + meta.getTitle());
-        Log.e(TAG, "author = " + meta.getAuthor());
-        Log.e(TAG, "subject = " + meta.getSubject());
-        Log.e(TAG, "keywords = " + meta.getKeywords());
-        Log.e(TAG, "creator = " + meta.getCreator());
-        Log.e(TAG, "producer = " + meta.getProducer());
         Log.e(TAG, "creationDate = " + meta.getCreationDate());
         Log.e(TAG, "modDate = " + meta.getModDate());
 
@@ -177,11 +177,6 @@ public class ProgramFragment extends Fragment implements View.OnClickListener,On
                 Toast.makeText(getContext(),"Please download the file to view it.", Toast.LENGTH_LONG).show();
             }
         }
-    }
-    public static boolean isProgramTabSelected() {
-        return android.os.Build.MANUFACTURER.equals("Amazon")
-                && (android.os.Build.MODEL.equals("Kindle Fire")
-                || android.os.Build.MODEL.startsWith("KF"));
     }
 
 }

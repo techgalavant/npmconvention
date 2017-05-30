@@ -26,7 +26,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -48,13 +47,11 @@ import java.util.HashMap;
 import java.util.Locale;
 
 
-public class ScheduleFragment extends Fragment implements View.OnClickListener{
-    public static final String TAG = ScheduleFragment.class.getSimpleName();
+public class EventFragment extends Fragment implements View.OnClickListener{
+    public static final String TAG = EventFragment.class.getSimpleName();
 
     // Listview to show the events
     private ListView lv;
-
-    private ImageView calIcon;
 
     //Buttons
     private Button btnDownload;
@@ -76,7 +73,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
     ArrayList<HashMap<String, String>> satList = new ArrayList<>();
 
 
-    public ScheduleFragment() {
+    public EventFragment() {
         // Required empty public constructor
     }
 
@@ -96,7 +93,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
                 Log.e(TAG, "Found " + jsonFile + " in " + jsonDir + ".");
 
                 // Display the events if the events JSON file has already been downloaded
-                View rootView = inflater.inflate(R.layout.scheduleb_frag, container, false);
+                View rootView = inflater.inflate(R.layout.events_frag, container, false);
 
                 // populate the JSON file into an arraylist
                 eventList = new ArrayList<>();
@@ -114,7 +111,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
                 Log.e(TAG, jsonFile + " not found at " + jsonDir);
 
                 // Display the fragment with the download buttons
-                View rootView = inflater.inflate(R.layout.schedule_frag, container, false);
+                View rootView = inflater.inflate(R.layout.event_frag, container, false);
 
                 //getting views from layout
                 btnDownload = (Button) rootView.findViewById(R.id.btnDownload);
@@ -147,11 +144,11 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
             is.read(buffer);
             is.close();
             json = new String(buffer, "UTF-8");
-            Toast.makeText(getContext(),"JSON file loaded from asset", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(),"JSON file loaded from asset", Toast.LENGTH_SHORT).show();
         } catch (IOException ex) {
             ex.printStackTrace();
             Log.e(TAG, "IOException: " + ex.getMessage());
-            Toast.makeText(getContext(),"JSON file load error: " +ex.getMessage(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(),"JSON file load error: " +ex.getMessage(), Toast.LENGTH_SHORT).show();
             return null;
         }
         return json;
@@ -161,8 +158,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
     // CONSIDER: building a handler first in a separate class,
     // and then use this to display the events in a listview
     private void displayFile() {
-
-        File localFile = new File(Environment.getExternalStorageDirectory() + jsonDir, jsonFile);
 
         // The method getJSONObject returns the JSON object.
         // The method getString returns the string value of the specified key.
@@ -268,12 +263,14 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
         // use this adaptor to show the event list item on listeventitem.xml
         ListAdapter adapter = new SimpleAdapter(
                 getActivity().getApplicationContext(), eventList,
-                R.layout.listeventitem, new String[]{"evid", "name", "description", "day",
-                "start", "finish"}, new int[]{R.id.eid, R.id.ename,
-                R.id.edesc, R.id.eday, R.id.estart, R.id.efinish});
+                R.layout.listeventitem,
+                new String[]{"evid", "name", "description", "day", "start", "finish"},
+                new int[]{R.id.eid, R.id.ename, R.id.edesc, R.id.eday, R.id.estart, R.id.efinish});
 
+        // List event adaptor
         lv.setAdapter(adapter);
 
+        // set on click listener
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {

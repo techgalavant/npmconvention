@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.techgalavant.npmconvention.ScheduleFragment">
+    tools:context="com.techgalavant.npmconvention.EventFragment">
 
     <TextView
         android:layout_width="match_parent"
@@ -17,6 +17,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="16dp"></TextView>
+
     <ListView
         android:id="@+id/list"
         android:layout_width="wrap_content"

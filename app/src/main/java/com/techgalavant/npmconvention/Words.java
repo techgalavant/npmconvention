@@ -11,6 +11,8 @@ public class Words {
     public String Sender;
     public String Contact;
     public String Feedback;
+    public String AndroidModel; // name of the device
+    public String AndroidBrand; // a consumer-friendly name for the device brand
 
 
     // This is the default constructor for DataSnapshot.getValue(Words.class)
@@ -18,10 +20,13 @@ public class Words {
 
         }
 
-    public Words(String Sender, String Contact, String Feedback) {
-            this.Sender = Sender;
-            this.Contact = Contact;
-            this.Feedback = Feedback;
+    public Words(String Sender, String Contact, String Feedback, String AndroidModel, String AndroidBrand) {
+        this.Sender = Sender;
+        this.Contact = Contact;
+        this.Feedback = Feedback;
+        this.AndroidModel = AndroidModel;
+        this.AndroidBrand = AndroidBrand;
+
         }
 
 }

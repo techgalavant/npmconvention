@@ -99,7 +99,7 @@ public class ScheduleFragmentB extends Fragment implements View.OnClickListener{
                 Log.e(TAG, jsonFile + " not found at " + jsonDir);
 
                 // Display the fragment with the download buttons
-                View rootView = inflater.inflate(R.layout.schedule_frag, container, false);
+                View rootView = inflater.inflate(R.layout.event_frag, container, false);
 
                 //getting views from layout
                 btnDownload = (Button) rootView.findViewById(R.id.btnDownload);

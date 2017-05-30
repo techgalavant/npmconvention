@@ -3,7 +3,7 @@ package com.techgalavant.npmconvention;
 /**
  * Created by Mike Fallon
  *
- * This class is used to display the event details from the ScheduleFragment in a card-like layout.
+ * This class is used to display the event details from the EventFragment in a card-like layout.
  * Users can add the event to their own Google calendar.
  *
  * References
@@ -53,7 +53,7 @@ public class EventDetails extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        // get the event list items from ScheduleFragment
+        // get the event list items from EventFragment
         String complete_event = (intent.getStringExtra("complete_event"));
         Log.e(TAG, "Event Detail for the list item - " + complete_event); // Log the event details to ensure it's displaying the correct information
 
@@ -85,7 +85,7 @@ public class EventDetails extends AppCompatActivity {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Let the user use their own back button to return to ScheduleFragment rather than showing a back arrow in the image.
+        // Let the user use their own back button to return to EventFragment rather than showing a back arrow in the image.
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         // The collapsing toolbar shows a random image in it as well as the event title from the list event
@@ -114,6 +114,15 @@ public class EventDetails extends AppCompatActivity {
         // Use a sample map for the time being
         evtMap.setImageResource(R.drawable.sample_map);
 
+        /*if (eventMap.contains("Convention")) {
+            evtMap.setImageResource(R.drawable.sample_map2);
+        } else if (eventMap.contains("Registration")) {
+            evtMap.setImageResource(R.drawable.sample_map);
+        } else if (eventMap.contains("Hilton Hotel")) {
+            evtMap.setImageResource(R.drawable.sample_map3);
+        } else {
+            evtMap.setImageResource(R.drawable.sample_map4);
+        }*/
 
         // Use a FAB to add the event to the user's favorites or to their Google calendar
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

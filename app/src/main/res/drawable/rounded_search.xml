@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <!--  res/drawable/rounded_search.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle" >
+
+    <corners
+        android:radius="100dp"/>
+    <solid
+        android:color="#ced2f5"/>
+    <size
+        android:width="200dp"
+        android:height="40dp"/>
+</shape>

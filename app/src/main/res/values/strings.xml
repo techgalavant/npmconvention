@@ -34,5 +34,12 @@
     <string name="initial_setup">Run Setup</string>
     <string name="check_setup">Download Files Again</string>
     <string name="time_title">Event Time</string>
+    <string name="search">Search</string>
+    <string name="sponsors">Sponsors</string>
+    <string name="about_photo">Shows an image of Peter and Mike</string>
+    <string name="about_info">Who is TechGalavant?</string>
+    <string name="info">Mike Fallon is the creator of this app. He enjoys learning about technology but exploring it for practical purposes. He is a friend of Peter Brockmann, the creator of the iPhone and iPad version of this app.</string>
+    <string name="about_contact">Contact</string>
+    <string name="contact">Visit Mike\'s blog to contact him or to read about his other technology adventures! http://www.techgalavant.com</string>
 
 </resources>

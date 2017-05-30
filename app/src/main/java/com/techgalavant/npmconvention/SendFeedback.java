@@ -13,6 +13,7 @@ package com.techgalavant.npmconvention;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -52,6 +53,10 @@ public class SendFeedback extends AppCompatActivity {
     private String hermosa = "chucknorrisrules"; // used to display messages on WelcomeFragment
     private String Contact;
 
+    // Capture device model and brand for learning
+    // Reference: https://developer.android.com/reference/android/os/Build.html
+    private String AndroidModel = Build.MODEL; // name of the device
+    private String AndroidBrand = Build.BRAND; // a consumer-friendly name for the device brand
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +83,8 @@ public class SendFeedback extends AppCompatActivity {
                     String Sender = inWord1.getText().toString();
                     String Feedback = inWord3.getText().toString();
 
+                    // If Digital Hermosa posts a message, it should be displayed in the WelcomeFragment.
+                    // The purpose of this was to allow for posting daily messages in case of room of time changes.
                     if (Sender.equals(hermosa)){
                         String currentTimeString = DateFormat.getDateTimeInstance().format(new Date());
                         Contact = "UPDATE: " + currentTimeString; // Instead of contact info, set contact field to time entered when userName equals Sender
@@ -93,7 +100,7 @@ public class SendFeedback extends AppCompatActivity {
                     // Create a new list of items to be stored.
                     // FUTURE - allow the user to update their feedback.
                     if (TextUtils.isEmpty(togglebtn)) {
-                        createList(Sender, Contact, Feedback);
+                        createList(Sender, Contact, Feedback, AndroidModel, AndroidBrand);
                         Log.e(TAG, "There were no words in " + storyId + ", so created a new list.");
                     } else {
                         updateList(Sender, Contact, Feedback);
@@ -170,9 +177,9 @@ public class SendFeedback extends AppCompatActivity {
 
 
         // Creates a new list of feedback words in the Firebase Database
-        private void createList(String Sender, String Contact, String Feedback) {
+        private void createList(String Sender, String Contact, String Feedback, String AndroidModel, String AndroidBrand) {
 
-            Words words = new Words(Sender, Contact, Feedback);
+            Words words = new Words(Sender, Contact, Feedback, AndroidModel, AndroidBrand);
             togglebtn = "On";
 
             myStory.setValue(words);
