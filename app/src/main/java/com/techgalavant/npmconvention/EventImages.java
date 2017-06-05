@@ -43,12 +43,16 @@ public class EventImages {
     }
 
     public static int getAboutImage() {
-        switch (RANDOM.nextInt(2)) {
+        switch (RANDOM.nextInt(4)) {
             default:
             case 0:
-                return R.drawable.ic_hermosa;
+                return R.drawable.devteam;
             case 1:
-                return R.drawable.ic_techgalavant;
+                return R.drawable.devteam;
+            case 2:
+                return R.drawable.devteam;
+            case 3:
+                return R.drawable.devteam;
         }
     }
 }

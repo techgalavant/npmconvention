@@ -6,11 +6,14 @@ package com.techgalavant.npmconvention;
  * The purpose of this class is to show some information about the creator of this app.
  */
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
+import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,22 +23,36 @@ import com.bumptech.glide.Glide;
 public class About extends AppCompatActivity {
     private static final String TAG = About.class.getSimpleName();
 
-    TextView tvTitle, tvAbout, tvContact;
-    ImageView ivPhoto;
+    TextView tvTitle, tvAbout, tvContact, tvWeb, tvPrivacy;
+    ImageView ivPhoto, ivWeb, ivDH;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.about);
 
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        // Set to false as there is already a back button on the user's device
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
+        // populate the textviews and imageviews with the specific event list items
+        ivPhoto = (ImageView) findViewById(R.id.photo);
+        ivWeb = (ImageView) findViewById(R.id.blog);
+        ivDH = (ImageView) findViewById(R.id.digital);
+        tvTitle = (TextView) findViewById(R.id.about_title);
+        tvAbout = (TextView) findViewById(R.id.info);
+        tvContact = (TextView) findViewById(R.id.contact);
+        tvWeb = (TextView) findViewById(R.id.website);
+        tvPrivacy = (TextView) findViewById(R.id.privacy);
+
         final String title = getResources().getString(R.string.about);  // title
         final String info = getResources().getString(R.string.info);  // info about Tech Galavant
         final String contact = getResources().getString(R.string.contact);  // info to contact
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        final String website = getResources().getString(R.string.website); // techgalavant blog
+        final String privacy = getResources().getString(R.string.privacy); // title for Privacy Policy section
+        Log.e(TAG, "Title= " + title + ", Info= " + info + ", Contact= " + contact);
 
-        // Set to false as there is already a back button on the user's device
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         // The collapsing toolbar shows a random image in it as well as the event title from the list event
         CollapsingToolbarLayout collapsingToolbar =
@@ -45,18 +62,41 @@ public class About extends AppCompatActivity {
         // loads a random image from EventImages with the 'getAboutImages' class
         loadBackdrop();
 
-        // populate the textviews and imageviews with the specific event list items
-        ivPhoto = (ImageView) findViewById(R.id.photo);
-        tvTitle = (TextView) findViewById(R.id.about_title);
-        tvAbout = (TextView) findViewById(R.id.about);
-        tvContact = (TextView) findViewById(R.id.contact);
-
-        ivPhoto.setImageResource(R.drawable.img_3);
+        ivPhoto.setImageResource(R.drawable.img_3);  // photo of me!
         tvTitle.setText(title);
         tvAbout.setText(info);
         tvContact.setText(contact);
-    }
+        tvWeb.setText(website);
+        tvPrivacy.setText(privacy);
 
+        // if the user clicks on the logo, then launch web browser and bring them to my blog
+        ivWeb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.techgalavant.com"));
+                startActivity(browserIntent);
+            }
+        });
+
+        // if the user selects the Privacy Policy title, then launch the web browser and bring them to the policy online
+        tvPrivacy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://bit.ly/2qU6DKL"));
+                startActivity(browserIntent);
+            }
+        });
+
+        // if the user selects Digital Hermosa image, then launch web browser and bring the user to the DH blog
+        ivDH.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.brockmann.com/digitalhermosa/"));
+                startActivity(browserIntent);
+            }
+        });
+
+   }
 
     // Takes random images from EventImages class and uses it for the backdrop on the top
     private void loadBackdrop() {
@@ -64,12 +104,6 @@ public class About extends AppCompatActivity {
         Glide.with(this).load(EventImages.getAboutImage()).centerCrop().into(imageView);
     }
 
-    // Possibly setup a menu button so that users can view their favorites?
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        //getMenuInflater().inflate(R.menu.sample_actions, menu);
-        return true;
-    }
 
 
 }
