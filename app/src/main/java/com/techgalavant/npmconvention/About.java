@@ -40,7 +40,7 @@ public class About extends AppCompatActivity {
         ivPhoto = (ImageView) findViewById(R.id.photo);
         ivWeb = (ImageView) findViewById(R.id.blog);
         ivDH = (ImageView) findViewById(R.id.digital);
-        tvTitle = (TextView) findViewById(R.id.about_title);
+        // tvTitle = (TextView) findViewById(R.id.about_title);
         tvAbout = (TextView) findViewById(R.id.info);
         tvContact = (TextView) findViewById(R.id.contact);
         tvWeb = (TextView) findViewById(R.id.website);
@@ -63,7 +63,7 @@ public class About extends AppCompatActivity {
         loadBackdrop();
 
         ivPhoto.setImageResource(R.drawable.img_3);  // photo of me!
-        tvTitle.setText(title);
+        // tvTitle.setText(title);
         tvAbout.setText(info);
         tvContact.setText(contact);
         tvWeb.setText(website);
