@@ -16,6 +16,7 @@ package com.techgalavant.npmconvention;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -38,6 +39,8 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -322,5 +325,6 @@ public class EventFragment extends Fragment implements View.OnClickListener{
             }
         }
     }
+
 
 }

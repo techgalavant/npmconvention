@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,7 +22,7 @@ import com.bumptech.glide.Glide;
 public class About extends AppCompatActivity {
     private static final String TAG = About.class.getSimpleName();
 
-    TextView tvTitle, tvAbout, tvContact, tvWeb, tvPrivacy;
+    TextView tvAbout, tvContact, tvWeb, tvPrivacy;
     ImageView ivPhoto, ivWeb, ivDH;
 
     @Override
@@ -40,7 +39,6 @@ public class About extends AppCompatActivity {
         ivPhoto = (ImageView) findViewById(R.id.photo);
         ivWeb = (ImageView) findViewById(R.id.blog);
         ivDH = (ImageView) findViewById(R.id.digital);
-        // tvTitle = (TextView) findViewById(R.id.about_title);
         tvAbout = (TextView) findViewById(R.id.info);
         tvContact = (TextView) findViewById(R.id.contact);
         tvWeb = (TextView) findViewById(R.id.website);
@@ -51,8 +49,6 @@ public class About extends AppCompatActivity {
         final String contact = getResources().getString(R.string.contact);  // info to contact
         final String website = getResources().getString(R.string.website); // techgalavant blog
         final String privacy = getResources().getString(R.string.privacy); // title for Privacy Policy section
-        Log.e(TAG, "Title= " + title + ", Info= " + info + ", Contact= " + contact);
-
 
         // The collapsing toolbar shows a random image in it as well as the event title from the list event
         CollapsingToolbarLayout collapsingToolbar =
@@ -62,8 +58,7 @@ public class About extends AppCompatActivity {
         // loads a random image from EventImages with the 'getAboutImages' class
         loadBackdrop();
 
-        ivPhoto.setImageResource(R.drawable.img_3);  // photo of me!
-        // tvTitle.setText(title);
+        ivPhoto.setImageResource(R.drawable.devteam);  // photo of Peter and me!
         tvAbout.setText(info);
         tvContact.setText(contact);
         tvWeb.setText(website);
@@ -101,7 +96,7 @@ public class About extends AppCompatActivity {
     // Takes random images from EventImages class and uses it for the backdrop on the top
     private void loadBackdrop() {
         final ImageView imageView = (ImageView) findViewById(R.id.backdrop);
-        Glide.with(this).load(EventImages.getAboutImage()).centerCrop().into(imageView);
+        Glide.with(this).load(EventImages.getRandomImage()).centerCrop().into(imageView);
     }
 
 

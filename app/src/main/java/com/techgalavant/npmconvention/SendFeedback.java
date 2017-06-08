@@ -43,7 +43,7 @@ public class SendFeedback extends AppCompatActivity {
 
     private Button mashIt_btn, cancelIt_btn, clearIt_btn;
     private EditText inWord1, inWord2, inWord3;
-    private TextView txtTitle, txtDetails;
+    private TextView txtDetails;
     private DatabaseReference myStory;
     private FirebaseDatabase myFBInstance;
     private String storyId;
@@ -63,7 +63,6 @@ public class SendFeedback extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.feedback_hints);
 
-            txtTitle = (TextView) findViewById(R.id.textView);
             txtDetails = (TextView) findViewById(R.id.textView2);
 
             // EditTexts in feedback_hints.xml use TextInputLayout to animate the hint texts.

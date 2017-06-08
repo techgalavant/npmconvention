@@ -12,8 +12,12 @@
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
+    <!-- Permission: call phone needed when user clicks on chapter web icon-->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
     <!-- Feature: detect device shaking for SendFeedback.java -->
     <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="true" />
+
 
     <application
         android:allowBackup="true"
@@ -44,6 +48,11 @@
                 android:value=".MainActivity" />
         </activity>
         <activity android:name=".About"
+            android:parentActivityName=".MainActivity">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity android:name=".ChapterDetails"
             android:parentActivityName=".MainActivity">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />

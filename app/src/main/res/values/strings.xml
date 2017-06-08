@@ -20,7 +20,7 @@
     <string name="senders_contact">Provide your email or contact number</string>
     <string name="senders_feedback">Enter your feedback here...</string>
     <string name="feedback_title">NPM Convention App</string>
-    <string name="feedback_title2">Feedback Form</string>
+    <string name="feedback_title2">Android App Feedback Form</string>
     <string name="feedback_chg">Change Your Feedback</string>
     <string name="send">Send</string>
     <string name="update">Update</string>
@@ -39,10 +39,12 @@
     <string name="about_photo">Shows an image of Mike</string>
     <string name="about_info">Who is TechGalavant?</string>
     <string name="info">Mike Fallon is the creator of this app. He enjoys learning about technology and exploring it for practical purposes. That includes coding apps for fun. He is a friend of Peter Brockmann, also known as Digital Hermosa, the creator of the iPhone and iPad versions of this app.</string>
-    <string name="about_contact">Contact</string>
+    <string name="about_contact">Mike\'s Blog</string>
     <string name="contact">Visit Mike\'s blog to contact him or to read about his other technology adventures!</string>
     <string name="website">www.techgalavant.com</string>
     <string name="privacy">Privacy Policy - click here</string>
-    <string name="see_also">See Also</string>
+    <string name="see_also">Peter\'s Blog</string>
+    <string name="down_file">Download File</string>
+    <string name="chap_contact">Chapter Info</string>
 
 </resources>
