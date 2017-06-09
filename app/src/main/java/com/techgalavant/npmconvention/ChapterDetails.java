@@ -11,6 +11,7 @@ package com.techgalavant.npmconvention;
  */
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -20,9 +21,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import static com.techgalavant.npmconvention.R.id.ch_name;
 import static com.techgalavant.npmconvention.R.id.dir_adr;
 import static com.techgalavant.npmconvention.R.id.dir_name;
 
@@ -32,6 +35,7 @@ public class ChapterDetails extends AppCompatActivity {
 
     TextView chapName, chapDir, chapAddr;
     ImageView chapPhone, chapEmail, chapWebsite, chapFace;
+    String chapadr, chapname, chapdir, chaptel, chapem, chapweb, chapfb;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,13 +48,13 @@ public class ChapterDetails extends AppCompatActivity {
         String complete_chapter = (intent.getStringExtra("complete_chapter"));
         Log.e(TAG, "Chapter-specific detail for the list item - " + complete_chapter); // Log the chapter details to ensure it's displaying the correct information
 
-        final String chapadr = intent.getStringExtra("chapadr"); // chapter address
-        final String chapname = intent.getStringExtra("chapname"); // chapter name
-        final String chapdir = intent.getStringExtra("chapdir"); // chapter director's name
-        final String chaptel = "Tel: " + (intent.getStringExtra("chaptel")); // chapter telephone
-        final String chapem = "Email: " + (intent.getStringExtra("chapem")); // chapter email
-        final String chapweb = intent.getStringExtra("chapweb"); // chapter website
-        final String chapfb = intent.getStringExtra("chapfb"); // chapter FaceBook
+        chapadr = intent.getStringExtra("chapadr"); // chapter address
+        chapname = intent.getStringExtra("chapname"); // chapter name
+        chapdir = intent.getStringExtra("chapdir"); // chapter director's name
+        chaptel = intent.getStringExtra("chaptel"); // chapter telephone
+        chapem = intent.getStringExtra("chapem"); // chapter email
+        chapweb = intent.getStringExtra("chapweb"); // chapter website
+        chapfb = intent.getStringExtra("chapfb"); // chapter FaceBook
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -67,13 +71,13 @@ public class ChapterDetails extends AppCompatActivity {
         loadBackdrop();
 
         // populate the textviews and imageviews with the specific chapter details
-        //chapName = (TextView) findViewById(chap_name);
+        chapName = (TextView) findViewById(ch_name);
         chapDir = (TextView) findViewById(dir_name);
         chapAddr = (TextView) findViewById(dir_adr);
 
-        //chapName.setText(chapname);
+        chapName.setText(chapname);
         chapAddr.setText(chapadr);
-        chapDir.setText(chapdir);
+        chapDir.setText("Director: " + chapdir);
 
         chapPhone = (ImageView) findViewById(R.id.chap_ph);
         chapEmail = (ImageView) findViewById(R.id.chap_em);
@@ -84,8 +88,26 @@ public class ChapterDetails extends AppCompatActivity {
         chapPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_DIAL, Uri.parse(chaptel));
-                startActivity(browserIntent);
+
+                Log.e(TAG, "Action: callPhone selected.");
+
+                PackageManager pm = getPackageManager();  // need to check to see if device has phone capability
+
+                if (chaptel.isEmpty()){
+                    // Toast to the user that no phone number provided
+                    Toast.makeText(getApplicationContext(), "No phone number provided for this chapter", Toast.LENGTH_LONG).show();
+                    Log.e(TAG, "No phone number for this chapter provided.");
+                } else if (pm.hasSystemFeature(PackageManager.FEATURE_TELEPHONY)){
+                    // Launch if the device has phone capability
+                    Intent browserIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + chaptel));
+                    startActivity(browserIntent);
+                    Log.e(TAG, "Device has phone capability and launching with tel:" + chaptel);
+                } else {
+                    // show the telephone number
+                    Toast.makeText(getApplicationContext(), "Tel: " + chaptel, Toast.LENGTH_LONG).show();
+                    Log.e(TAG, "Device doesn't have phone capability.");
+                }
+
             }
         });
 
@@ -93,15 +115,27 @@ public class ChapterDetails extends AppCompatActivity {
         chapEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://bit.ly/2qU6DKL"));
-                startActivity(browserIntent);
 
-                Intent sendIntent = new Intent(Intent.ACTION_SEND);
-                sendIntent.setType("text/html");
-                sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Message to " + chapname);
-                sendIntent.putExtra(Intent.EXTRA_EMAIL, chapem);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "Dear " + chapdir + ",");
-                startActivity(Intent.createChooser(sendIntent, "Select:"));
+                Log.e(TAG, "Action: sendEmail selected.");
+
+                // first check to make sure that the email field is not null
+                if (chapem.isEmpty()){
+                    // if no email provided then Toast to the user
+                    Toast.makeText(getApplicationContext(), "No email provided by this chapter", Toast.LENGTH_LONG).show();
+                    Log.e(TAG, "No email for this chapter provided.");
+
+                } else {
+                    // launch email with some fields pre-filled
+                    Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                    sendIntent.setType("text/html");
+                    sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Message to " + chapname);
+                    sendIntent.putExtra(Intent.EXTRA_EMAIL, chapem);
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, "Dear " + chapdir + ",");
+                    startActivity(Intent.createChooser(sendIntent, "Select:")); // user should be able to pick which email option
+
+                    Log.e(TAG, "Launched email application to send email to " + chapem);
+                }
+
             }
         });
 
@@ -109,8 +143,22 @@ public class ChapterDetails extends AppCompatActivity {
         chapWebsite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(chapweb));
-                startActivity(browserIntent);
+
+                Log.e(TAG, "Action: visitWeb selected.");
+
+                // first check to make sure that the chapter's website field is not null
+                if (chapweb.isEmpty()){
+                    // if no chapter website, just Toast message to inform the user
+                    Toast.makeText(getApplicationContext(), "No website provided by this chapter", Toast.LENGTH_LONG).show();
+                    Log.e(TAG, "No website for this chapter provided.");
+                } else {
+                    // launch user's web browser with the website
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(chapweb));
+                    startActivity(browserIntent);
+
+                    Log.e(TAG, "Launched web browser for chapter website at " + chapweb);
+                }
+
             }
         });
 
@@ -118,8 +166,23 @@ public class ChapterDetails extends AppCompatActivity {
         chapFace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(chapfb));
-                startActivity(browserIntent);
+                Log.e(TAG, "Action: visitFacebook selected.");
+
+                if (chapfb.isEmpty()){
+
+                    // if no chapter Facebook page, just Toast message to inform the user
+                    Toast.makeText(getApplicationContext(), "No FaceBook link provided by this chapter", Toast.LENGTH_LONG).show();
+                    Log.e(TAG, "No FaceBook link for this chapter provided.");
+
+                } else {
+
+                    // launch user's web browser with the facebook website
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(chapfb));
+                    startActivity(browserIntent);
+
+                    Log.e(TAG, "Launched web browser for chapter's Facebook page at " + chapfb);
+                }
+
             }
         });
 
@@ -130,6 +193,5 @@ public class ChapterDetails extends AppCompatActivity {
         final ImageView imageView = (ImageView) findViewById(R.id.backdrop);
         Glide.with(this).load(EventImages.getRandomImage()).centerCrop().into(imageView);
     }
-
 
 }

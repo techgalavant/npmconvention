@@ -46,5 +46,9 @@
     <string name="see_also">Peter\'s Blog</string>
     <string name="down_file">Download File</string>
     <string name="chap_contact">Chapter Info</string>
+    <string name="chapter_phone">Link to call chapter if the telephone number has been provided.</string>
+    <string name="chapter_email">Link to email the chapter if an email address has been provided.</string>
+    <string name="chapter_website">Link to chapter website if the website address has been provided.</string>
+    <string name="chapter_facebook">Link to the chapter Facebook page if it has been provided.</string>
 
 </resources>

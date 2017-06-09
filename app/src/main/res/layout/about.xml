@@ -96,8 +96,9 @@
 
                     <ImageView
                         android:id="@+id/photo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_gravity="center"
                         android:contentDescription="@string/about_photo"
                         android:paddingTop="2dp"/>
 

@@ -5,24 +5,8 @@
     android:layout_height="match_parent"
     tools:context="com.techgalavant.npmconvention.ProgramFragment">
 
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@color/colorPrimaryDark"
-            android:text="@string/two"
-            android:textColor="#ffffff"
-            android:id="@+id/tv_header"
-            android:textSize="18dp"
-            android:gravity="center"
-            android:layout_below="@+id/btnDownload"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="16dp"></TextView>
-
         <com.github.barteksc.pdfviewer.PDFView
             android:id="@+id/pdfView"
-            android:layout_below="@+id/tv_header"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
