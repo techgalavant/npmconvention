@@ -17,6 +17,19 @@
         android:paddingBottom="3dp"/>
 
     <TextView
+        android:id="@+id/welcominfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/welcome_info"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:layout_below="@+id/npmtitle"
+        android:paddingBottom="2dp"
+        android:padding="5dp"
+        android:layout_margin="5dp"/>
+
+    <TextView
         android:id="@+id/appdate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,7 +37,8 @@
         android:textSize="18sp"
         android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
-        android:layout_below="@+id/npmtitle"
+        android:layout_below="@+id/welcominfo"
+        android:background="@color/updateInfoColor"
         android:paddingBottom="2dp" />
 
     <TextView
@@ -37,7 +51,7 @@
         android:paddingBottom="3dp"
         android:gravity="center_horizontal"
         android:layout_below="@+id/appdate"
-        android:hint="QuickText"
+        android:hint="@string/apdate_hint"
         android:textSize="20sp"/>
 
 

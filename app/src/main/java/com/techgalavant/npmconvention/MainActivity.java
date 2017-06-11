@@ -161,29 +161,22 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new WelcomeFragment(), "WELCOME");
         adapter.addFragment(new ProgramFragment(), "PROGRAM");
         adapter.addFragment(new EventFragment(), "EVENTS");
+
+        // display the tabs if it's enabled on Firebase remote configuration
+        if (mRemoteConfig.getBoolean(maps_tab)) {
+                adapter.addFragment(new MapsFragment(), "MAPS");
+            }
+        if (mRemoteConfig.getBoolean(exhibits_tab)) {
+                adapter.addFragment(new ExhibitsFragment(), "EXHIBITS");
+            }
+
         adapter.addFragment(new ChaptersFragmentMulti(), "CHAPTERS");
         //adapter.addFragment(new ChaptersFragment(), "CHAPTERS");
         //adapter.addFragment(new ChaptersFragmentFromUrl(), "CHAPTERS");
 
-        // Firebase remote management will not work on Kindle Fire, so display all tabs by default
-        if (isKindleFire()) {
-            adapter.addFragment(new MapsFragment(), "MAPS");
-            adapter.addFragment(new ExhibitsFragment(), "EXHIBITS");
+        // start displaying the different tabs in the viewPager
+        viewPager.setAdapter(adapter);
         }
-
-        // display the tabs if it's enabled on Firebase remote configuration
-        else {
-            if (mRemoteConfig.getBoolean(maps_tab)) {
-                adapter.addFragment(new MapsFragment(), "MAPS");
-            }
-            if (mRemoteConfig.getBoolean(exhibits_tab)) {
-                adapter.addFragment(new ExhibitsFragment(), "EXHIBITS");
-            }
-
-            // start displaying the different tabs in the viewPager
-            viewPager.setAdapter(adapter);
-        }
-    }
 
     // Used to retrieve the remote configs and compare against local remote config files
     private void fetchRemoteConfigs() {
@@ -254,14 +247,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // The app should run on the Kindle Fire which has an older version of Android.
-    // Firebase remote config will not run on these older models.
-    // This is a check to determine if the app is on a Kindle Fire
-    public static boolean isKindleFire() {
-        return android.os.Build.MANUFACTURER.equals("Amazon")
-                && (android.os.Build.MODEL.equals("Kindle Fire")
-                || android.os.Build.MODEL.startsWith("KF"));
-    }
 
     // Used for ShakerListener and detect if app is first run
     @Override

@@ -55,7 +55,7 @@ public class EventDetails extends AppCompatActivity {
     long eTime; // event end time in milliseconds
 
     // used for sending event feedback
-    private Button mashIt_btn, cancelIt_btn, clearIt_btn;
+    private Button mashIt_btn, clearIt_btn;
     private EditText inWord1, inWord2;
     private DatabaseReference myFeedback;
 
@@ -74,6 +74,11 @@ public class EventDetails extends AppCompatActivity {
         final String eventTitle = intent.getStringExtra("name");
         final String eventDesc = intent.getStringExtra("description");
         String eventPresent = intent.getStringExtra("presented");
+
+        if (eventPresent.isEmpty()){
+            eventPresent = "Not Available";
+        }
+
         String eventTime = (intent.getStringExtra("day")) + " " + (intent.getStringExtra("start")) + " to " + (intent.getStringExtra("finish")); // Used to display in the TextView
         String eventMap = intent.getStringExtra("map");
         final String eventRoom = "Room: " + (intent.getStringExtra("room"));
@@ -120,7 +125,6 @@ public class EventDetails extends AppCompatActivity {
 
         mashIt_btn = (Button) findViewById(R.id.mashIt);
         clearIt_btn = (Button) findViewById(R.id.clearIt);
-        cancelIt_btn = (Button) findViewById(R.id.cxlIt);
 
         evtTitle.setText(eventTitle);
         evtDesc.setText(eventDesc);
@@ -132,7 +136,7 @@ public class EventDetails extends AppCompatActivity {
         // Use a sample map for the time being
         evtMap.setImageResource(R.drawable.sample_map);
 
-        /*if (eventMap.contains("Convention")) {
+       /* if (eventMap.contains("Convention")) {
             evtMap.setImageResource(R.drawable.sample_map2);
         } else if (eventMap.contains("Registration")) {
             evtMap.setImageResource(R.drawable.sample_map);
@@ -222,16 +226,6 @@ public class EventDetails extends AppCompatActivity {
             }
         });
 
-        // Cancel this and go back to EventFragment
-        cancelIt_btn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Log.e(TAG, "User elected to cancel.");
-                Intent intent = new Intent(EventDetails.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
 
     }
         // Creates a new list of feedback words in the Firebase Database

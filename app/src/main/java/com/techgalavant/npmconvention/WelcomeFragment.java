@@ -29,7 +29,7 @@ public class WelcomeFragment extends Fragment{
 
     private static final String TAG = WelcomeFragment.class.getSimpleName();
 
-    private TextView txtMsg, tvDate;
+    private TextView txtWelcom, txtMsg, tvDate;
 
     // String hermosa = getResources().getString(R.string.hermosa); // causes a problem for Fragments -- See http://stackoverflow.com/questions/28672883/java-lang-illegalstateexception-fragment-not-attached-to-activity
     private String hermosa = "chucknorrisrules"; // used to display messages on WelcomeFragment
@@ -55,6 +55,9 @@ public class WelcomeFragment extends Fragment{
         DatabaseReference myRef = MyFirebaseUtil.getDatabase().getReference(hermosa);
         DatabaseReference myMesg = myRef.child("Feedback");
         DatabaseReference mesgTime = myRef.child("Contact");
+
+        // Show a friendly message about the screen's purpose
+        txtWelcom = (TextView) rootView.findViewById(R.id.welcominfo);
 
         // Show a friendly date and time to the user
         tvDate = (TextView) rootView.findViewById(R.id.appdate); // Shows the time for the most recent message

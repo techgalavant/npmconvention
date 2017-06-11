@@ -278,15 +278,6 @@
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                         android:textStyle="normal|bold" />
 
-                    <Button
-                        android:id="@+id/cxlIt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/clearIt"
-                        android:fontFamily="casual"
-                        android:text="Cancel"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                        android:textStyle="normal|bold" />
 
                 </RelativeLayout>
 
@@ -295,7 +286,6 @@
             </android.support.v7.widget.CardView>
 
         </LinearLayout>
-
 
     </android.support.v4.widget.NestedScrollView>
 
