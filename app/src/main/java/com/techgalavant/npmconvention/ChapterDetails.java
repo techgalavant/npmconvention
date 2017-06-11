@@ -44,7 +44,7 @@ public class ChapterDetails extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        // get the event list items from ChaptersFragment
+        // get the chapter list items from ChaptersFragment
         String complete_chapter = (intent.getStringExtra("complete_chapter"));
         Log.e(TAG, "Chapter-specific detail for the list item - " + complete_chapter); // Log the chapter details to ensure it's displaying the correct information
 

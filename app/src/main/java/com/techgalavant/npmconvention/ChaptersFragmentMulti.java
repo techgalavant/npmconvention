@@ -5,6 +5,7 @@ package com.techgalavant.npmconvention;
  *
  * The purpose of this fragment is to display contact information for the chapters across the country.
  * Users will click on the chapter info and then be brought to a chapter details page.
+ * The second listview is supposed to represent how to setup a chapter.
  *
  * Credits
  *  - JSON Parsing Tutorial - http://www.androidhive.info/2012/01/android-json-parsing-tutorial/
@@ -43,12 +44,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static com.techgalavant.npmconvention.R.id.list2;
 
-public class ChaptersFragment extends Fragment implements View.OnClickListener{
-    public static final String TAG = ChaptersFragment.class.getSimpleName();
+
+public class ChaptersFragmentMulti extends Fragment implements View.OnClickListener{
+    public static final String TAG = ChaptersFragmentMulti.class.getSimpleName();
 
     // Listview to show the chapters
     private ListView lv;
+    private ListView lv2;
 
     //Buttons
     private Button btnDownload;
@@ -61,8 +65,9 @@ public class ChaptersFragment extends Fragment implements View.OnClickListener{
     File localFile = new File(Environment.getExternalStorageDirectory()+jsonDir, jsonFile);
 
     ArrayList<HashMap<String, String>> chapterList = new ArrayList<>();
+    ArrayList<HashMap<String, String>> chapterInfoList = new ArrayList<>();
 
-    public ChaptersFragment() {
+    public ChaptersFragmentMulti() {
         // Required empty public constructor
     }
 
@@ -84,13 +89,15 @@ public class ChaptersFragment extends Fragment implements View.OnClickListener{
                 Log.e(TAG, "Found " + jsonFile + " in " + jsonDir + ".");
 
                 // Display the chapters if the chapters JSON file has already been downloaded
-                View rootView = inflater.inflate(R.layout.chapters_frag, container, false);
+                View rootView = inflater.inflate(R.layout.chapters_multi_frag, container, false);
 
                 // populate the JSON file into an arraylist
                 chapterList = new ArrayList<>();
+                chapterInfoList = new ArrayList<>();
 
                 // Used to show the chapters in a listview
                 lv = (ListView) rootView.findViewById(R.id.list);
+                lv2 = (ListView) rootView.findViewById(list2);
 
                 // Display the list of chapters
                 displayFile();
@@ -157,6 +164,7 @@ public class ChaptersFragment extends Fragment implements View.OnClickListener{
 
             // Getting JSON Array node
             JSONArray chapters = jsonObj.getJSONArray("list"); // "list" is the node in the JSON file
+            JSONArray chaptersinfo = jsonObj.getJSONArray("headers"); // "list" is the node in the JSON file
 
             // populate the array nodes into a hashmap
             for (int i = 0; i < chapters.length(); i++) {
@@ -185,6 +193,30 @@ public class ChaptersFragment extends Fragment implements View.OnClickListener{
                 // add the chapter into the chapter list
                 chapterList.add(chapter);
             }
+            // populate the 2nd array nodes into a hashmap
+            for (int j = 0; j < chaptersinfo.length(); j++) {
+
+                JSONObject ci = chaptersinfo.getJSONObject(j);
+
+                String chap1 = ci.getString("Nat'l Committee on Chapters.");
+                String chap2 = ci.getString("Chapters @ Convention.");
+                String chap3 = ci.getString("How to Form a Chapter.");
+                String chap4 = ci.getString("Become a Chapter Member.");
+                String chap5 = ci.getString("Purpose of NPM Chapters.");
+
+                // the hash map for single chapter
+                HashMap<String, String> chapterinfo = new HashMap<>();
+
+                // add each child node to HashMap key => value
+                chapterinfo.put("chap1", chap1);
+                chapterinfo.put("chap2", chap2);
+                chapterinfo.put("chap3", chap3);
+                chapterinfo.put("chap4", chap4);
+                chapterinfo.put("chap5", chap5);
+
+                // add the chapter into the chapter list
+                chapterInfoList.add(chapterinfo);
+            }
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -199,8 +231,16 @@ public class ChaptersFragment extends Fragment implements View.OnClickListener{
                 new String[]{"chapname"},
                 new int[]{R.id.chap_name});
 
+        // use this adaptor to show the chapter setup instructions list item on listchaptrsetupitem.xml
+        ListAdapter adapter2 = new SimpleAdapter(
+                getActivity().getApplicationContext(), chapterInfoList,
+                R.layout.listchaptrsetupitem,
+                new String[]{"chap5"},
+                new int[]{R.id.chap_instruct});
+
         // List chapter adaptor
         lv.setAdapter(adapter);
+        lv2.setAdapter(adapter2);
 
         // set on click listener
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -222,7 +262,26 @@ public class ChaptersFragment extends Fragment implements View.OnClickListener{
 
         });
 
+        // set on click listener
+        lv2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+
+                // Take the chapter strings from listview position and populate them in ChapterDetails.java
+                Intent intent = new Intent(getActivity(), ChapterSetup.class);
+                intent.putExtra("complete_chapter_info", parent.getItemAtPosition(position).toString()); // Pass the entire chapter info so I can check it in ChapterDetails
+                intent.putExtra("chap1", ((HashMap<String, String>) lv2.getAdapter().getItem((int)id)).get("chap1"));
+                intent.putExtra("chap2", ((HashMap<String, String>) lv2.getAdapter().getItem((int)id)).get("chap2"));
+                intent.putExtra("chap3", ((HashMap<String, String>) lv2.getAdapter().getItem((int)id)).get("chap3"));
+                intent.putExtra("chap4", ((HashMap<String, String>) lv2.getAdapter().getItem((int)id)).get("chap4"));
+                intent.putExtra("chap5", ((HashMap<String, String>) lv2.getAdapter().getItem((int)id)).get("chap5"));
+                startActivity(intent);
+            }
+
+        });
+
     }
+
 
     @Override
     public void onClick(View view) {

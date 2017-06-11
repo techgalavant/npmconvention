@@ -74,7 +74,7 @@ public class SendFeedback extends AppCompatActivity {
             clearIt_btn = (Button) findViewById(R.id.clearIt);
             cancelIt_btn = (Button) findViewById(R.id.cxlIt);
 
-            // Store the Words in Firebase and passes the words via intent to display the story
+            // Store the app feedback in Firebase
             mashIt_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

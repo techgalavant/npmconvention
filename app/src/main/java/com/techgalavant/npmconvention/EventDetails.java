@@ -12,20 +12,29 @@ package com.techgalavant.npmconvention;
  * Collapsible view & card layout credit to CheeseSquare - - https://github.com/chrisbanes/cheesesquare
  */
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -45,6 +54,10 @@ public class EventDetails extends AppCompatActivity {
     long sTime; // event start time in milliseconds
     long eTime; // event end time in milliseconds
 
+    // used for sending event feedback
+    private Button mashIt_btn, cancelIt_btn, clearIt_btn;
+    private EditText inWord1, inWord2;
+    private DatabaseReference myFeedback;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -103,6 +116,11 @@ public class EventDetails extends AppCompatActivity {
         evtTime = (TextView) findViewById(R.id.event_time);
         evtRoom = (TextView) findViewById(R.id.room);
         evtMap = (ImageView) findViewById(R.id.map_location);
+        inWord1 = (EditText) findViewById(R.id.survey1);
+
+        mashIt_btn = (Button) findViewById(R.id.mashIt);
+        clearIt_btn = (Button) findViewById(R.id.clearIt);
+        cancelIt_btn = (Button) findViewById(R.id.cxlIt);
 
         evtTitle.setText(eventTitle);
         evtDesc.setText(eventDesc);
@@ -151,7 +169,115 @@ public class EventDetails extends AppCompatActivity {
                 startActivity(calIntent);
             }
         });
+
+        // Store the feedback on the event in Firebase
+        mashIt_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String Feedback = inWord1.getText().toString();
+                myFeedback = MyFirebaseUtil.getDatabase().getReference(eventId);
+
+                Log.e(TAG, "Firebase reference is set to " + myFeedback);
+
+                // Create a new list of items to be stored.
+                createList(eventTitle, Feedback);
+
+                // Launch an AlertDialog box to post a confirmation message
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(EventDetails.this);
+
+                // Set Dialog box title
+                alertDialog.setTitle("Thank You!");
+
+                // Set Dialog message
+                alertDialog.setMessage("Your feedback has been captured.");
+
+                // Sets icon in the AlertDialog window
+                alertDialog.setIcon(R.drawable.ic_mesg);
+
+                // Sets operation for when "Close" button is selected
+                alertDialog.setNegativeButton("CLOSE", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Close the AlertDialog box and return to MainActivity
+                        Log.e(TAG, "User selected CLOSE button on AlertDialog in EventDetails.java");
+                        // dialog.cancel();
+                        Intent intent = new Intent(EventDetails.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                });
+
+                // Show AlertDialog box
+                alertDialog.show();
+
+            }
+
+        });
+
+        // Clear the feedback form
+        clearIt_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                inWord1.setText("");
+                Log.e(TAG, "clearIt_btn was used to reset entries");
+            }
+        });
+
+        // Cancel this and go back to EventFragment
+        cancelIt_btn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Log.e(TAG, "User elected to cancel.");
+                Intent intent = new Intent(EventDetails.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
+        // Creates a new list of feedback words in the Firebase Database
+        private void createList(String EventTitle, String Feedback) {
+
+            Survey survey = new Survey(EventTitle, Feedback);
+
+            myFeedback.setValue(survey);
+
+            addWordChangeListener();
+        }
+
+        // Updates the list of feedback words in the Firebase Database
+        private void updateList(String EventTitle, String Feedback) {
+
+            if (!TextUtils.isEmpty(EventTitle))
+                myFeedback.child("EventTitle").setValue(EventTitle);
+            if (!TextUtils.isEmpty(Feedback))
+                myFeedback.child("Feedback").setValue(Feedback);
+        }
+
+        private void addWordChangeListener() {
+            // User data change listener
+            myFeedback.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Survey survey = dataSnapshot.getValue(Survey.class);
+
+                    // Check for null
+                    if (survey == null) {
+                        Log.e(TAG, "No feedback has been found.");
+                        return;
+                    } else {
+
+                        Log.e(TAG, "Feedback was updated.");
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    // Failed to read value
+                    Log.e(TAG, "Database error. See onCancelled", error.toException());
+                }
+            });
+        }
 
     // Takes random images from EventImages class and uses it for the backdrop on the top
     private void loadBackdrop() {
@@ -166,6 +292,7 @@ public class EventDetails extends AppCompatActivity {
         //getMenuInflater().inflate(R.menu.sample_actions, menu);
         return true;
     }
-
-
 }
+
+
+

@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
                             // Launch feedback form - SendFeedback
                             Intent intent = new Intent(MainActivity.this, SendFeedback.class);
                             startActivity(intent);
-                            Log.e(TAG, "User selected YES on AlertDialog");
+                            Log.e(TAG, "User selected YES to SendFeedback AlertDialog");
                         }
                     });
 
@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                     alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // Close the AlertDialog box
-                            Log.e(TAG, "User selected NO on AlertDialog");
+                            Log.e(TAG, "User selected NO on SendFeedback AlertDialog");
                             dialog.cancel();
                         }
                     });
@@ -161,11 +161,13 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new WelcomeFragment(), "WELCOME");
         adapter.addFragment(new ProgramFragment(), "PROGRAM");
         adapter.addFragment(new EventFragment(), "EVENTS");
+        adapter.addFragment(new ChaptersFragmentMulti(), "CHAPTERS");
+        //adapter.addFragment(new ChaptersFragment(), "CHAPTERS");
+        //adapter.addFragment(new ChaptersFragmentFromUrl(), "CHAPTERS");
 
         // Firebase remote management will not work on Kindle Fire, so display all tabs by default
         if (isKindleFire()) {
             adapter.addFragment(new MapsFragment(), "MAPS");
-            adapter.addFragment(new ChaptersFragment(), "CHAPTERS");
             adapter.addFragment(new ExhibitsFragment(), "EXHIBITS");
         }
 
@@ -173,9 +175,6 @@ public class MainActivity extends AppCompatActivity {
         else {
             if (mRemoteConfig.getBoolean(maps_tab)) {
                 adapter.addFragment(new MapsFragment(), "MAPS");
-            }
-            if (mRemoteConfig.getBoolean(chapters_tab)) {
-                adapter.addFragment(new ChaptersFragment(), "CHAPTERS");
             }
             if (mRemoteConfig.getBoolean(exhibits_tab)) {
                 adapter.addFragment(new ExhibitsFragment(), "EXHIBITS");

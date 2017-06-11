@@ -50,5 +50,14 @@
     <string name="chapter_email">Link to email the chapter if an email address has been provided.</string>
     <string name="chapter_website">Link to chapter website if the website address has been provided.</string>
     <string name="chapter_facebook">Link to the chapter Facebook page if it has been provided.</string>
+    <string name="chap_1">National Committee on Chapters</string>
+    <string name="chap_2">Chapters at Convention</string>
+    <string name="chap_3">How To Form A Chapter</string>
+    <string name="chap_4">Become A Chapter Member</string>
+    <string name="chap_5">Purpose of NPM Chapters</string>
+    <string name="chap_setup_info">Chapter Info</string>
+    <string name="evt_survey">Survey</string>
+    <string name="evt_survey_ask">If you attended this event, please provide us with some quick feedback on it.</string>
+    <string name="evt_feedback_form">Comments</string>
 
 </resources>
