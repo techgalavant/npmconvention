@@ -22,7 +22,7 @@ import com.bumptech.glide.Glide;
 public class About extends AppCompatActivity {
     private static final String TAG = About.class.getSimpleName();
 
-    TextView tvAbout, tvContact, tvWeb, tvPrivacy;
+    TextView tvAbout, tvContact, tvWeb, tvPrivacy, tvCaption;
     ImageView ivPhoto, ivWeb, ivDH;
 
     @Override
@@ -43,6 +43,7 @@ public class About extends AppCompatActivity {
         tvContact = (TextView) findViewById(R.id.contact);
         tvWeb = (TextView) findViewById(R.id.website);
         tvPrivacy = (TextView) findViewById(R.id.privacy);
+        tvCaption = (TextView) findViewById(R.id.photo_caption);
 
         final String title = getResources().getString(R.string.about);  // title
         final String info = getResources().getString(R.string.info);  // info about Tech Galavant
@@ -63,6 +64,7 @@ public class About extends AppCompatActivity {
         tvContact.setText(contact);
         tvWeb.setText(website);
         tvPrivacy.setText(privacy);
+        tvCaption.setText(getResources().getString(R.string.photocaption));
 
         // if the user clicks on the logo, then launch web browser and bring them to my blog
         ivWeb.setOnClickListener(new View.OnClickListener() {

@@ -104,13 +104,14 @@
 
                     <TextView
                         android:id="@+id/photo_caption"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@string/photocaption"
                         android:paddingBottom="2dp"
                         android:textColor="#5d5d5d"
                         android:textStyle="italic"
                         android:textSize="13sp"
+                        android:layout_gravity="center_horizontal"
                         android:paddingLeft="2dp"/>
 
                 </LinearLayout>
