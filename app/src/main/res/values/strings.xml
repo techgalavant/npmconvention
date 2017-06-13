@@ -61,5 +61,6 @@
     <string name="evt_feedback_form">Comments</string>
     <string name="welcome_info">Be sure to check this screen occasionally as key announcements and last minute changes may appear here.</string>
     <string name="apdate_hint">No Updates Today</string>
+    <string name="photocaption">Peter and Mike</string>
 
 </resources>

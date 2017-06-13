@@ -68,7 +68,7 @@ public class About extends AppCompatActivity {
         ivWeb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.techgalavant.com"));
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.techgalavant.com"));
                 startActivity(browserIntent);
             }
         });
@@ -77,7 +77,7 @@ public class About extends AppCompatActivity {
         tvPrivacy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://bit.ly/2qU6DKL"));
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.brockmann.com/digitalhermosa/privacy.html"));
                 startActivity(browserIntent);
             }
         });

@@ -170,8 +170,7 @@ public class MainActivity extends AppCompatActivity {
                 adapter.addFragment(new ExhibitsFragment(), "EXHIBITS");
             }
 
-        adapter.addFragment(new ChaptersFragmentMulti(), "CHAPTERS");
-        //adapter.addFragment(new ChaptersFragment(), "CHAPTERS");
+        adapter.addFragment(new ChaptersFragment(), "CHAPTERS");
         //adapter.addFragment(new ChaptersFragmentFromUrl(), "CHAPTERS");
 
         // start displaying the different tabs in the viewPager

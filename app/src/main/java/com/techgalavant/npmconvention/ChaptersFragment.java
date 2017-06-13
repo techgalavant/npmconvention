@@ -84,7 +84,7 @@ public class ChaptersFragment extends Fragment implements View.OnClickListener{
                 Log.e(TAG, "Found " + jsonFile + " in " + jsonDir + ".");
 
                 // Display the chapters if the chapters JSON file has already been downloaded
-                View rootView = inflater.inflate(R.layout.chapters_frag, container, false);
+                View rootView = inflater.inflate(R.layout.chapters_multi_frag, container, false);
 
                 // populate the JSON file into an arraylist
                 chapterList = new ArrayList<>();
