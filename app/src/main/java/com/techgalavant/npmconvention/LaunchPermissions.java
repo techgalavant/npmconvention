@@ -69,6 +69,11 @@ public class LaunchPermissions extends AppCompatActivity implements View.OnClick
     private String jsonChapFile = "Chapters_NPM.json"; // the name of the actual file
     File JSONChapFile = new File(Environment.getExternalStorageDirectory()+jsonDir, jsonChapFile);
 
+    // Download the Chapters Manual PDF file
+    private DownloadManager dmcm;
+    private String pdfChapFile = "NPMChapterManual.pdf"; // the name of the actual file
+    File PDFChapFile = new File(Environment.getExternalStorageDirectory()+pdfDir, pdfChapFile);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -199,6 +204,7 @@ public class LaunchPermissions extends AppCompatActivity implements View.OnClick
     // Download the files needed for the app to perform it's operations
     private void downloadFiles(){
 
+        // Main Program file
         if (PDFFile.exists()){
 
             Log.e(TAG, "PDF Programs file exists already.");
@@ -220,6 +226,7 @@ public class LaunchPermissions extends AppCompatActivity implements View.OnClick
             Snackbar.make(view, "Downloading files started", Snackbar.LENGTH_LONG).show();
         }
 
+        // Events JSON file
         if (JSONFile.exists()){
 
             Log.e(TAG, "Events JSON file exists already.");
@@ -240,6 +247,7 @@ public class LaunchPermissions extends AppCompatActivity implements View.OnClick
             Snackbar.make(view, "Downloading files started", Snackbar.LENGTH_LONG).show();
         }
 
+        // Chapter JSON file
         if (JSONChapFile.exists()){
 
             Log.e(TAG, "Chapters JSON file exists already.");
@@ -260,7 +268,28 @@ public class LaunchPermissions extends AppCompatActivity implements View.OnClick
             Snackbar.make(view, "Downloading files started", Snackbar.LENGTH_LONG).show();
         }
 
-        if (PDFFile.exists() && JSONFile.exists() && JSONChapFile.exists()){
+        // Chapter Manual
+        if (PDFChapFile.exists()){
+
+            Log.e(TAG, "NPM Chapter Manual PDF file exists already.");
+
+        } else {
+            // download the JSON file
+            dmcm = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+            // Location of the  JSON file to be downloaded
+            Uri uri4 = Uri.parse("https://firebasestorage.googleapis.com/v0/b/npm-convention.appspot.com/o/NPMChapterManual.pdf?alt=media&token=7a9fb9ff-cb92-442e-9075-8a1c777782ac");
+            DownloadManager.Request request4 = new DownloadManager.Request(uri4);
+            request4.setDestinationInExternalPublicDir(pdfDir,pdfChapFile);
+            request4.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+            request4.setTitle(pdfChapFile);
+            Long reference4 = dmcm.enqueue(request4);
+
+            Log.e(TAG, "Downloading NPM Chapter Manual PDF file.");
+
+            Snackbar.make(view, "Downloading files started", Snackbar.LENGTH_LONG).show();
+        }
+
+        if (PDFFile.exists() && JSONFile.exists() && JSONChapFile.exists() && PDFChapFile.exists()){
             Log.e(TAG, "All downloaded files are present.");
 
             // if they have all the downloaded files then you can set this to false

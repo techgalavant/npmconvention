@@ -57,5 +57,11 @@
 		"subName": "",
 		"imageName": "2016exhibits.png",
 		"sequence": 5
+	},
+	{
+		"name": "Millennium Hotel Second Floor",
+		"subName": "Cantor Certifications & Selected Meeting Room",
+		"imageName": "millennium_cin2.png",
+		"sequence": 7
 	}
 ]}

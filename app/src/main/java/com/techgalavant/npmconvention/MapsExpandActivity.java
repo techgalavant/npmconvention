@@ -49,14 +49,17 @@ public class MapsExpandActivity extends AppCompatActivity {
         mapTitle.setText(mapName);
 
         if (mapFile.contains("level1")) {
-            evtMap.setImageResource(R.drawable.cincinnati_level1_sml);
-            Log.e(TAG, mapFile + " - Mapped to cincinnati_level1_sml");
+            evtMap.setImageResource(R.drawable.cincinnati_level1);
+            Log.e(TAG, mapFile + " - Mapped to cincinnati_level1");
         } else if (mapFile.contains("level2")) {
-            evtMap.setImageResource(R.drawable.cincinnati_level2_sml);
-            Log.e(TAG, mapFile + " - Mapped to cincinnati_level2_sml");
+            evtMap.setImageResource(R.drawable.cincinnati_level2);
+            Log.e(TAG, mapFile + " - Mapped to cincinnati_level2");
         } else if (mapFile.contains("level3")) {
-            evtMap.setImageResource(R.drawable.cincinnati_level3_sml);
-            Log.e(TAG, mapFile + " - Mapped to cincinnati_level3_sml");
+            evtMap.setImageResource(R.drawable.cincinnati_level3);
+            Log.e(TAG, mapFile + " - Mapped to cincinnati_level3");
+        }  else if (mapFile.contains("cin2")) {
+            evtMap.setImageResource(R.drawable.millennium_cin2);
+            Log.e(TAG, mapFile + " - Mapped to millennium_cin2");
         } else {
             evtMap.setImageResource(R.drawable.sample_map);
             Log.e(TAG, mapFile + " - Mapped to sample_map");
