@@ -50,9 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
     // The following are related to the Firebase Remote Config
     private FirebaseRemoteConfig mRemoteConfig;
-    private static final String chapters_tab = "is_chapters_on";
     private static final String exhibits_tab = "is_exhibits_on";
-    private static final String sponsors_tab = "is_sponsors_on";
     private static final String maps_tab = "is_maps_on";
 
     // The following are used for the shake detection
@@ -262,7 +260,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
 
             // commit () or apply () to Shared Preferences
-            prefs.edit().putBoolean("firstrun", false).commit();  // https://developer.android.com/reference/android/content/SharedPreferences.Editor.html#apply()
+            //prefs.edit().putBoolean("firstrun", false).apply();  // https://developer.android.com/reference/android/content/SharedPreferences.Editor.html#apply()
         }
 
     }

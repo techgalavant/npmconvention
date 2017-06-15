@@ -123,7 +123,6 @@ public class ProgramFragment extends Fragment implements View.OnClickListener,On
                 .load();
     }
 
-
     @Override
     public void onPageChanged(int page, int pageCount) {
         pageNumber = page+1;
@@ -178,6 +177,8 @@ public class ProgramFragment extends Fragment implements View.OnClickListener,On
             }
         }
     }
+
+
 
 }
 

@@ -80,7 +80,7 @@ public class EventDetails extends AppCompatActivity {
         }
 
         String eventTime = (intent.getStringExtra("day")) + " " + (intent.getStringExtra("start")) + " to " + (intent.getStringExtra("finish")); // Used to display in the TextView
-        String eventMap = intent.getStringExtra("map");
+        final String eventMap = intent.getStringExtra("map");
         final String eventRoom = "Room: " + (intent.getStringExtra("room"));
         final String event_start = intent.getStringExtra("start_mills"); // used to convert to milliseconds for adding to the Google Calendar
         final String event_end = intent.getStringExtra("end_mills"); // used to convert to milliseconds for adding to the Google Calendar
@@ -102,6 +102,7 @@ public class EventDetails extends AppCompatActivity {
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        assert getSupportActionBar() != null;
 
         // Let the user use their own back button to return to EventFragment rather than showing a back arrow in the image.
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
@@ -132,19 +133,46 @@ public class EventDetails extends AppCompatActivity {
         evtTime.setText(eventTime);
         evtRoom.setText(eventRoom);
 
-        // TODO locate map from string
+        // TODO modify with this years maps
         // Use a sample map for the time being
-        evtMap.setImageResource(R.drawable.sample_map);
+        //evtMap.setImageResource(R.drawable.sample_map);
 
-       /* if (eventMap.contains("Convention")) {
-            evtMap.setImageResource(R.drawable.sample_map2);
-        } else if (eventMap.contains("Registration")) {
+       if (eventMap.contains("hotel4")) {
+           evtMap.setImageResource(R.drawable.cincinnati_level1_sml);
+           Log.e(TAG, eventMap + " - Mapped to cincinnati_level1_sml");
+        } else if (eventMap.contains("hotel2")) {
             evtMap.setImageResource(R.drawable.sample_map);
+           Log.e(TAG, eventMap + " - Mapped to sample_map");
         } else if (eventMap.contains("Hilton Hotel")) {
             evtMap.setImageResource(R.drawable.sample_map3);
+           Log.e(TAG, eventMap + " - Mapped to sample_map3");
         } else {
             evtMap.setImageResource(R.drawable.sample_map4);
-        }*/
+           Log.e(TAG, eventMap + " - Mapped to sample_map4");
+        }
+
+        evtMap.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                Log.e(TAG, "User clicked on map image in EventDetails");
+
+                // first check to make sure that the chapter's website field is not null
+                if (eventMap.isEmpty()){
+                    // if no map is provided
+                    // Toast.makeText(getApplicationContext(), "No website provided by this chapter", Toast.LENGTH_LONG).show();
+                    Log.e(TAG, "No map indicated in eventMap.");
+                } else {
+                    // launch user's web browser with the website
+
+                   // Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(chapweb));
+                    //startActivity(browserIntent);
+
+                    Log.e(TAG, "Launched " + eventMap + " in new intent");
+                }
+
+            }
+        });
+
 
         // Use a FAB to add the event to the user's favorites or to their Google calendar
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

@@ -5,12 +5,10 @@
     android:layout_height="match_parent"
     tools:context="com.techgalavant.npmconvention.MapsFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <ListView
+        android:id="@+id/maplist1"
         android:layout_height="wrap_content"
-        android:text="@string/four"
-        android:textSize="40dp"
-        android:textStyle="bold"
-        android:layout_centerInParent="true"/>
+        android:layout_width="match_parent">
+    </ListView>
 
 </RelativeLayout>

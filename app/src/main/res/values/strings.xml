@@ -62,5 +62,5 @@
     <string name="welcome_info">Be sure to check this screen occasionally as key announcements and last minute changes may appear here.</string>
     <string name="apdate_hint">No Updates Today</string>
     <string name="photocaption">Peter and Mike</string>
-
+    <string name="map_image_info">Shows a map of the convention area</string>
 </resources>

@@ -42,6 +42,7 @@ public class EventImages {
         }
     }
 
+    // not used; I was going to implement this on the About.java class
     public static int getAboutImage() {
         switch (RANDOM.nextInt(4)) {
             default:

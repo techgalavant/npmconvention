@@ -57,8 +57,8 @@ public class ChaptersFragment extends Fragment implements View.OnClickListener{
     // A download manager is used to download a file from a URL onto the device
     DownloadManager downloadManager;
     private String jsonDir = "/NPM"; // the name of the directory to store the file
-    private String jsonFile = "Chapters_NPM.json"; // the name of the actual file
-    File localFile = new File(Environment.getExternalStorageDirectory()+jsonDir, jsonFile);
+    private String jsonChapFile = "Chapters_NPM.json"; // the name of the actual file
+    File localFile = new File(Environment.getExternalStorageDirectory()+jsonDir, jsonChapFile);
 
     ArrayList<HashMap<String, String>> chapterList = new ArrayList<>();
 
@@ -81,7 +81,7 @@ public class ChaptersFragment extends Fragment implements View.OnClickListener{
 
         try {
             if (localFile.exists()) {
-                Log.e(TAG, "Found " + jsonFile + " in " + jsonDir + ".");
+                Log.e(TAG, "Found " + jsonChapFile + " in " + jsonDir + ".");
 
                 // Display the chapters if the chapters JSON file has already been downloaded
                 View rootView = inflater.inflate(R.layout.chapters_multi_frag, container, false);
@@ -99,7 +99,7 @@ public class ChaptersFragment extends Fragment implements View.OnClickListener{
 
             } else {
                 // show screen with download button
-                Log.e(TAG, jsonFile + " not found at " + jsonDir);
+                Log.e(TAG, jsonChapFile + " not found at " + jsonDir);
 
                 // Display the fragment with the download buttons
                 View rootView = inflater.inflate(R.layout.chapter_frag, container, false);
@@ -235,9 +235,9 @@ public class ChaptersFragment extends Fragment implements View.OnClickListener{
 
             DownloadManager.Request request = new DownloadManager.Request(uri);
 
-            request.setDestinationInExternalPublicDir(jsonDir,jsonFile);
+            request.setDestinationInExternalPublicDir(jsonDir,jsonChapFile);
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-            request.setTitle(jsonFile);
+            request.setTitle(jsonChapFile);
             Long reference = downloadManager.enqueue(request);
         }
         // View the downloaded file which has already been stored locally on the user's device

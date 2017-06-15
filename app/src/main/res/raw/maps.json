@@ -1,0 +1,61 @@
+{"maps":[{
+		"name": "Duke Energy Convention Center",
+		"subName": "Home of the 2017 NPM Convention",
+		"latitude": 39.1012,
+		"longitude": -84.518,
+		"street": "525 Elm St",
+		"city": "Cincinnati",
+		"state": "OH",
+		"zip": "45202",
+		"country": "US",
+		"sequence": 1
+	},
+	{
+		"name": "Cincinnati Airport",
+		"subName": "Safe journeys everyone!",
+		"latitude": 39.0533,
+		"longitude": -84.663,
+		"street": "3087 Terminal Dr",
+		"city": "Hebron",
+		"state": "KY",
+		"zip": "41048",
+		"country": "US",
+		"sequence": 7
+	},
+	{
+		"name": "St Peter in Chains Cathedral",
+		"subName": "Mother Church of Archdiocese of Cincinnati",
+		"latitude": 39.1035,
+		"longitude": -84.5196,
+		"street": "325 W 8th St",
+		"city": "Cincinnati",
+		"state": "OH",
+		"zip": "45202",
+		"country": "US",
+		"sequence": 6
+	},
+	{
+		"name": "Duke Energy First Floor",
+		"subName": "Exhibit Hall",
+		"imageName": "Cincinnati_level1.png",
+		"sequence": 2
+	},
+	{
+		"name": "Duke Energy Second Floor",
+		"subName": "Meeting Rooms",
+		"imageName": "Cincinnati_level2.png",
+		"sequence": 3
+	},
+	{
+		"name": "Duke Energy Third Floor",
+		"subName": "Ballrooms",
+		"imageName": "Cincinnati_level3.png",
+		"sequence": 4
+	},
+	{
+		"name": "NPM Exhibit Hall",
+		"subName": "",
+		"imageName": "2016exhibits.png",
+		"sequence": 5
+	}
+]}

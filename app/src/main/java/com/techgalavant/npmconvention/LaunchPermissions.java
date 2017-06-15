@@ -14,6 +14,7 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -44,6 +45,8 @@ public class LaunchPermissions extends AppCompatActivity implements View.OnClick
     private View view;
     private TextView txtPurpose;
 
+    SharedPreferences prefs; // used to answer whether this is the first-time the app is being run
+
     private String togglebtn; // use to display text on conditions
     private Button request_permission;  // use to kick off app permission process
     private Button check_permission;  // use to check if all permissions set and files downloaded
@@ -61,6 +64,11 @@ public class LaunchPermissions extends AppCompatActivity implements View.OnClick
     private String jsonFile = "Events_NPM.json"; // the name of the actual file
     File JSONFile = new File(Environment.getExternalStorageDirectory()+jsonDir, jsonFile);
 
+    // Download the Chapters JSON file
+    private DownloadManager dmc;
+    private String jsonChapFile = "Chapters_NPM.json"; // the name of the actual file
+    File JSONChapFile = new File(Environment.getExternalStorageDirectory()+jsonDir, jsonChapFile);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +76,9 @@ public class LaunchPermissions extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.launch);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        // Access the shared preferences to detect if this is the first time the app has launched
+        prefs = getSharedPreferences("com.techgalavant.npmconvention", MODE_PRIVATE);
 
         check_permission = (Button) findViewById(R.id.check_permission);
         request_permission = (Button) findViewById(R.id.request_permission);
@@ -229,8 +240,31 @@ public class LaunchPermissions extends AppCompatActivity implements View.OnClick
             Snackbar.make(view, "Downloading files started", Snackbar.LENGTH_LONG).show();
         }
 
-        if (PDFFile.exists() && JSONFile.exists()){
+        if (JSONChapFile.exists()){
+
+            Log.e(TAG, "Chapters JSON file exists already.");
+
+        } else {
+            // download the JSON file
+            dmc = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+            // Location of the  JSON file to be downloaded
+            Uri uri3 = Uri.parse("https://www.brockmann.com/apps/npmconvention/2017/objects/chapters.json");
+            DownloadManager.Request request3 = new DownloadManager.Request(uri3);
+            request3.setDestinationInExternalPublicDir(jsonDir,jsonChapFile);
+            request3.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+            request3.setTitle(jsonChapFile);
+            Long reference3 = dmc.enqueue(request3);
+
+            Log.e(TAG, "Downloading Chapters JSON file.");
+
+            Snackbar.make(view, "Downloading files started", Snackbar.LENGTH_LONG).show();
+        }
+
+        if (PDFFile.exists() && JSONFile.exists() && JSONChapFile.exists()){
             Log.e(TAG, "All downloaded files are present.");
+
+            // if they have all the downloaded files then you can set this to false
+            prefs.edit().putBoolean("firstrun", false).commit();  // https://developer.android.com/reference/android/content/SharedPreferences.Editor.html#apply()
 
             // Launch an alert dialog with a confirmation that allows the user to return to WelcomeFragment (MainActivity)
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(LaunchPermissions.this);
@@ -259,7 +293,9 @@ public class LaunchPermissions extends AppCompatActivity implements View.OnClick
             // Show AlertDialog box
             alertDialog.show();
 
-
+        } else {
+            // if the files can't be found then set firstrun condition to true
+            prefs.edit().putBoolean("firstrun", true).commit();  // https://developer.android.com/reference/android/content/SharedPreferences.Editor.html#apply()
         }
 
     }
