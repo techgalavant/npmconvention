@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.github.barteksc.pdfviewer.PDFView;
@@ -31,12 +32,13 @@ import java.io.File;
 import java.util.List;
 
 
-public class ProgramFragment extends Fragment implements View.OnClickListener,OnPageChangeListener,OnLoadCompleteListener {
-    public static final String TAG = ProgramFragment.class.getSimpleName();
+public class ProgramFragment_Search extends Fragment implements View.OnClickListener,OnPageChangeListener,OnLoadCompleteListener {
+    public static final String TAG = ProgramFragment_Search.class.getSimpleName();
 
     //Buttons
     private Button btnDownload;
     private Button btnView;
+    private Button btnGoToPage;
 
     // A download manager is used to download a file from a URL onto the device
     DownloadManager downloadManager;
@@ -51,8 +53,10 @@ public class ProgramFragment extends Fragment implements View.OnClickListener,On
     // use this boolean to display pages as Toast
     boolean mUserVisibleHint = true;
 
+    // go to page
+    private EditText goToPage;
 
-    public ProgramFragment() {
+    public ProgramFragment_Search() {
         // Required empty public constructor
     }
 
@@ -72,7 +76,7 @@ public class ProgramFragment extends Fragment implements View.OnClickListener,On
                 Log.e(TAG, "Found " + pdfFile + " in " + pdfDir + ".");
 
                 // Display the program without the download buttons
-                View rootView = inflater.inflate(R.layout.programb_frag, container, false);
+                View rootView = inflater.inflate(R.layout.programb_search_frag, container, false);
 
                 // Used to show the downloaded PDF
                 pdfView = (PDFView) rootView.findViewById(R.id.pdfView);
@@ -86,11 +90,14 @@ public class ProgramFragment extends Fragment implements View.OnClickListener,On
                 Log.e(TAG, pdfFile + " not found at " + pdfDir);
 
                 // Display the fragment with the download buttons
-                View rootView = inflater.inflate(R.layout.program_frag, container, false);
+                View rootView = inflater.inflate(R.layout.program_search_frag, container, false);
 
                 //getting views from layout
                 btnDownload = (Button) rootView.findViewById(R.id.btnDownload);
                 btnView = (Button) rootView.findViewById(R.id.btnView);
+                btnGoToPage = (Button) rootView.findViewById(R.id.btnGoToPage);
+
+                goToPage = (EditText) rootView.findViewById(R.id.goto_page);
 
                 // Used to show the downloaded PDFs
                 pdfView = (PDFView) rootView.findViewById(R.id.pdfView);
@@ -98,6 +105,9 @@ public class ProgramFragment extends Fragment implements View.OnClickListener,On
                 //attaching listener
                 btnDownload.setOnClickListener(this);
                 btnView.setOnClickListener(this);
+                btnGoToPage.setOnClickListener(this);
+
+
 
                 return rootView;
 
@@ -132,6 +142,12 @@ public class ProgramFragment extends Fragment implements View.OnClickListener,On
 
             //Toast.makeText(getContext(),"Page " + pageNumber + " of " + pageCount, Toast.LENGTH_SHORT).show();
         }
+
+    }
+
+    // Need a mechanism for going to a specific page in the PDF
+    private void goToPage(int page){
+        pdfView.jumpTo(page);
 
     }
 
@@ -178,9 +194,24 @@ public class ProgramFragment extends Fragment implements View.OnClickListener,On
                 Toast.makeText(getContext(),"Please download the file to view it.", Toast.LENGTH_LONG).show();
             }
 
-
+            // allow user to go to a specific page
+        } else if (view == btnGoToPage){
+            if (goToPage!=null){ // if string is entered in edittext
+                int pagenumber;
+                try { // try parsing the string to a number (int)
+                    pagenumber = Integer.parseInt(goToPage.getText().toString());
+                    Log.e(TAG, "btnGoToPage was pressed. User tried to go to page " + pagenumber +".");
+                    pdfView.jumpTo(pagenumber);
+                }catch(NumberFormatException nfe) {
+                    System.out.println("Could not parse " + nfe);
+                    Toast.makeText(getContext(),"Use a correct number format.", Toast.LENGTH_LONG).show();  // toast if they haven't entered it as a number
+                }
+            } else {
+                Toast.makeText(getContext(), "You haven't entered a page number.", Toast.LENGTH_LONG).show();  // toast that they need to enter a number
+            }
         }
     }
+
 
 
 }

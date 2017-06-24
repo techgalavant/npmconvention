@@ -159,11 +159,9 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new WelcomeFragment(), "WELCOME");
         adapter.addFragment(new ProgramFragment(), "PROGRAM");
         adapter.addFragment(new EventFragment(), "EVENTS");
+        adapter.addFragment(new MapsFragment(), "MAPS");
 
         // display the tabs if it's enabled on Firebase remote configuration
-        if (mRemoteConfig.getBoolean(maps_tab)) {
-                adapter.addFragment(new MapsFragment(), "MAPS");
-            }
         if (mRemoteConfig.getBoolean(exhibits_tab)) {
                 adapter.addFragment(new ExhibitsFragment(), "EXHIBITS");
             }

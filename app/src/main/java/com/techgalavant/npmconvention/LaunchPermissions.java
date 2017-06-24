@@ -71,7 +71,7 @@ public class LaunchPermissions extends AppCompatActivity implements View.OnClick
 
     // Download the Chapters Manual PDF file
     private DownloadManager dmcm;
-    private String pdfChapFile = "NPMChapterManual.pdf"; // the name of the actual file
+    private String pdfChapFile = "NPMChapterManual_2016.pdf"; // the name of the actual file
     File PDFChapFile = new File(Environment.getExternalStorageDirectory()+pdfDir, pdfChapFile);
 
 
@@ -214,7 +214,8 @@ public class LaunchPermissions extends AppCompatActivity implements View.OnClick
             // download the PDF file
             downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
             // Location of the PDF file to be downloaded
-            Uri uri = Uri.parse("https://firebasestorage.googleapis.com/v0/b/npm-convention.appspot.com/o/ConventionBrochure.pdf?alt=media&token=bf07296e-cc61-4429-b27e-ad628c6eb486");
+            //Uri uri = Uri.parse("https://firebasestorage.googleapis.com/v0/b/npm-convention.appspot.com/o/ConventionBrochure.pdf?alt=media&token=bf07296e-cc61-4429-b27e-ad628c6eb486");
+            Uri uri = Uri.parse("https://firebasestorage.googleapis.com/v0/b/npm-convention.appspot.com/o/NPM-Convention-2016-lowRes.pdf?alt=media&token=a7aea853-37ff-409e-8a38-7f1b3308bc5a");
             DownloadManager.Request request = new DownloadManager.Request(uri);
             request.setDestinationInExternalPublicDir(pdfDir,pdfFile);
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
@@ -274,9 +275,9 @@ public class LaunchPermissions extends AppCompatActivity implements View.OnClick
             Log.e(TAG, "NPM Chapter Manual PDF file exists already.");
 
         } else {
-            // download the JSON file
+            // download manager for the the Chapter Manual PDF file
             dmcm = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-            // Location of the  JSON file to be downloaded
+            // Location of the  Chapter Manual PDF to be downloaded
             Uri uri4 = Uri.parse("https://firebasestorage.googleapis.com/v0/b/npm-convention.appspot.com/o/NPMChapterManual.pdf?alt=media&token=7a9fb9ff-cb92-442e-9075-8a1c777782ac");
             DownloadManager.Request request4 = new DownloadManager.Request(uri4);
             request4.setDestinationInExternalPublicDir(pdfDir,pdfChapFile);

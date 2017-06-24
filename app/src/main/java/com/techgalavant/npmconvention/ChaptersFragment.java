@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -53,12 +54,19 @@ public class ChaptersFragment extends Fragment implements View.OnClickListener{
     //Buttons
     private Button btnDownload;
     private Button btnView;
+    private Button btnChapManual;
+
 
     // A download manager is used to download a file from a URL onto the device
     DownloadManager downloadManager;
     private String jsonDir = "/NPM"; // the name of the directory to store the file
     private String jsonChapFile = "Chapters_NPM.json"; // the name of the actual file
     File localFile = new File(Environment.getExternalStorageDirectory()+jsonDir, jsonChapFile);
+
+    // A separate file is the Chapters Manual which is a PDF file
+    private String pdfChapFile = "NPMChapterManual_2016.pdf"; // the name of the file
+    File localPDFFile = new File(Environment.getExternalStorageDirectory()+jsonDir,pdfChapFile);
+    //TODO logic for remote configuration to check if a new file exists
 
     ArrayList<HashMap<String, String>> chapterList = new ArrayList<>();
 
@@ -84,13 +92,19 @@ public class ChaptersFragment extends Fragment implements View.OnClickListener{
                 Log.e(TAG, "Found " + jsonChapFile + " in " + jsonDir + ".");
 
                 // Display the chapters if the chapters JSON file has already been downloaded
-                View rootView = inflater.inflate(R.layout.chapters_multi_frag, container, false);
+                View rootView = inflater.inflate(R.layout.chapters_frag, container, false);
 
                 // populate the JSON file into an arraylist
                 chapterList = new ArrayList<>();
 
                 // Used to show the chapters in a listview
                 lv = (ListView) rootView.findViewById(R.id.list);
+
+                // Have a button to allow the user to view the national chapter manual
+                btnChapManual = (Button) rootView.findViewById(R.id.chapter_manual_btn);
+
+                // needs a listener
+                btnChapManual.setOnClickListener(this);
 
                 // Display the list of chapters
                 displayFile();
@@ -107,13 +121,15 @@ public class ChaptersFragment extends Fragment implements View.OnClickListener{
                 //getting views from layout
                 btnDownload = (Button) rootView.findViewById(R.id.btnDownload);
                 btnView = (Button) rootView.findViewById(R.id.btnView);
+                btnChapManual = (Button) rootView.findViewById(R.id.chapter_manual_btn);
 
                 // Used to show the chapters in a listview
                 lv = (ListView) rootView.findViewById(R.id.list);
 
-                //attaching listener
+                //attaching listeners
                 btnDownload.setOnClickListener(this);
                 btnView.setOnClickListener(this);
+                btnChapManual.setOnClickListener(this);
 
                 return rootView;
 
@@ -239,6 +255,7 @@ public class ChaptersFragment extends Fragment implements View.OnClickListener{
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
             request.setTitle(jsonChapFile);
             Long reference = downloadManager.enqueue(request);
+            Log.e(TAG, "Attempted to download the the Chapters JSON file.");
         }
         // View the downloaded file which has already been stored locally on the user's device
         else if (view == btnView) {
@@ -246,7 +263,20 @@ public class ChaptersFragment extends Fragment implements View.OnClickListener{
                 displayFile();
             } else {
                 Toast.makeText(getContext(),"Please download the file to view the chapters info.", Toast.LENGTH_LONG).show();
+                Log.e(TAG, "Attempted to view the Chapters JSON file.");
             }
+        }
+        // FAB will allow the user to view the national chapters file
+        else if (view == btnChapManual) {
+            if (localPDFFile.exists()){
+                // launch intent to view the manual which is a PDF file
+                Snackbar.make(view, "FAB button worked!", Snackbar.LENGTH_LONG).show();
+
+            } else {
+                Toast.makeText(getContext(),"Please try downloading the file again.", Toast.LENGTH_LONG).show();
+                Log.e(TAG, "Attempted to view the Chapters Manual PDF file.");
+            }
+
         }
     }
 

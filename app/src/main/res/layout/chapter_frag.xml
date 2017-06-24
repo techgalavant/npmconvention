@@ -20,7 +20,6 @@
         android:id="@+id/btnView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:text="@string/upload"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
@@ -47,6 +46,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_header" />
+
+    <Button
+        android:id="@+id/chapter_manual_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/list"
+        android:text="@string/chapter_manual"/>
+
 
 
 </RelativeLayout>
