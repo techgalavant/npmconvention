@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
     // The following are related to the Firebase Remote Config
     private FirebaseRemoteConfig mRemoteConfig;
     private static final String exhibits_tab = "is_exhibits_on";
-    private static final String maps_tab = "is_maps_on";
 
     // The following are used for the shake detection
     private SensorManager mSensorManager;
@@ -147,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
         mRemoteConfig = FirebaseRemoteConfig.getInstance();
         // [START enable_dev_mode]
         FirebaseRemoteConfigSettings remoteConfigSettings = new FirebaseRemoteConfigSettings.Builder()
-                .setDeveloperModeEnabled(true)
+                .setDeveloperModeEnabled(false)
                 .build();
         mRemoteConfig.setConfigSettings(remoteConfigSettings);
         // [END enable_dev_mode]

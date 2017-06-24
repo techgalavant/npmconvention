@@ -21,12 +21,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListAdapter;
@@ -240,6 +240,8 @@ public class ChaptersFragment extends Fragment implements View.OnClickListener{
 
     }
 
+
+
     @Override
     public void onClick(View view) {
         // Download file to sdcard
@@ -270,7 +272,16 @@ public class ChaptersFragment extends Fragment implements View.OnClickListener{
         else if (view == btnChapManual) {
             if (localPDFFile.exists()){
                 // launch intent to view the manual which is a PDF file
-                Snackbar.make(view, "FAB button worked!", Snackbar.LENGTH_LONG).show();
+                String mime = MimeTypeMap.getSingleton().getMimeTypeFromExtension(".PDF");
+
+                Intent intent = new Intent();
+                intent.setAction(android.content.Intent.ACTION_VIEW);
+                intent.setDataAndType(Uri.fromFile(localPDFFile), mime);
+                startActivityForResult(intent, 10);
+
+                Log.e(TAG, "Attempt to launch intent to view the Chapters Manual PDF file.");
+
+                //Snackbar.make(view, "Button worked!", Snackbar.LENGTH_LONG).show();
 
             } else {
                 Toast.makeText(getContext(),"Please try downloading the file again.", Toast.LENGTH_LONG).show();
@@ -279,7 +290,6 @@ public class ChaptersFragment extends Fragment implements View.OnClickListener{
 
         }
     }
-
 
 }
 
