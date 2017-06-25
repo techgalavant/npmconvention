@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:paddingLeft="3dp"
     android:paddingRight="3dp"
     tools:context="com.techgalavant.npmconvention.MainActivity">
@@ -11,6 +16,7 @@
         android:id="@+id/logo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/settings"
         android:src="@drawable/npmlogo"/>
 
     <TextView
@@ -18,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/logo"
-        android:text="@string/one"
+        android:text="@string/settings"
         android:textSize="40sp"
         android:textStyle="bold"
         android:layout_centerHorizontal="true"
@@ -57,3 +63,6 @@
 
 
 </RelativeLayout>
+
+
+</ScrollView>

@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
         mRemoteConfig = FirebaseRemoteConfig.getInstance();
         // [START enable_dev_mode]
         FirebaseRemoteConfigSettings remoteConfigSettings = new FirebaseRemoteConfigSettings.Builder()
-                .setDeveloperModeEnabled(false)
+                .setDeveloperModeEnabled(true)
                 .build();
         mRemoteConfig.setConfigSettings(remoteConfigSettings);
         // [END enable_dev_mode]
@@ -246,7 +246,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        // Add the following line to register the Session Manager Listener onResume
+        // Shaker Listener for setting up the device shaking sensor
         mSensorManager.registerListener(mShakeDetector, mAccelerometer, SensorManager.SENSOR_DELAY_UI);
 
         // Detects if app is running for the first time, and users must download the files & set permissions
@@ -254,10 +254,10 @@ public class MainActivity extends AppCompatActivity {
 
             // If this is the first time that the app is running, user's must set their app permissions and download the files
             Intent intent = new Intent(MainActivity.this, LaunchPermissions.class);
+            //Intent intent = new Intent(MainActivity.this, LaunchSetup.class);
             startActivity(intent);
 
-            // commit () or apply () to Shared Preferences
-            //prefs.edit().putBoolean("firstrun", false).apply();  // https://developer.android.com/reference/android/content/SharedPreferences.Editor.html#apply()
+            // https://developer.android.com/reference/android/content/SharedPreferences.Editor.html#apply()
         }
 
     }
@@ -265,7 +265,7 @@ public class MainActivity extends AppCompatActivity {
     // Used for ShakerListener
     @Override
     public void onPause() {
-        // Add the following line to unregister the Sensor Manager onPause
+        // Sensor Manager onPause
         mSensorManager.unregisterListener(mShakeDetector);
         super.onPause();
     }
@@ -284,6 +284,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.settings:
                 startActivity(new Intent(this, LaunchPermissions.class));
+                //startActivity(new Intent(this, LaunchSetup.class));
                 return true;
             case R.id.feedback:
                 startActivity(new Intent(this, SendFeedback.class));
