@@ -33,6 +33,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
@@ -40,6 +41,8 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = MainActivity.class.getSimpleName();
@@ -65,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
 
 
             setContentView(R.layout.activity_main);
@@ -166,7 +170,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
         adapter.addFragment(new ChaptersFragment(), "CHAPTERS");
-        //adapter.addFragment(new ChaptersFragmentFromUrl(), "CHAPTERS");
 
         // start displaying the different tabs in the viewPager
         viewPager.setAdapter(adapter);
@@ -254,10 +257,8 @@ public class MainActivity extends AppCompatActivity {
 
             // If this is the first time that the app is running, user's must set their app permissions and download the files
             Intent intent = new Intent(MainActivity.this, LaunchPermissions.class);
-            //Intent intent = new Intent(MainActivity.this, LaunchSetup.class);
             startActivity(intent);
 
-            // https://developer.android.com/reference/android/content/SharedPreferences.Editor.html#apply()
         }
 
     }
@@ -284,7 +285,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.settings:
                 startActivity(new Intent(this, LaunchPermissions.class));
-                //startActivity(new Intent(this, LaunchSetup.class));
                 return true;
             case R.id.feedback:
                 startActivity(new Intent(this, SendFeedback.class));

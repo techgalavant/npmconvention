@@ -10,7 +10,6 @@ package com.techgalavant.npmconvention;
 
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
 public class MyFirebaseUtil {
 
@@ -26,21 +25,5 @@ public class MyFirebaseUtil {
 
         return mDatabase;
     }
-
-    public FirebaseRemoteConfig getmRemoteConfig() {
-
-            // Use Firebase Remote Config to display the tabs when they are ready
-            mRemoteConfig = FirebaseRemoteConfig.getInstance();
-            // [START enable_dev_mode]
-            FirebaseRemoteConfigSettings remoteConfigSettings = new FirebaseRemoteConfigSettings.Builder()
-                    .setDeveloperModeEnabled(true)
-                    .build();
-            mRemoteConfig.setConfigSettings(remoteConfigSettings);
-            // [END enable_dev_mode]
-
-        return mRemoteConfig;
-
-    }
-
 
 }

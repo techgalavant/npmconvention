@@ -28,11 +28,6 @@
     <string name="appdate">appdate</string>
     <string name="apptime">apptime</string>
     <string name="purpose">Before you can start to use the NPM convention app, you will need to grant permissions on your device so that you can download the NPM convention files. Please conduct the setup before attending the convention as the convention hall may have poor Internet connectivity. Let\'s get started below!</string>
-    <string name="purpose1">Before you can start to use the NPM convention app, you will need to grant permissions on your device so that you can download the NPM convention files.</string>
-    <string name="purpose2">Once you complete this setup, these files will be stored in your download folder called \'NPM\'.</string>
-    <string name="purpose3">The convention hall may have poor Internet connectivity, so you are encouraged to complete this task before attending the convention events.</string>
-    <string name="purpose4">If you need to download the files again, use the Settings link to complete this step again.</string>
-    <string name="purpose5">Let\'s check your permission settings and download the necessary files for the convention.</string>
     <string name="about">About</string>
     <string name="feedback">Feedback</string>
     <string name="settings">Settings</string>
@@ -68,7 +63,5 @@
     <string name="apdate_hint">No Updates Today</string>
     <string name="photocaption">Peter and Mike</string>
     <string name="map_image_info">Shows a map of the convention area</string>
-    <string name="gotopage">Go To Page</string>
-    <string name="gonow">Go!</string>
     <string name="chapter_manual">NPM Chapter Manual</string>
 </resources>

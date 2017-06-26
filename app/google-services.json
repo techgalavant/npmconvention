@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "113481153514-am6fb3vb7lpdf6uh5ui8m411gqlr4i66.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.techgalavant.npmconvention",
+            "certificate_hash": "17070a051ba792b7efcb5c18f39e8919e6134e4c"
+          }
+        },
+        {
           "client_id": "113481153514-p21huo9b0bc457tp3pg98m7amg6rng8i.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

@@ -44,11 +44,6 @@
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".LaunchSetup"
-            android:parentActivityName=".MainActivity">
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
         <activity android:name=".About"
             android:parentActivityName=".MainActivity">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
@@ -61,10 +56,20 @@
         </activity>
 
         <activity android:name=".MapsExpandActivity"
-            android:parentActivityName=".MainActivity">            <meta-data android:name="android.support.PARENT_ACTIVITY"
+            android:parentActivityName=".MainActivity">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
 
+        <!-- Firebase custom default icon - this is used when no icon is set for incoming notification messages.
+     See README(https://goo.gl/l4GJaQ) for more. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_music_note_black_24dp" />
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="18a29fd9b5d550cda1c1f7256cda563d5dbf6dd0" />
     </application>
 
 </manifest>
