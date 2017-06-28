@@ -31,6 +31,7 @@
             android:layout_height="wrap_content"
             android:textColor="#5d5d5d"
             android:layout_below="@id/eid"
+            android:textSize="15sp"
             android:textStyle="bold"/>
 
         <TextView
@@ -41,7 +42,18 @@
             android:textColor="#5d5d5d"
             android:layout_below="@id/ename"
             android:textStyle="italic"
-            android:paddingLeft="2dp"/>
+            android:paddingLeft="2dp"
+            android:paddingStart="2dp"/>
+
+        <TextView
+            android:id="@+id/eweekday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#091c97"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:layout_below="@id/edesc"
+            android:textSize="15sp"/>
 
         <TextView
             android:id="@+id/eday"
@@ -50,7 +62,11 @@
             android:textColor="#091c97"
             android:textStyle="bold"
             android:layout_below="@id/edesc"
-            android:textSize="12dp"/>
+            android:layout_toRightOf="@id/eweekday"
+            android:layout_toEndOf="@id/eweekday"
+            android:textSize="15sp"
+            android:paddingStart="5dp"
+            android:paddingLeft="5dp"/>
 
         <TextView
             android:id="@+id/estart"
@@ -59,8 +75,9 @@
             android:textColor="#5d5d5d"
             android:textStyle="bold"
             android:layout_toRightOf="@id/eday"
+            android:layout_toEndOf="@id/eday"
             android:layout_below="@+id/edesc"
-            android:textSize="12dp"
+            android:textSize="15sp"
             android:paddingStart="7dp"
             android:paddingLeft="7dp"/>
 
@@ -72,8 +89,9 @@
             android:textStyle="bold"
             android:text="@string/from"
             android:layout_toRightOf="@id/estart"
+            android:layout_toEndOf="@+id/estart"
             android:layout_below="@+id/edesc"
-            android:textSize="12dp"
+            android:textSize="15sp"
             android:paddingStart="2dp"
             android:paddingLeft="2dp"/>
 
@@ -84,8 +102,9 @@
             android:textColor="#5d5d5d"
             android:textStyle="bold"
             android:layout_toRightOf="@id/efrom"
+            android:layout_toEndOf="@+id/efrom"
             android:layout_below="@+id/edesc"
-            android:textSize="12dp"
+            android:textSize="15sp"
             android:paddingStart="3dp"
             android:paddingLeft="3dp"/>
 

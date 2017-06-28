@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
         mRemoteConfig = FirebaseRemoteConfig.getInstance();
         // [START enable_dev_mode]
         FirebaseRemoteConfigSettings remoteConfigSettings = new FirebaseRemoteConfigSettings.Builder()
-                .setDeveloperModeEnabled(true)
+                .setDeveloperModeEnabled(false)
                 .build();
         mRemoteConfig.setConfigSettings(remoteConfigSettings);
         // [END enable_dev_mode]
@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
     private void fetchRemoteConfigs() {
 
         // START retrieving from Firebase service
-        long cacheExpiration = 3600; // 1 hour in seconds.
+        long cacheExpiration = 1800; // 30 minutes in seconds - it will check for an update every 30 minutes
         // If your app is using developer mode, cacheExpiration is set to 0, so each fetch will
         // retrieve values from the service.
         if (mRemoteConfig.getInfo().getConfigSettings().isDeveloperModeEnabled()) {

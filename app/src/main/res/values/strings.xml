@@ -64,4 +64,5 @@
     <string name="photocaption">Peter and Mike</string>
     <string name="map_image_info">Shows a map of the convention area</string>
     <string name="chapter_manual">NPM Chapter Manual</string>
+    <string name="feedback_thanks">Thank you for your feedback!</string>
 </resources>

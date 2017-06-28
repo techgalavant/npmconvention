@@ -214,8 +214,7 @@ public class LaunchPermissions extends AppCompatActivity implements View.OnClick
             // download the PDF file
             downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
             // Location of the PDF file to be downloaded
-            //Uri uri = Uri.parse("https://firebasestorage.googleapis.com/v0/b/npm-convention.appspot.com/o/ConventionBrochure.pdf?alt=media&token=bf07296e-cc61-4429-b27e-ad628c6eb486");
-            Uri uri = Uri.parse("https://firebasestorage.googleapis.com/v0/b/npm-convention.appspot.com/o/NPM-Convention-2016-lowRes.pdf?alt=media&token=a7aea853-37ff-409e-8a38-7f1b3308bc5a");
+            Uri uri = Uri.parse("https://firebasestorage.googleapis.com/v0/b/npm-convention.appspot.com/o/ConventionBrochure.pdf?alt=media&token=bf07296e-cc61-4429-b27e-ad628c6eb486");
             DownloadManager.Request request = new DownloadManager.Request(uri);
             request.setDestinationInExternalPublicDir(pdfDir,pdfFile);
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
@@ -233,10 +232,10 @@ public class LaunchPermissions extends AppCompatActivity implements View.OnClick
             Log.e(TAG, "Events JSON file exists already.");
 
         } else {
-            // download the JSON file
+            // download the Events JSON file
             dm = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
             // Location of the  JSON file to be downloaded
-            Uri uri2 = Uri.parse("https://firebasestorage.googleapis.com/v0/b/npm-convention.appspot.com/o/Events_NPM.json?alt=media&token=65a29d0a-5f78-487a-9d76-41c6c31762e0");
+            Uri uri2 = Uri.parse("https://firebasestorage.googleapis.com/v0/b/npm-convention.appspot.com/o/2017Events.json?alt=media&token=9e442bc2-2992-41c6-8dc4-90a6f3c6ca6c");
             DownloadManager.Request request2 = new DownloadManager.Request(uri2);
             request2.setDestinationInExternalPublicDir(jsonDir,jsonFile);
             request2.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);

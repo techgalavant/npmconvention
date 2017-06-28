@@ -49,7 +49,7 @@ import static com.techgalavant.npmconvention.R.id.etitle;
 public class EventDetails extends AppCompatActivity {
     private static final String TAG = EventDetails.class.getSimpleName();
 
-    TextView evtTitle, evtDesc, evtPresenter, evtTime, evtRoom;
+    TextView evtTitle, evtDesc, evtPresenter, evtWeekday, evtTime, evtRoom;
     ImageView evtMap;
     long sTime; // event start time in milliseconds
     long eTime; // event end time in milliseconds
@@ -75,9 +75,13 @@ public class EventDetails extends AppCompatActivity {
         final String eventDesc = intent.getStringExtra("description");
         String eventPresent = intent.getStringExtra("presented");
 
+        // some events don't have presenters listed, so friendly message to display that they are not listed
         if (eventPresent.isEmpty()){
             eventPresent = "Not Available";
         }
+
+        String eventWeekDay = intent.getStringExtra("weekday");
+
 
         String eventTime = (intent.getStringExtra("day")) + " " + (intent.getStringExtra("start")) + " to " + (intent.getStringExtra("finish")); // Used to display in the TextView
         final String eventMap = intent.getStringExtra("map");
@@ -119,6 +123,7 @@ public class EventDetails extends AppCompatActivity {
         evtTitle = (TextView) findViewById(etitle);
         evtDesc = (TextView) findViewById(edesc);
         evtPresenter = (TextView) findViewById(epresent);
+        evtWeekday = (TextView) findViewById(R.id.event_weekday);
         evtTime = (TextView) findViewById(R.id.event_time);
         evtRoom = (TextView) findViewById(R.id.room);
         evtMap = (ImageView) findViewById(R.id.map_location);
@@ -130,25 +135,28 @@ public class EventDetails extends AppCompatActivity {
         evtTitle.setText(eventTitle);
         evtDesc.setText(eventDesc);
         evtPresenter.setText(eventPresent);
+        evtWeekday.setText(eventWeekDay);
         evtTime.setText(eventTime);
         evtRoom.setText(eventRoom);
 
-        // TODO modify with this years maps
-        // Use a sample map for the time being
-        //evtMap.setImageResource(R.drawable.sample_map);
 
-       if (eventMap.contains("hotel4")) {
-           evtMap.setImageResource(R.drawable.cincinnati_level1_sml);
-           Log.e(TAG, eventMap + " - Mapped to cincinnati_level1_sml");
-        } else if (eventMap.contains("hotel2")) {
-            evtMap.setImageResource(R.drawable.sample_map);
-           Log.e(TAG, eventMap + " - Mapped to sample_map");
-        } else if (eventMap.contains("Hilton Hotel")) {
-            evtMap.setImageResource(R.drawable.sample_map3);
-           Log.e(TAG, eventMap + " - Mapped to sample_map3");
+        String mapFile = eventMap;  // redundant, but copied this if - then - else - if below from MapsExpandActivity.java
+
+        if (mapFile.contains("level1")) {
+            evtMap.setImageResource(R.drawable.cinn_level_1);
+            Log.e(TAG, mapFile + " - Mapped to cinn_level_1");
+        } else if (mapFile.contains("level2")) {
+            evtMap.setImageResource(R.drawable.cinn_level_2);
+            Log.e(TAG, mapFile + " - Mapped to cinn_level_2");
+        } else if (mapFile.contains("level3")) {
+            evtMap.setImageResource(R.drawable.cinn_level_3);
+            Log.e(TAG, mapFile + " - Mapped to cinn_level_3");
+        }  else if (mapFile.contains("cin2")) {
+            evtMap.setImageResource(R.drawable.millennium_cin2);
+            Log.e(TAG, mapFile + " - Mapped to millennium_cin2");
         } else {
-            evtMap.setImageResource(R.drawable.sample_map4);
-           Log.e(TAG, eventMap + " - Mapped to sample_map4");
+            evtMap.setImageResource(R.drawable.sample_map);
+            Log.e(TAG, mapFile + " - Mapped to sample_map");
         }
 
         evtMap.setOnClickListener(new View.OnClickListener() {
@@ -156,16 +164,17 @@ public class EventDetails extends AppCompatActivity {
 
                 Log.e(TAG, "User clicked on map image in EventDetails");
 
-                // first check to make sure that the chapter's website field is not null
+                // first check to make sure that the map image field is not null
                 if (eventMap.isEmpty()){
                     // if no map is provided
-                    // Toast.makeText(getApplicationContext(), "No website provided by this chapter", Toast.LENGTH_LONG).show();
+                    // Toast.makeText(getApplicationContext(), "No map provided for this event", Toast.LENGTH_LONG).show();
                     Log.e(TAG, "No map indicated in eventMap.");
                 } else {
-                    // launch user's web browser with the website
-
-                   // Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(chapweb));
-                    //startActivity(browserIntent);
+                    // launch intent to show map in new activity so that user can pinch/zoom to view it
+                    Intent intent = new Intent(getApplication().getApplicationContext(), MapsExpandActivity.class);
+                    intent.putExtra("mapname", eventRoom);
+                    intent.putExtra("mapfile", eventMap);
+                    startActivity(intent);
 
                     Log.e(TAG, "Launched " + eventMap + " in new intent");
                 }
@@ -232,9 +241,9 @@ public class EventDetails extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         // Close the AlertDialog box and return to MainActivity
                         Log.e(TAG, "User selected CLOSE button on AlertDialog in EventDetails.java");
-                        // dialog.cancel();
-                        Intent intent = new Intent(EventDetails.this, MainActivity.class);
-                        startActivity(intent);
+                        dialog.cancel();
+                        inWord1.setText(getResources().getString(R.string.feedback_thanks));
+                        Log.e(TAG, "Event feedback captured and field was changed to thank user for their feedback.");
                     }
                 });
 
@@ -250,7 +259,7 @@ public class EventDetails extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 inWord1.setText("");
-                Log.e(TAG, "clearIt_btn was used to reset entries");
+                Log.e(TAG, "clearIt_btn was used to reset entry");
             }
         });
 

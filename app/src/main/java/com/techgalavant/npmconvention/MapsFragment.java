@@ -24,10 +24,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -78,7 +76,7 @@ public class MapsFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    public String getStringFromJson() {
+   /* public String getStringFromJson() {
         StringBuffer sb = new StringBuffer();
         BufferedReader br = null;
         try {
@@ -96,7 +94,7 @@ public class MapsFragment extends Fragment implements View.OnClickListener {
             }
         }
         return sb.toString();
-    }
+    }*/
 
     // Load JSON file into string
     public String loadJSONFromFile() {
@@ -179,7 +177,7 @@ public class MapsFragment extends Fragment implements View.OnClickListener {
 
                 // Take the chapter strings from listview position and populate them in ChapterDetails.java
                 Intent intent = new Intent(getActivity(), MapsExpandActivity.class);
-                intent.putExtra("seq", ((HashMap<String, String>) roomList.getAdapter().getItem((int)id)).get("seq"));
+                //intent.putExtra("seq", ((HashMap<String, String>) roomList.getAdapter().getItem((int)id)).get("seq"));
                 intent.putExtra("mapname", ((HashMap<String, String>) roomList.getAdapter().getItem((int)id)).get("mapname"));
                 intent.putExtra("mapfile", ((HashMap<String, String>) roomList.getAdapter().getItem((int)id)).get("mapfile"));
 

@@ -16,7 +16,6 @@ package com.techgalavant.npmconvention;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -39,8 +38,6 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -175,6 +172,7 @@ public class EventFragment extends Fragment implements View.OnClickListener{
             SimpleDateFormat dtStart = new SimpleDateFormat("M/dd/yy h:mm a zzz", Locale.US);
             DateFormat dtDay = new SimpleDateFormat("M/dd/yy", Locale.US);
             DateFormat dtTime = new SimpleDateFormat("h:mm a", Locale.US);
+            DateFormat dtDayOfWeek = new SimpleDateFormat("EEE", Locale.US);
             Date dateStart = null;
             Date dateEnd = null;
 
@@ -208,6 +206,9 @@ public class EventFragment extends Fragment implements View.OnClickListener{
                 // convert end date back to string for the array
                 String endtime = dtTime.format(dateEnd);
 
+                // convert date to day of the week for the array
+                String dayofweek = dtDayOfWeek.format(dateStart);
+
                 String map = c.getString("Map");
 
                 // the hash map for single event
@@ -222,35 +223,37 @@ public class EventFragment extends Fragment implements View.OnClickListener{
                 event.put("day", day);
                 event.put("start", starttime);
                 event.put("finish", endtime);
+                event.put("weekday", dayofweek);
                 event.put("map", map);
                 event.put("start_mills", start);
                 event.put("end_mills", end);
+
 
                 // add the event into the event list
                 eventList.add(event);
 
                 // adds the event to the appropriate day of the week
                 // TODO add the event to the expandableListDetail
-                switch (day){
-                    case "SUN":
+                switch (dayofweek){
+                    case "Sun":
                         sunList.add(event);
                         break;
-                    case "MON":
+                    case "Mon":
                         monList.add(event);
                         break;
-                    case "TUE":
+                    case "Tue":
                         tueList.add(event);
                         break;
-                    case "WED":
+                    case "Wed":
                         wedList.add(event);
                         break;
-                    case "THU":
+                    case "Thu":
                         thuList.add(event);
                         break;
-                    case "FRI":
+                    case "Fri":
                         friList.add(event);
                         break;
-                    case "SAT":
+                    case "Sat":
                         satList.add(event);
                         break;
                 }
@@ -263,12 +266,14 @@ public class EventFragment extends Fragment implements View.OnClickListener{
 
         }
 
+
+
         // use this adaptor to show the event list item on listeventitem.xml
         ListAdapter adapter = new SimpleAdapter(
-                getActivity().getApplicationContext(), eventList,
+                getActivity().getApplicationContext(), monList,
                 R.layout.listeventitem,
-                new String[]{"evid", "name", "description", "day", "start", "finish"},
-                new int[]{R.id.eid, R.id.ename, R.id.edesc, R.id.eday, R.id.estart, R.id.efinish});
+                new String[]{"evid", "name", "description", "weekday", "day", "start", "finish"},
+                new int[]{R.id.eid, R.id.ename, R.id.edesc, R.id.eweekday, R.id.eday, R.id.estart, R.id.efinish});
 
         // List event adaptor
         lv.setAdapter(adapter);
@@ -286,6 +291,7 @@ public class EventFragment extends Fragment implements View.OnClickListener{
                 intent.putExtra("map", ((HashMap<String, String>) lv.getAdapter().getItem((int)id)).get("map"));
                 intent.putExtra("description", ((HashMap<String, String>) lv.getAdapter().getItem((int)id)).get("description"));
                 intent.putExtra("day", ((HashMap<String, String>) lv.getAdapter().getItem((int)id)).get("day"));
+                intent.putExtra("weekday", ((HashMap<String, String>) lv.getAdapter().getItem((int)id)).get("weekday"));
                 intent.putExtra("name", ((HashMap<String, String>) lv.getAdapter().getItem((int)id)).get("name"));
                 intent.putExtra("presented", ((HashMap<String, String>) lv.getAdapter().getItem((int)id)).get("presented"));
                 intent.putExtra("finish", ((HashMap<String, String>) lv.getAdapter().getItem((int)id)).get("finish"));
@@ -307,7 +313,7 @@ public class EventFragment extends Fragment implements View.OnClickListener{
             downloadManager = (DownloadManager)getContext().getSystemService(Context.DOWNLOAD_SERVICE);
 
             // Location of the file to be downloaded
-            Uri uri = Uri.parse("https://firebasestorage.googleapis.com/v0/b/npm-convention.appspot.com/o/Events_NPM.json?alt=media&token=65a29d0a-5f78-487a-9d76-41c6c31762e0");
+            Uri uri = Uri.parse("https://firebasestorage.googleapis.com/v0/b/npm-convention.appspot.com/o/2017Events.json?alt=media&token=9e442bc2-2992-41c6-8dc4-90a6f3c6ca6c");
 
             DownloadManager.Request request = new DownloadManager.Request(uri);
 
@@ -325,6 +331,5 @@ public class EventFragment extends Fragment implements View.OnClickListener{
             }
         }
     }
-
 
 }
