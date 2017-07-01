@@ -1,0 +1,223 @@
+{
+	"hours": ["Monday 9:30 pm - Tuesday 12 am",
+		"Tuesday 12 pm - 6 pm",
+		"Wednesday 10:30 am - 6 pm",
+		"Thursday 10 am - 6 pm",
+		"Friday 2 pm - 5:30 pm",
+		"Saturday 10 am - 4 pm"],
+	"exhibitors": [{
+		"booth": 211,
+		"exhibitor": "Allen Organ"
+	},
+		{
+			"booth": 131,
+			"exhibitor": "Believe Art from the Heart"
+		},
+		{
+			"booth": 308,
+			"exhibitor": "Card's by Anne"
+		},
+		{
+			"booth": 416,
+			"exhibitor": "Catholic Music Publications"
+		},
+		{
+			"booth": 505,
+			"exhibitor": "Choristers Guild"
+		},
+		{
+			"booth": 511,
+			"exhibitor": "Classic Performance"
+		},
+		{
+			"booth": 209,
+			"exhibitor": "Corporate Travel Service"
+		},
+
+		{"booth":"216","exhibitor":"Digital Hermosa", "web":"https://www.brockmann.com/digitalhermosa", "contact":"Peter Brockmann", "prose":"Exclusive smartphone and tablet app supplier to the NPM. Visit our tab in the app and checkout our amazing offerings for music ministers.", "phone":"(508) 904-0171", "email":"peter@brockmann.com", "facebook":""},
+		{
+			"booth": 412,
+			"exhibitor": "ECS Publishing"
+		},
+		{
+			"booth": 435,
+			"exhibitor": "Entheos Architects"
+		},
+		{
+			"booth": 116,
+			"exhibitor": "Franciscan Ministry of Peace"
+		},
+		{
+			"booth": 313,
+			"exhibitor": "Fred Bock Music Company"
+		},
+		{
+			"booth": 301,
+			"exhibitor": "GIA"
+		},
+		{
+			"booth": 417,
+			"exhibitor": "HFL Publications"
+		},
+		{
+			"booth": 317,
+			"exhibitor": "Hope Publishing"
+		},
+		{
+			"booth": 414,
+			"exhibitor": "Italy Vatican Tours"
+		},
+		{
+			"booth": 110,
+			"exhibitor": "Johannus Organ US"
+		},
+		{
+			"booth": 517,
+			"exhibitor": "Kochberg Graphics"
+		},
+		{
+			"booth": 217,
+			"exhibitor": "Little Books of Saginaw"
+		},
+		{
+			"booth": 425,
+			"exhibitor": "Liturgical Press"
+		},
+		{
+			"booth": 314,
+			"exhibitor": "Liturgy Training Publications"
+		},
+		{
+			"booth": 431,
+			"exhibitor": "Lumen Christi Ministry"
+		},
+		{
+			"booth": 309,
+			"exhibitor": "Marklin Candle"
+		},
+		{
+			"booth": 437,
+			"exhibitor": "Meyer Vogelpohl"
+		},
+		{
+			"booth": 415,
+			"exhibitor": "MG Rosary"
+		},
+		{
+			"booth": 234,
+			"exhibitor": "Ministry Scheduler Pro-Rotunda Software"
+		},
+		{
+			"booth": 408,
+			"exhibitor": "MorningStar Music"
+		},
+		{
+			"booth": 509,
+			"exhibitor": "Music for the Soul"
+		},
+		{
+			"booth": 310,
+			"exhibitor": "Notre Dame Center for Liturgy"
+		},
+		{
+			"booth": 101,
+			"exhibitor": "NPM"
+		},
+		{
+			"booth": 330,
+			"exhibitor": "NPM Silent Auction"
+		},
+		{
+			"booth": 221,
+			"exhibitor": "OCP"
+		},
+		{
+			"booth": 507,
+			"exhibitor": "OneLicense.net"
+		},
+		{
+			"booth": 243,
+			"exhibitor": "Open Your Hymnal"
+		},
+		{
+			"booth": 311,
+			"exhibitor": "Pamela T. Hardiman Liturgical Fiber Art"
+		},
+		{
+			"booth": 224,
+			"exhibitor": "Patrick J. Murphy & Associates Inc."
+		},
+		{
+			"booth": 516,
+			"exhibitor": "Peragallo Organ Company"
+		},
+		{
+			"booth": 106,
+			"exhibitor": "Peter's Way"
+		},
+		{
+			"booth": 312,
+			"exhibitor": "Pierson-Young Project"
+		},
+		{
+			"booth": 236,
+			"exhibitor": "Rodgers Instruments"
+		},
+		{
+			"booth": 521,
+			"exhibitor": "Sacred Music at Notre Dame"
+		},
+		{
+			"booth": 230,
+			"exhibitor": "Simply Liturgical Music"
+		},
+		{
+			"booth": 108,
+			"exhibitor": "Solid Vocal Foundations"
+		},
+		{
+			"booth": 117,
+			"exhibitor": "Songs in His Presence"
+		},
+		{
+			"booth": 527,
+			"exhibitor": "St. Johnâ€™s School of Theology & Seminary"
+		},
+		{
+			"booth": 114,
+			"exhibitor": "St. Michael Hymnal"
+		},
+		{
+			"booth": 125,
+			"exhibitor": "Steinway & Sonâ€™s"
+		},
+		{
+			"booth": 508,
+			"exhibitor": "The Emmaus Center/Music Ministry Alive"
+		},
+		{
+			"booth": 411,
+			"exhibitor": "The Lorenz Corporation"
+		},
+		{
+			"booth": 109,
+			"exhibitor": "The Newman Singers"
+		},
+		{
+			"booth": 213,
+			"exhibitor": "The Verdin Company"
+		},
+		{
+			"booth": 226,
+			"exhibitor": "Wicks Organ Company"
+		},
+		{
+			"booth": 201,
+			"exhibitor": "WLP"
+		},
+		{
+			"booth": 409,
+			"exhibitor": "World Cultural Tours"
+		}
+	]
+}

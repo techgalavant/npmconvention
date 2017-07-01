@@ -164,12 +164,13 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new EventFragment(), "EVENTS");
         adapter.addFragment(new MapsFragment(), "MAPS");
 
-        // display the tabs if it's enabled on Firebase remote configuration
+       /* // display the tabs if it's enabled on Firebase remote configuration
         if (mRemoteConfig.getBoolean(exhibits_tab)) {
                 adapter.addFragment(new ExhibitsFragment(), "EXHIBITS");
             }
-
+*/
         adapter.addFragment(new ChaptersFragment(), "CHAPTERS");
+        adapter.addFragment(new ExhibitsFragment(), "EXHIBITS");
 
         // start displaying the different tabs in the viewPager
         viewPager.setAdapter(adapter);

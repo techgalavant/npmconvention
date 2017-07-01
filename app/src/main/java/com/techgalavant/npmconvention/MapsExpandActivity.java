@@ -48,7 +48,7 @@ public class MapsExpandActivity extends AppCompatActivity {
         TouchImageView evtMap = (TouchImageView) findViewById(R.id.map_image);
 
 
-        mapTitle.setText(mapName);
+        mapTitle.setText(mapName); // NOTE: app crashes if the map image is too large! make sure it's 1000x1000 or under 250 kb
 
         if (mapFile.contains("level1")) {
             evtMap.setImageResource(R.drawable.cinn_level_1);
@@ -62,11 +62,14 @@ public class MapsExpandActivity extends AppCompatActivity {
         }  else if (mapFile.contains("cin2")) {
             evtMap.setImageResource(R.drawable.millennium_cin2);
             Log.e(TAG, mapFile + " - Mapped to millennium_cin2");
+        } else if(mapFile.contains("exhibit")) {
+            evtMap.setImageResource(R.drawable.exhibit_hall);
+            Log.e(TAG, mapFile + " - Mapped to exhibit_hall");
         } else {
-            evtMap.setImageResource(R.drawable.sample_map);
-            Log.e(TAG, mapFile + " - Mapped to sample_map");
+                evtMap.setImageResource(R.drawable.sample_map);
+                Log.e(TAG, mapFile + " - Mapped to sample_map");
+            }
         }
-    }
 
 
     @Override

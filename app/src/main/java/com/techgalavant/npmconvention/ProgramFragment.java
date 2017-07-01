@@ -45,7 +45,7 @@ public class ProgramFragment extends Fragment implements View.OnClickListener,On
     PDFView pdfView;
     Integer pageNumber = 0;
     private String pdfDir = "/NPM"; // the name of the directory to store the PDF files
-    private String pdfFile = "ConventionBrochure.pdf"; // the name of the PDF file
+    private String pdfFile = "ConventionBrochure2017.pdf"; // the name of the PDF file
     File localFile = new File(Environment.getExternalStorageDirectory()+pdfDir, pdfFile);
 
     // use this boolean to display pages as Toast
@@ -163,7 +163,7 @@ public class ProgramFragment extends Fragment implements View.OnClickListener,On
         // Download file to sdcard
         if (view == btnDownload) {
            downloadManager = (DownloadManager)getContext().getSystemService(Context.DOWNLOAD_SERVICE);
-            Uri uri = Uri.parse("https://firebasestorage.googleapis.com/v0/b/npm-convention.appspot.com/o/ConventionBrochure.pdf?alt=media&token=bf07296e-cc61-4429-b27e-ad628c6eb486");
+            Uri uri = Uri.parse("https://www.brockmann.com/apps/npmconvention/2017/objects/NPM-Convention-2017High.pdf");
             DownloadManager.Request request = new DownloadManager.Request(uri);
             request.setDestinationInExternalPublicDir(pdfDir,pdfFile);
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);

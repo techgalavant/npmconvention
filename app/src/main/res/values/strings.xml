@@ -65,4 +65,14 @@
     <string name="map_image_info">Shows a map of the convention area</string>
     <string name="chapter_manual">NPM Chapter Manual</string>
     <string name="feedback_thanks">Thank you for your feedback!</string>
+    <string name="ex_name">Exhibitor\'s Info</string>
+    <string name="ex_define">About</string>
+    <string name="not_avail">Not provided</string>
+    <string name="contact_na">Contact name not provided</string>
+    <string name="spin_refine">Refine List</string>
+    <string-array name="map_locations">
+        <item>ALL</item>
+        <item>Onsite</item>
+        <item>Offsite</item>
+    </string-array>
 </resources>

@@ -143,16 +143,16 @@ public class EventDetails extends AppCompatActivity {
         String mapFile = eventMap;  // redundant, but copied this if - then - else - if below from MapsExpandActivity.java
 
         if (mapFile.contains("level1")) {
-            evtMap.setImageResource(R.drawable.cinn_level_1);
+            evtMap.setImageResource(R.drawable.cincinnati_level1_sml);
             Log.e(TAG, mapFile + " - Mapped to cinn_level_1");
         } else if (mapFile.contains("level2")) {
-            evtMap.setImageResource(R.drawable.cinn_level_2);
+            evtMap.setImageResource(R.drawable.cincinnati_level2_sml);
             Log.e(TAG, mapFile + " - Mapped to cinn_level_2");
         } else if (mapFile.contains("level3")) {
-            evtMap.setImageResource(R.drawable.cinn_level_3);
+            evtMap.setImageResource(R.drawable.cincinnati_level3_sml);
             Log.e(TAG, mapFile + " - Mapped to cinn_level_3");
         }  else if (mapFile.contains("cin2")) {
-            evtMap.setImageResource(R.drawable.millennium_cin2);
+            evtMap.setImageResource(R.drawable.millennium_cin2_sml);
             Log.e(TAG, mapFile + " - Mapped to millennium_cin2");
         } else {
             evtMap.setImageResource(R.drawable.sample_map);

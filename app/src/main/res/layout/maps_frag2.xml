@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.techgalavant.npmconvention.MapsFragment2">
+
+    <Spinner
+        android:id="@+id/spin_maps"
+        style="@style/Widget.AppCompat.Spinner.Underlined"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dropdown"
+        android:prompt="@string/spin_refine"
+        android:layout_margin="5dp" />
+
+    <ListView
+        android:id="@+id/maplist1"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/spin_maps">
+    </ListView>
+
+</RelativeLayout>

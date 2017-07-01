@@ -41,19 +41,19 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="16dp"></TextView>
 
-    <ListView
-        android:id="@+id/list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_header" />
 
     <Button
         android:id="@+id/chapter_manual_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/list"
+        android:layout_below="@id/tv_header"
         android:text="@string/chapter_manual"/>
 
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/chapter_manual_btn" />
 
 
 </RelativeLayout>

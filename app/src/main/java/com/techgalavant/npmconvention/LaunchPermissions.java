@@ -55,18 +55,18 @@ public class LaunchPermissions extends AppCompatActivity implements View.OnClick
     // Download the Program PDF file
     private DownloadManager downloadManager;
     private String pdfDir = "/NPM"; // the name of the directory to store the PDF files
-    private String pdfFile = "ConventionBrochure.pdf"; // the name of the PDF file
+    private String pdfFile = "ConventionBrochure2017.pdf"; // the name of the PDF file
     File PDFFile = new File(Environment.getExternalStorageDirectory()+pdfDir, pdfFile);
 
     // Download the Events JSON file
     private DownloadManager dm;
     private String jsonDir = "/NPM"; // the name of the directory to store the file
-    private String jsonFile = "Events_NPM.json"; // the name of the actual file
+    private String jsonFile = "Events_NPM2017.json"; // the name of the actual file
     File JSONFile = new File(Environment.getExternalStorageDirectory()+jsonDir, jsonFile);
 
     // Download the Chapters JSON file
     private DownloadManager dmc;
-    private String jsonChapFile = "Chapters_NPM.json"; // the name of the actual file
+    private String jsonChapFile = "Chapters_NPM2017.json"; // the name of the actual file
     File JSONChapFile = new File(Environment.getExternalStorageDirectory()+jsonDir, jsonChapFile);
 
     // Download the Chapters Manual PDF file
@@ -214,7 +214,7 @@ public class LaunchPermissions extends AppCompatActivity implements View.OnClick
             // download the PDF file
             downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
             // Location of the PDF file to be downloaded
-            Uri uri = Uri.parse("https://firebasestorage.googleapis.com/v0/b/npm-convention.appspot.com/o/ConventionBrochure.pdf?alt=media&token=bf07296e-cc61-4429-b27e-ad628c6eb486");
+            Uri uri = Uri.parse("https://www.brockmann.com/apps/npmconvention/2017/objects/NPM-Convention-2017High.pdf");
             DownloadManager.Request request = new DownloadManager.Request(uri);
             request.setDestinationInExternalPublicDir(pdfDir,pdfFile);
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
@@ -235,7 +235,7 @@ public class LaunchPermissions extends AppCompatActivity implements View.OnClick
             // download the Events JSON file
             dm = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
             // Location of the  JSON file to be downloaded
-            Uri uri2 = Uri.parse("https://firebasestorage.googleapis.com/v0/b/npm-convention.appspot.com/o/2017Events.json?alt=media&token=9e442bc2-2992-41c6-8dc4-90a6f3c6ca6c");
+            Uri uri2 = Uri.parse("https://firebasestorage.googleapis.com/v0/b/npm-convention.appspot.com/o/2017Events.json?alt=media&token=2bc91c65-c17f-418d-b12a-a1e9e8ee7cdd");
             DownloadManager.Request request2 = new DownloadManager.Request(uri2);
             request2.setDestinationInExternalPublicDir(jsonDir,jsonFile);
             request2.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);

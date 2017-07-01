@@ -60,7 +60,7 @@ public class EventFragment extends Fragment implements View.OnClickListener{
     // A download manager is used to download a file from a URL onto the device
     DownloadManager downloadManager;
     private String jsonDir = "/NPM"; // the name of the directory to store the file
-    private String jsonFile = "Events_NPM.json"; // the name of the actual file
+    private String jsonFile = "Events_NPM2017.json"; // the name of the actual file
     File localFile = new File(Environment.getExternalStorageDirectory()+jsonDir, jsonFile);
 
     ArrayList<HashMap<String, String>> eventList = new ArrayList<>();
@@ -270,7 +270,7 @@ public class EventFragment extends Fragment implements View.OnClickListener{
 
         // use this adaptor to show the event list item on listeventitem.xml
         ListAdapter adapter = new SimpleAdapter(
-                getActivity().getApplicationContext(), monList,
+                getActivity().getApplicationContext(), eventList,
                 R.layout.listeventitem,
                 new String[]{"evid", "name", "description", "weekday", "day", "start", "finish"},
                 new int[]{R.id.eid, R.id.ename, R.id.edesc, R.id.eweekday, R.id.eday, R.id.estart, R.id.efinish});
@@ -313,7 +313,7 @@ public class EventFragment extends Fragment implements View.OnClickListener{
             downloadManager = (DownloadManager)getContext().getSystemService(Context.DOWNLOAD_SERVICE);
 
             // Location of the file to be downloaded
-            Uri uri = Uri.parse("https://firebasestorage.googleapis.com/v0/b/npm-convention.appspot.com/o/2017Events.json?alt=media&token=9e442bc2-2992-41c6-8dc4-90a6f3c6ca6c");
+            Uri uri = Uri.parse("https://firebasestorage.googleapis.com/v0/b/npm-convention.appspot.com/o/2017Events.json?alt=media&token=2bc91c65-c17f-418d-b12a-a1e9e8ee7cdd");
 
             DownloadManager.Request request = new DownloadManager.Request(uri);
 

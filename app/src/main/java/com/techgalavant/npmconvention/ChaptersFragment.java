@@ -60,7 +60,7 @@ public class ChaptersFragment extends Fragment implements View.OnClickListener{
     // A download manager is used to download a file from a URL onto the device
     DownloadManager downloadManager;
     private String jsonDir = "/NPM"; // the name of the directory to store the file
-    private String jsonChapFile = "Chapters_NPM.json"; // the name of the actual file
+    private String jsonChapFile = "Chapters_NPM2017.json"; // the name of the actual file
     File localFile = new File(Environment.getExternalStorageDirectory()+jsonDir, jsonChapFile);
 
     // A separate file is the Chapters Manual which is a PDF file
