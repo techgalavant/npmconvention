@@ -49,8 +49,7 @@ public class SendFeedback extends AppCompatActivity {
     private String storyId;
     private String togglebtn;
 
-    //String hermosa = getResources().getString(R.string.hermosa); // causes error on Fragments - see http://stackoverflow.com/questions/28672883/java-lang-illegalstateexception-fragment-not-attached-to-activity
-    private String hermosa = "chucknorrisrules"; // used to display messages on WelcomeFragment
+    private String hermosa; // used to display messages on WelcomeFragment
     private String Contact;
 
     // Capture device model and brand for learning
@@ -81,6 +80,7 @@ public class SendFeedback extends AppCompatActivity {
 
                     String Sender = inWord1.getText().toString();
                     String Feedback = inWord3.getText().toString();
+                    hermosa = getResources().getString(R.string.hermosa);
 
                     // If Digital Hermosa posts a message, it should be displayed in the WelcomeFragment.
                     // The purpose of this was to allow for posting daily messages in case of room of time changes.
