@@ -15,13 +15,17 @@ package com.techgalavant.npmconvention;
  *
  */
 
+import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +48,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static android.Manifest.permission.GET_ACCOUNTS;
+import static android.Manifest.permission.READ_CALENDAR;
+import static android.Manifest.permission.WRITE_CALENDAR;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+
 
 public class ChaptersFragment extends Fragment implements View.OnClickListener{
     public static final String TAG = ChaptersFragment.class.getSimpleName();
@@ -60,7 +69,7 @@ public class ChaptersFragment extends Fragment implements View.OnClickListener{
     // A download manager is used to download a file from a URL onto the device
     DownloadManager downloadManager;
     private String jsonDir = "/NPM"; // the name of the directory to store the file
-    private String jsonChapFile = "Chapters_NPM2017.json"; // the name of the actual file
+    private String jsonChapFile = "Chapters_NPM2017_v2.json"; // the name of the actual file
     File localFile = new File(Environment.getExternalStorageDirectory()+jsonDir, jsonChapFile);
 
     // A separate file is the Chapters Manual which is a PDF file
@@ -240,25 +249,90 @@ public class ChaptersFragment extends Fragment implements View.OnClickListener{
 
     }
 
+    // check if permissions has been completed
+    private boolean checkPermission() {
+        int result = ContextCompat.checkSelfPermission(getContext(), WRITE_EXTERNAL_STORAGE);
+        int result1 = ContextCompat.checkSelfPermission(getContext(), READ_CALENDAR);
+        int result2 = ContextCompat.checkSelfPermission(getContext(), WRITE_CALENDAR);
+        int result3 = ContextCompat.checkSelfPermission(getContext(), GET_ACCOUNTS);
+
+        return result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED && result2 == PackageManager.PERMISSION_GRANTED && result3 == PackageManager.PERMISSION_GRANTED;
+    }
+
 
 
     @Override
     public void onClick(View view) {
         // Download file to sdcard
         if (view == btnDownload) {
-            downloadManager = (DownloadManager)getContext().getSystemService(Context.DOWNLOAD_SERVICE);
 
-            // Location of the file to be downloaded
-            Uri uri = Uri.parse("https://www.brockmann.com/apps/npmconvention/2017/objects/chapters.json");
+        // check first if user has granted permissions
+        if (checkPermission()) {
 
-            DownloadManager.Request request = new DownloadManager.Request(uri);
+            // display the file if it was downloaded already
+            if (localFile.exists()) {
+                displayFile();
 
-            request.setDestinationInExternalPublicDir(jsonDir,jsonChapFile);
-            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-            request.setTitle(jsonChapFile);
-            Long reference = downloadManager.enqueue(request);
-            Log.e(TAG, "Attempted to download the the Chapters JSON file.");
+            } else {
+
+                downloadManager = (DownloadManager) getContext().getSystemService(Context.DOWNLOAD_SERVICE);
+
+                // Location of the file to be downloaded
+                Uri uri = Uri.parse("https://www.brockmann.com/apps/npmconvention/2017/objects/chapters.json");
+
+                DownloadManager.Request request = new DownloadManager.Request(uri);
+
+                request.setDestinationInExternalPublicDir(jsonDir, jsonChapFile);
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                request.setTitle(jsonChapFile);
+                Long reference = downloadManager.enqueue(request);
+                Log.e(TAG, "Attempted to download the the Chapters JSON file.");
+
+            }
+
+        } else {
+
+            // Launch an AlertDialog box so that users can elect to run permissions check
+            Log.e(TAG, "Android permissions weren't set on ChaptersFragment, so prompted user.");
+
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(ChaptersFragment.this.getActivity());
+
+            // Set Dialog box title
+            alertDialog.setTitle("NOTICE");
+
+            // Set Dialog message
+            alertDialog.setMessage("Please enable app permissions so you can download the file.");
+
+            // Sets icon in the AlertDialog window
+            alertDialog.setIcon(R.drawable.ic_mesg);
+
+            // Set operation for when user selects "OK" on AlertDialog
+            alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+
+                    // Launch intent to bring user back to Settings screen
+                    Intent intent = new Intent(ChaptersFragment.this.getActivity(), LaunchPermissions.class);
+                    startActivity(intent);
+                    Log.e(TAG, "User selected OK to LaunchPermissions.class on ChaptersFragment AlertDialog");
+                }
+            });
+
+            // Sets operation for when "CANCEL" is selected
+            alertDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    // Close the AlertDialog box
+                    Log.e(TAG, "User selected to CANCEL the permissions prompt on ChaptersFragment AlertDialog");
+                    dialog.cancel();
+                }
+            });
+
+            // Show AlertDialog box
+            alertDialog.show();
+
         }
+
+    }
+
         // View the downloaded file which has already been stored locally on the user's device
         else if (view == btnView) {
             if (localFile.exists()){
@@ -268,7 +342,8 @@ public class ChaptersFragment extends Fragment implements View.OnClickListener{
                 Log.e(TAG, "Attempted to view the Chapters JSON file.");
             }
         }
-        // FAB will allow the user to view the national chapters file
+
+        // Simple button to allow the user to view the PDF in their preferred PDF viewer
         else if (view == btnChapManual) {
             if (localPDFFile.exists()){
                 // launch intent to view the manual which is a PDF file
@@ -280,8 +355,6 @@ public class ChaptersFragment extends Fragment implements View.OnClickListener{
                 startActivityForResult(intent, 10);
 
                 Log.e(TAG, "Attempt to launch intent to view the Chapters Manual PDF file.");
-
-                //Snackbar.make(view, "Button worked!", Snackbar.LENGTH_LONG).show();
 
             } else {
                 Toast.makeText(getContext(),"Please try downloading the file again.", Toast.LENGTH_LONG).show();

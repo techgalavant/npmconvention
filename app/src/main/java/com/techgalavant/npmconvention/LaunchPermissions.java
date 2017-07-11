@@ -8,6 +8,11 @@ package com.techgalavant.npmconvention;
  *
  * Credits -
  * http://www.journaldev.com/10409/android-handling-runtime-permissions-example
+ *
+ * TODO - set a broadcast receiver to detect when the files have finished downloading and then notify the user
+ * so they don't need to hit another button.
+ * REF: https://github.com/commonsguy/cw-android/blob/master/Internet/Download/src/com/commonsware/android/download/DownloadDemo.java
+ * REF: https://stackoverflow.com/questions/21477493/android-download-manager-completed
  */
 
 import android.app.DownloadManager;
@@ -66,7 +71,7 @@ public class LaunchPermissions extends AppCompatActivity implements View.OnClick
 
     // Download the Chapters JSON file
     private DownloadManager dmc;
-    private String jsonChapFile = "Chapters_NPM2017.json"; // the name of the actual file
+    private String jsonChapFile = "Chapters_NPM2017_v2.json"; // the name of the actual file
     File JSONChapFile = new File(Environment.getExternalStorageDirectory()+jsonDir, jsonChapFile);
 
     // Download the Chapters Manual PDF file
@@ -332,8 +337,9 @@ public class LaunchPermissions extends AppCompatActivity implements View.OnClick
     // Changing button text
     private void toggleButton() {
 
-        if (JSONFile.exists() && PDFFile.exists()) {
+        if (PDFFile.exists() && JSONFile.exists() && JSONChapFile.exists() && PDFChapFile.exists()) {
             check_permission.setText("LAUNCH CONVENTION APP");
+            request_permission.setText("RUN SETUP AGAIN?");
         } else {
             check_permission.setText("DOWNLOAD FILES");
         }

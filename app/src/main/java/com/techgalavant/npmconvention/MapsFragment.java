@@ -5,6 +5,10 @@ package com.techgalavant.npmconvention;
  *
  * The purpose of this fragment is to display maps of the convention center and maps to the different locations.
  * The maps are really just downloaded images.
+ *
+ * Google Maps Help - https://developers.google.com/maps/documentation/urls/android-intents
+ *
+ * * Spinner help from Ravi Govarthanan - thank you, man!
  */
 
 import android.content.Intent;
@@ -16,9 +20,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,10 +43,17 @@ public class MapsFragment extends Fragment implements View.OnClickListener {
     public static final String TAG = MapsFragment.class.getSimpleName();
 
     // an Array list of a hashmap with the maps in it
-    ArrayList<HashMap<String, String>> mapsList = new ArrayList<>();
+    ArrayList<HashMap<String, String>> mapsList;
+    ArrayList<HashMap<String, String>> onsiteList;
+    ArrayList<HashMap<String, String>> offsiteList;
 
     // Listview to show the maps from the res/raw/ folder
     ListView roomList;
+
+    // Spinner for site selection
+    Spinner sitesSpinner;
+
+    public Integer choice=0;
 
     public MapsFragment() {
         // Required empty public constructor
@@ -58,12 +71,80 @@ public class MapsFragment extends Fragment implements View.OnClickListener {
             Log.e(TAG, "MapsFragment tab selected.");
 
             // Inflate the maps_frag layout
-            View rootView = inflater.inflate(R.layout.maps_frag, container, false);
+            final View rootView = inflater.inflate(R.layout.maps_frag, container, false);
 
             // populate the JSON file into an arraylist
-            mapsList = new ArrayList<>();
+            mapsList = new ArrayList<>(); // when the app uses onCreate, it should create a new Arraylist, other wise, it will retain the array list when user swipes from tab to tab
+            onsiteList= new ArrayList<>();
+            offsiteList = new ArrayList<>();
+            // drop-down for onsite, off site or both
+            sitesSpinner = (Spinner) rootView.findViewById(R.id.spin_maps);
 
-            // Used to show the chapters in a listview
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext().getApplicationContext(),
+                    R.array.map_locations, R.layout.spinner_item);
+
+            // apply custom adaptor view, this can be found in the layouts xml
+            adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+
+            // Apply the adapter to the spinner
+            sitesSpinner.setAdapter(adapter);
+
+            sitesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+
+                    String option = parent.getItemAtPosition(pos).toString();
+
+                    if(pos==1){
+                        Log.e(TAG, "User selected " + option + " on Maps fragment");
+                        ListAdapter adapter = new SimpleAdapter(
+                                getActivity().getApplicationContext(), onsiteList,
+                                R.layout.listmapitem,
+                                new String[]{"mapname"},
+                                new int[]{R.id.map_name});
+
+                        // Update adapter and listview based on choice selected
+
+                        roomList.setAdapter(adapter);
+                    }
+
+                    if(pos==2){
+                        Log.e(TAG, "User selected " + option + " on Maps fragment");
+                        ListAdapter adapter = new SimpleAdapter(
+                                getActivity().getApplicationContext(), offsiteList,
+                                R.layout.listmapitem,
+                                new String[]{"mapname"},
+                                new int[]{R.id.map_name});
+
+                        // Update adapter and listview based on choice selected
+
+                        roomList.setAdapter(adapter);
+
+                    }
+                    if (pos==0) {
+                        Log.e(TAG, "User selected " + option + " on Maps fragment");
+                        ListAdapter adapter = new SimpleAdapter(
+                                getActivity().getApplicationContext(), mapsList,
+                                R.layout.listmapitem,
+                                new String[]{"mapname"},
+                                new int[]{R.id.map_name});
+
+                        // Update adapter and listview based on choice selected
+
+                        roomList.setAdapter(adapter);
+                    }
+
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                    choice = 0;
+
+                }
+            });
+
+
+            // Used to show the events in a listview
             roomList = (ListView) rootView.findViewById(R.id.maplist1);
 
             // Display the maps in the JSON file
@@ -136,6 +217,32 @@ public class MapsFragment extends Fragment implements View.OnClickListener {
 
                 // add the map to the map list
                 mapsList.add(mapinfo);
+
+                // if the sequence number includes long and lat, then it's offsite, otherwise it's onsite
+                // probably an easier way to do this!
+                switch (seq){
+                    case "1":
+                        offsiteList.add(mapinfo);
+                        break;
+                    case "2":
+                        onsiteList.add(mapinfo);
+                        break;
+                    case "3":
+                        onsiteList.add(mapinfo);
+                        break;
+                    case "4":
+                        onsiteList.add(mapinfo);
+                        break;
+                    case "5":
+                        onsiteList.add(mapinfo);
+                        break;
+                    case "6":
+                        offsiteList.add(mapinfo);
+                        break;
+                    case "7":
+                        offsiteList.add(mapinfo);
+                        break;
+                }
             }
 
         } catch (JSONException e) {
@@ -144,22 +251,12 @@ public class MapsFragment extends Fragment implements View.OnClickListener {
 
         }
 
-        // use this adaptor to show the map list item on listmapitem.xml
-        ListAdapter adapter = new SimpleAdapter(
-                getActivity().getApplicationContext(), mapsList,
-                R.layout.listmapitem,
-                new String[]{"mapname"},
-                new int[]{R.id.map_name});
-
-        // List chapter adaptor
-        roomList.setAdapter(adapter);
-
         // set on click listener
         roomList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 
-                // Take the strings from listview position and populate them in MapsExpandActivity.java
+                // Take the chapter strings from listview position and populate them in ChapterDetails.java
                 Intent intent = new Intent(getActivity(), MapsExpandActivity.class);
                 intent.putExtra("mapname", ((HashMap<String, String>) roomList.getAdapter().getItem((int)id)).get("mapname"));
                 intent.putExtra("mapfile", ((HashMap<String, String>) roomList.getAdapter().getItem((int)id)).get("mapfile"));
@@ -189,9 +286,11 @@ public class MapsFragment extends Fragment implements View.OnClickListener {
 
     }
 
+
     @Override
     public void onClick(View view) {
         // Download file to sdcard
 
     }
+
 }

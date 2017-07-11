@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
     private void fetchRemoteConfigs() {
 
         // START retrieving from Firebase service
-        long cacheExpiration = 1800; // 30 minutes in seconds - it will check for an update every 30 minutes
+        long cacheExpiration = 3600; // 60 mins x 60 secs; it will check for an update once an hour
         // If your app is using developer mode, cacheExpiration is set to 0, so each fetch will
         // retrieve values from the service.
         if (mRemoteConfig.getInfo().getConfigSettings().isDeveloperModeEnabled()) {

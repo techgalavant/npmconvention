@@ -9,6 +9,7 @@ package com.techgalavant.npmconvention;
  * Credits to - http://manishkpr.webheavens.com/android-autocompletetextview-example-json/
  * Ref also - http://stackoverflow.com/questions/24545345/how-to-bind-autocompletetextview-from-hashmap
  *
+ * USED with EventFragmentB.java
  */
 
 import android.app.Activity;

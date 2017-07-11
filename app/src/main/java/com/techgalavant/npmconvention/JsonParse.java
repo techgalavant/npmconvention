@@ -7,6 +7,8 @@ package com.techgalavant.npmconvention;
  * This will load the Events JSON file in the NPM directory and then put it into an Array list
  *
  * Credit - http://manishkpr.webheavens.com/android-autocompletetextview-example-json/
+ *
+ * USED with EventFragmentB.java
  */
 
 import android.os.Environment;
@@ -38,8 +40,6 @@ public class JsonParse {
 
     // Used to put all the events into an EventsList
     ArrayList<HashMap<String, String>> eventsList = new ArrayList<>();
-
-    double current_latitude,current_longitude;
 
     public JsonParse(){
 

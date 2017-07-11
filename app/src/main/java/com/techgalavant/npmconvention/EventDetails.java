@@ -98,8 +98,6 @@ public class EventDetails extends AppCompatActivity {
             Date eDate = sdf.parse(event_end);
             eTime = eDate.getTime(); // convert eDate to milliseconds - eDate is actually in the end date and time
             String endtime = sdf.format(eDate);
-            Log.e(TAG, "Event Start Time in milliseconds: " + sTime + " Start Time as string: " + starttime);
-            Log.e(TAG, "Event End Time in milliseconds" + eTime + " End Time as string: " + endtime);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -204,8 +202,14 @@ public class EventDetails extends AppCompatActivity {
                 calIntent.putExtra(CalendarContract.Events.TITLE, "NPM Event - " + eventId);
                 calIntent.putExtra(CalendarContract.Events.DESCRIPTION, "NPM Event Session Title: " + eventTitle + ". " + eventDesc);
                 calIntent.putExtra(CalendarContract.Events.EVENT_LOCATION, eventRoom);
-                calIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, sTime); // must be in milliseconds
-                calIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, eTime); // time must be in milliseconds
+                calIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, sTime-3600000); // must be in milliseconds
+                calIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, eTime-3600000); // time must be in milliseconds
+                // Reference for millisecond converters:
+                // https://currentmillis.com/
+                // https://www.timecalculator.net/milliseconds-to-date
+
+                Log.e(TAG, "Event Start Time in milliseconds: " + sTime);
+                Log.e(TAG, "Event End Time in milliseconds: " + eTime);
 
                 startActivity(calIntent);
             }

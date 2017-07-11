@@ -6,6 +6,8 @@ package com.techgalavant.npmconvention;
  * Used with JsonParse and with search the events JSON file
  *
  * Credit - http://manishkpr.webheavens.com/android-autocompletetextview-example-json/
+ *
+ * USED with EventFragmentB.java
  */
 
 public class SearchGetSet {
