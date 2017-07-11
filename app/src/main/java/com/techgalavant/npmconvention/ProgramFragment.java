@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -47,6 +48,7 @@ public class ProgramFragment extends Fragment implements View.OnClickListener,On
     //Buttons
     private Button btnDownload;
     private Button btnView;
+    private Button btnProgramView;
 
     // A download manager is used to download a file from a URL onto the device
     DownloadManager downloadManager;
@@ -60,7 +62,6 @@ public class ProgramFragment extends Fragment implements View.OnClickListener,On
 
     // use this boolean to display pages as Toast
     boolean mUserVisibleHint = true;
-
 
     public ProgramFragment() {
         // Required empty public constructor
@@ -87,6 +88,12 @@ public class ProgramFragment extends Fragment implements View.OnClickListener,On
                 // Used to show the downloaded PDF
                 pdfView = (PDFView) rootView.findViewById(R.id.pdfView);
 
+                // Have a button to allow the user to view the program in their own PDF reader
+                btnProgramView = (Button) rootView.findViewById(R.id.btnProgram);
+
+                // needs a listener
+                btnProgramView.setOnClickListener(this);
+
                 displayFile();
 
                 return rootView;
@@ -104,6 +111,12 @@ public class ProgramFragment extends Fragment implements View.OnClickListener,On
 
                 // Used to show the downloaded PDFs
                 pdfView = (PDFView) rootView.findViewById(R.id.pdfView);
+
+                // Have a button to allow the user to view the program in their own PDF reader
+                btnProgramView = (Button) rootView.findViewById(R.id.btnProgram);
+
+                // needs a listener
+                btnProgramView.setOnClickListener(this);
 
                 //attaching listener
                 btnDownload.setOnClickListener(this);
@@ -256,6 +269,25 @@ public class ProgramFragment extends Fragment implements View.OnClickListener,On
                 Toast.makeText(getContext(),"Please download the file to view it.", Toast.LENGTH_LONG).show();
             }
 
+
+        }
+        // Simple button to allow the user to view the PDF in their preferred PDF viewer
+        else if (view == btnProgramView) {
+            if (localFile.exists()){
+                // launch intent to view the program which is a PDF file in their preferred reader
+                String mime = MimeTypeMap.getSingleton().getMimeTypeFromExtension(".PDF");
+
+                Intent intent = new Intent();
+                intent.setAction(android.content.Intent.ACTION_VIEW);
+                intent.setDataAndType(Uri.fromFile(localFile), mime);
+                startActivityForResult(intent, 10);
+
+                Log.e(TAG, "Attempt to launch intent to view the Programs PDF file.");
+
+            } else {
+                Toast.makeText(getContext(),"Please try downloading the file again.", Toast.LENGTH_LONG).show();
+                Log.e(TAG, "Attempted to view the Programs PDF file.");
+            }
 
         }
     }

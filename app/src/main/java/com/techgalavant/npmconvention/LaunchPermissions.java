@@ -66,7 +66,7 @@ public class LaunchPermissions extends AppCompatActivity implements View.OnClick
     // Download the Events JSON file
     private DownloadManager dm;
     private String jsonDir = "/NPM"; // the name of the directory to store the file
-    private String jsonFile = "Events_NPM2017.json"; // the name of the actual file
+    private String jsonFile = "Events_NPM2017_v2.json"; // the name of the actual file
     File JSONFile = new File(Environment.getExternalStorageDirectory()+jsonDir, jsonFile);
 
     // Download the Chapters JSON file
@@ -240,7 +240,7 @@ public class LaunchPermissions extends AppCompatActivity implements View.OnClick
             // download the Events JSON file
             dm = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
             // Location of the  JSON file to be downloaded
-            Uri uri2 = Uri.parse("https://firebasestorage.googleapis.com/v0/b/npm-convention.appspot.com/o/2017Events.json?alt=media&token=2bc91c65-c17f-418d-b12a-a1e9e8ee7cdd");
+            Uri uri2 = Uri.parse("https://firebasestorage.googleapis.com/v0/b/npm-convention.appspot.com/o/2017Events-1.json?alt=media&token=7e6006fa-df95-4ae6-9477-ec7cb01235b1");
             DownloadManager.Request request2 = new DownloadManager.Request(uri2);
             request2.setDestinationInExternalPublicDir(jsonDir,jsonFile);
             request2.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);

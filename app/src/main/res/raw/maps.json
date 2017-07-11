@@ -32,22 +32,22 @@
 		"state": "OH",
 		"zip": "45202",
 		"country": "US",
-		"sequence": 6
+		"sequence": 7
 	},
 	{
-		"name": "Duke Energy First Floor",
+		"name": "Convention Center First Floor",
 		"subName": "Exhibit Hall",
 		"imageName": "Cincinnati_level1.png",
 		"sequence": 2
 	},
 	{
-		"name": "Duke Energy Second Floor",
+		"name": "Convention Center Second Floor",
 		"subName": "Meeting Rooms",
 		"imageName": "Cincinnati_level2.png",
 		"sequence": 3
 	},
 	{
-		"name": "Duke Energy Third Floor",
+		"name": "Convention Center Third Floor",
 		"subName": "Ballrooms",
 		"imageName": "Cincinnati_level3.png",
 		"sequence": 4
@@ -62,6 +62,130 @@
 		"name": "Millennium Hotel Second Floor",
 		"subName": "Cantor Certifications & Selected Meeting Room",
 		"imageName": "millennium_cin2.png",
-		"sequence": 7
+		"sequence": 6
+	},
+	{
+		"name": "Christ Church (Episcopal) Cathedral",
+		"subName": "Lunchtime Organ Concert",
+		"latitude": 39.101071,
+		"longitude": -84.50742,
+		"street": "318 E 4th St",
+		"city": "Cincinnati",
+		"state": "OH",
+		"zip": "45202",
+		"country": "US",
+		"sequence": 8
+	},
+	{
+		"name": "Christ Episcopal Church, Glendate OH",
+		"subName": "Organ Crawl",
+		"latitude": 39.272323,
+		"longitude": -84.466430,
+		"street": "965 Forest Ave",
+		"city": "Glendale",
+		"state": "OH",
+		"zip": "45246",
+		"country": "US",
+		"sequence": 9
+	},
+	{
+		"name": "Hyde Park United Methodist Church",
+		"subName": "Organ Crawl",
+		"latitude": 39.136302,
+		"longitude": -84.432635,
+		"street": "1345 Grace Ave",
+		"city": "Cincinnati",
+		"state": "OH",
+		"zip": "45208",
+		"country": "US",
+		"sequence": 10
+	}, {
+		"name": "Isaac M. Wise Temple",
+		"subName": "Organ Crawl",
+		"latitude": 39.135503,
+		"longitude": -84.429930,
+		"street": "720 Plum St",
+		"city": "Cincinnati",
+		"state": "OH",
+		"zip": "45202",
+		"country": "US",
+		"sequence": 11
+	}, {
+		"name": "St Boniface Church",
+		"subName": "Liturgical Spaces Tour",
+		"latitude": 39.167369,
+		"longitude": -84.551745,
+		"street": "1750 Chase Ave",
+		"city": "Cincinnati",
+		"state": "OH",
+		"zip": "45223",
+		"country": "US",
+		"sequence": 12
+	}, {
+		"name": "St Michael Church",
+		"subName": "Liturgical Spaces Tour",
+		"latitude": 39.102927,
+		"longitude": -84.551745,
+		"street": "2115 Storrs St",
+		"city": "Cincinnati",
+		"state": "OH",
+		"zip": "45204",
+		"country": "US",
+		"sequence": 13
+	}, {
+		"name": "St Francis de Sales",
+		"subName": "Liturgical Spaces Tour",
+		"latitude": 39.129927,
+		"longitude": -84.475932,
+		"street": "1602 Madison Rd",
+		"city": "Cincinnati",
+		"state": "OH",
+		"zip": "45206",
+		"country": "US",
+		"sequence": 14
+	}, {
+		"name": "St Columban Church",
+		"subName": "Liturgical Spaces Tour",
+		"latitude": 39.259080,
+		"longitude": -84.246736,
+		"street": "894 Oakland Rd",
+		"city": "Loveland",
+		"state": "OH",
+		"zip": "45140",
+		"country": "US",
+		"sequence": 15
+	}, {
+		"name": "Covenant-First Presbyterian Church",
+		"subName": "Notre Dame Childrens' Choir Concert",
+		"latitude": 39.103780,
+		"longitude": -84.517369,
+		"street": "717 Elm St",
+		"city": "Cincinnati",
+		"state": "OH",
+		"zip": "45202",
+		"country": "US",
+		"sequence": 16
+	}, {
+		"name": "Covington Cathedral Basilica of the Assumption",
+		"subName": "Sacred Music to Fill a Sacred Space (Part Deux)",
+		"latitude": 39.078708,
+		"longitude": -84.509101,
+		"street": "1101 Madison Ave",
+		"city": "Covington",
+		"state": "KY",
+		"zip": "41011",
+		"country": "US",
+		"sequence": 17
+	}, {
+		"name": "Cincinnati Zoo",
+		"subName": "A Musical Safari Cinci Style",
+		"latitude": 39.143452,
+		"longitude": -84.508815,
+		"street": "3400 Vine St",
+		"city": "Wyoming",
+		"state": "OH",
+		"zip": "45220",
+		"country": "US",
+		"sequence": 18
 	}
 ]}

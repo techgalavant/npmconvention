@@ -70,6 +70,7 @@
     <string name="not_avail">Not provided</string>
     <string name="contact_na">Contact name not provided</string>
     <string name="spin_refine">Refine List</string>
+    <string name="prog_button">Make Notes</string>
     <string-array name="map_locations">
         <item>ALL</item>
         <item>Onsite</item>

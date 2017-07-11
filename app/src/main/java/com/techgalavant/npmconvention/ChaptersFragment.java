@@ -266,29 +266,29 @@ public class ChaptersFragment extends Fragment implements View.OnClickListener{
         // Download file to sdcard
         if (view == btnDownload) {
 
-        // check first if user has granted permissions
-        if (checkPermission()) {
+            // check first if user has granted permissions
+            if (checkPermission()) {
 
-            // display the file if it was downloaded already
-            if (localFile.exists()) {
-                displayFile();
+                // display the file if it was downloaded already
+                if (localFile.exists()) {
+                    displayFile();
 
-            } else {
+                } else {
 
-                downloadManager = (DownloadManager) getContext().getSystemService(Context.DOWNLOAD_SERVICE);
+                    downloadManager = (DownloadManager) getContext().getSystemService(Context.DOWNLOAD_SERVICE);
 
-                // Location of the file to be downloaded
-                Uri uri = Uri.parse("https://www.brockmann.com/apps/npmconvention/2017/objects/chapters.json");
+                    // Location of the file to be downloaded
+                    Uri uri = Uri.parse("https://www.brockmann.com/apps/npmconvention/2017/objects/chapters.json");
 
-                DownloadManager.Request request = new DownloadManager.Request(uri);
+                    DownloadManager.Request request = new DownloadManager.Request(uri);
 
-                request.setDestinationInExternalPublicDir(jsonDir, jsonChapFile);
-                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                request.setTitle(jsonChapFile);
-                Long reference = downloadManager.enqueue(request);
-                Log.e(TAG, "Attempted to download the the Chapters JSON file.");
+                    request.setDestinationInExternalPublicDir(jsonDir, jsonChapFile);
+                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                    request.setTitle(jsonChapFile);
+                    Long reference = downloadManager.enqueue(request);
+                    Log.e(TAG, "Attempted to download the the Chapters JSON file.");
 
-            }
+                }
 
         } else {
 

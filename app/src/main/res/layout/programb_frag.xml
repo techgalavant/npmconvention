@@ -5,10 +5,18 @@
     android:layout_height="match_parent"
     tools:context="com.techgalavant.npmconvention.ProgramFragment">
 
+        <Button
+            android:id="@+id/btnProgram"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_header"
+            android:text="@string/prog_button"/>
+
         <com.github.barteksc.pdfviewer.PDFView
             android:id="@+id/pdfView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_below="@+id/btnProgram"/>
 
 
 </RelativeLayout>

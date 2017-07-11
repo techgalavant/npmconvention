@@ -219,30 +219,23 @@ public class MapsFragment extends Fragment implements View.OnClickListener {
                 mapsList.add(mapinfo);
 
                 // if the sequence number includes long and lat, then it's offsite, otherwise it's onsite
-                // probably an easier way to do this!
-                switch (seq){
-                    case "1":
-                        offsiteList.add(mapinfo);
-                        break;
-                    case "2":
-                        onsiteList.add(mapinfo);
-                        break;
-                    case "3":
-                        onsiteList.add(mapinfo);
-                        break;
-                    case "4":
-                        onsiteList.add(mapinfo);
-                        break;
-                    case "5":
-                        onsiteList.add(mapinfo);
-                        break;
-                    case "6":
-                        offsiteList.add(mapinfo);
-                        break;
-                    case "7":
-                        offsiteList.add(mapinfo);
-                        break;
+                // convert the seq number to string 'myNum'
+                int myNum = 0; // initialize first!
+
+                try {
+                    myNum = Integer.parseInt(seq);
+                } catch(NumberFormatException nfe) {
+                   Log.e(TAG, "Number Format Exception " + nfe);
                 }
+
+                // the maps.json in the res/raw folder contains a 'seq' number and that is a string converted to int 'myNum'
+                // to separate the onsite maps from the offsite maps so that the sitesSpinner works properly
+                if (myNum<=6){
+                    onsiteList.add(mapinfo);
+                } else {
+                    offsiteList.add(mapinfo);
+                }
+
             }
 
         } catch (JSONException e) {
@@ -263,7 +256,7 @@ public class MapsFragment extends Fragment implements View.OnClickListener {
                 intent.putExtra("mapCoord", ((HashMap<String, String>) roomList.getAdapter().getItem((int)id)).get("mapCoord"));
 
                 // Create a URI from String
-                Uri gmmIntentUri = Uri.parse(intent.getStringExtra("mapCoord"));  // TODO populate with the mapCoord value from the Hashmap
+                Uri gmmIntentUri = Uri.parse(intent.getStringExtra("mapCoord"));
 
                 // If it contains latitude and longitude, then launch it in Google Maps
                 if (intent.getStringExtra("mapfile").isEmpty()){
